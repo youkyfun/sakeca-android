@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @Module
 class RecipeInteractor @Inject constructor(private val recipeRepository: IRecipeRepository): RecipeUseCase {
-    override fun getRecipes(query: String): Flow<Resource<List<Recipe>>> = recipeRepository.getRecipes(query)
+    override fun searchRecipes(query: String): Flow<Resource<List<Recipe>>> = recipeRepository.searchRecipes(query)
 
     override fun getRecipe(rId: String): Flow<Resource<Recipe>> = recipeRepository.getRecipe(rId)
 

@@ -24,7 +24,6 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: RecipeAdapter
     private lateinit var rvRecipes: RecyclerView
 
     @Inject
@@ -73,9 +72,7 @@ class HomeFragment : Fragment() {
             searchView.editText.setOnEditorActionListener { _, _, _ ->
                 searchBar.setText(searchView.text)
                 searchView.hide()
-
                 recipeViewModel.searchRecipes(searchBar.text.toString())
-
                 false
             }
         }

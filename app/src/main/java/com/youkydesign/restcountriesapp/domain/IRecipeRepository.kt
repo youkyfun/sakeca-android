@@ -4,6 +4,6 @@ import com.youkydesign.restcountriesapp.data.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface IRecipeRepository {
-    fun getRecipes(query: String): Flow<Resource<List<Recipe>>>
+    fun searchRecipes(query: String): Flow<Resource<List<Recipe>>>
     fun getRecipe(rId: String): Flow<Resource<Recipe>>
 }

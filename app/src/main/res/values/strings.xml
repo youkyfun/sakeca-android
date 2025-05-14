@@ -6,4 +6,5 @@
     <string name="tv_no_recipe">No recipe</string>
     <string name="recipe_image">recipe_image</string>
     <string name="favorite_recipe">Favorite recipe</string>
+    <string name="tv_recipe_title">Recipe title</string>
 </resources>

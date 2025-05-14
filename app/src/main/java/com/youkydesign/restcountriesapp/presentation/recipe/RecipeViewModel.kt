@@ -1,6 +1,5 @@
 package com.youkydesign.restcountriesapp.presentation.recipe
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +25,17 @@ class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
     fun searchRecipes(query: String) {
         _searchResult.value = Resource.Loading()
         viewModelScope.launch {
-            recipeUseCase.getRecipes(query).collect { state: Resource<List<Recipe>> ->
+            recipeUseCase.searchRecipes(query).collect { state: Resource<List<Recipe>> ->
                 _searchResult.value = state
+            }
+        }
+    }
+
+    fun getRecipe(rId: String) {
+        _recipeDetailState.value = Resource.Loading()
+        viewModelScope.launch {
+            recipeUseCase.getRecipe(rId).collect { state: Resource<Recipe> ->
+                _recipeDetailState.value = state
             }
         }
     }

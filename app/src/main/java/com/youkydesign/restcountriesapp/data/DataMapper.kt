@@ -38,6 +38,16 @@ object DataMapper {
         )
     }
 
+    fun mapResponseToDomain(input: RecipesItem) = Recipe(
+        publisher = input.publisher,
+        title = input.title,
+        sourceUrl = input.sourceUrl,
+        recipeId = input.recipeId,
+        imageUrl = input.imageUrl,
+        socialRank = (input.socialRank).toDouble(),
+        publisherUrl = input.publisherUrl,
+    )
+
     fun mapResponseToEntity(input: RecipeResponse) = RecipeEntity(
         publisher = input.publisher,
         title = input.title,

@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Singleton
 class NetworkRecipeDataSource @Inject constructor(private val apiService: ApiService) {
-    fun getRecipes(query: String): Flow<ApiResponse<List<RecipesItem>>> = flow {
+    fun searchRecipes(query: String): Flow<ApiResponse<List<RecipesItem>>> = flow {
         try {
             Log.d("RemoteDataSource", query)
-            val response = apiService.getRecipes(query)
+            val response = apiService.searchRecipes(query)
             val dataArray = response.recipes
             if (dataArray.isNotEmpty()) {
                 emit(ApiResponse.Success(response.recipes))

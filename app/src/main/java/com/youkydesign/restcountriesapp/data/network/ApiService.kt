@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("search")
-    suspend fun getRecipes(@Query("q") q: String = "pizza"): RecipeListResponse
+    suspend fun searchRecipes(@Query("q") q: String = "pizza"): RecipeListResponse
 
     @GET("get")
     suspend fun getRecipe(@Query("rId") rId: String): RecipeDetailsResponse?
