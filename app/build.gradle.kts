@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.youkydesign.restcountriesapp"
+    namespace = "com.youkydesign.recipeapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.youkydesign.restcountriesapp"
+        applicationId = "com.youkydesign.recipeapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

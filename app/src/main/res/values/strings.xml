@@ -7,4 +7,5 @@
     <string name="recipe_image">recipe_image</string>
     <string name="favorite_recipe">Favorite recipe</string>
     <string name="tv_recipe_title">Recipe title</string>
+    <string name="social_rank_placeholder">9.98</string>
 </resources>

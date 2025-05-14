@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.youkydesign.restcountriesapp.presentation.recipe.HomeFragment"
+        android:name="com.youkydesign.recipeapp.presentation.recipe.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.youkydesign.restcountriesapp.presentation.recipe.DetailFragment"
+        android:name="com.youkydesign.recipeapp.presentation.recipe.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
