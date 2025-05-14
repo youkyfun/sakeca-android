@@ -1,6 +1,5 @@
 package com.youkydesign.recipeapp.data.network
 
-import com.youkydesign.recipeapp.data.network.response.RecipeDetailsResponse
 import com.youkydesign.recipeapp.data.network.response.RecipeResponse
 import com.youkydesign.recipeapp.data.network.response.RecipesItem
 import kotlinx.coroutines.Dispatchers
