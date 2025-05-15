@@ -27,4 +27,7 @@ data class RecipeEntity(
 
     @ColumnInfo(name = "socialRank")
     val socialRank: Double,
+
+    @ColumnInfo(name = "ingredients")
+    val ingredients: List<String>
 )

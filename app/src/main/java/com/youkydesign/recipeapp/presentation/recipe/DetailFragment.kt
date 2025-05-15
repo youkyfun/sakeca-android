@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.data.Resource
 import com.youkydesign.recipeapp.databinding.FragmentDetailBinding
+import com.youkydesign.recipeapp.presentation.IngredientsAdapter
 import com.youkydesign.recipeapp.presentation.ViewModelFactory
 import javax.inject.Inject
 
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
+    private lateinit var rvIngredients: RecyclerView
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -70,6 +73,7 @@ class DetailFragment : Fragment() {
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
+                        setIngredientList(resource.data!!.ingredients)
                     }
                 }
 
@@ -81,6 +85,11 @@ class DetailFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun setIngredientList(ingredientList: List<String>) {
+        val adapter = IngredientsAdapter(ingredientList)
+        binding.rvIngredients.adapter = adapter
     }
 
     private fun showLoading(isLoading: Boolean) {

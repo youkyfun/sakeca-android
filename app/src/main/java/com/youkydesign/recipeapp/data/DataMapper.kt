@@ -14,37 +14,16 @@ object DataMapper {
         imageUrl = input.imageUrl,
         socialRank = input.socialRank,
         publisherUrl = input.publisherUrl,
+        ingredients = input.ingredients
     )
 
-    fun mapDomainToEntity(input: Recipe) = RecipeEntity(
+    fun mapListItemResponseToDomain(input: RecipesItem) = Recipe(
         publisher = input.publisher,
         title = input.title,
         sourceUrl = input.sourceUrl,
         recipeId = input.recipeId,
         imageUrl = input.imageUrl,
         socialRank = input.socialRank,
-        publisherUrl = input.publisherUrl,
-    )
-
-    fun mapResponsesToEntities(input: List<RecipesItem>) = input.map {
-        RecipeEntity(
-            publisher = it.publisher,
-            title = it.title,
-            sourceUrl = it.sourceUrl,
-            recipeId = it.recipeId,
-            imageUrl = it.imageUrl,
-            socialRank = (it.socialRank).toDouble(),
-            publisherUrl = it.publisherUrl,
-        )
-    }
-
-    fun mapResponseToDomain(input: RecipesItem) = Recipe(
-        publisher = input.publisher,
-        title = input.title,
-        sourceUrl = input.sourceUrl,
-        recipeId = input.recipeId,
-        imageUrl = input.imageUrl,
-        socialRank = (input.socialRank).toDouble(),
         publisherUrl = input.publisherUrl,
     )
 
@@ -56,6 +35,7 @@ object DataMapper {
         imageUrl = input.imageUrl,
         socialRank = input.socialRank as Double,
         publisherUrl = input.publisherUrl,
+        ingredients = input.ingredients
     )
 
 }

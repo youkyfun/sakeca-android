@@ -1,61 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollable_recipe_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".presentation.recipe.DetailFragment">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@android:style/Widget.ProgressBar.Inverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:forceHasOverlappingRendering="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/img_recipe_photo"
+    <LinearLayout
+        android:id="@+id/scrollview_child_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/backgrounds/scenic"
-        android:contentDescription="@string/recipe_image_content_description"/>
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tv_recipe_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_recipe_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_recipe_photo" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:forceHasOverlappingRendering="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_recipe_publisher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_recipe_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_recipe_title" />
+        <ImageView
+            android:id="@+id/img_recipe_photo"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:contentDescription="@string/recipe_image_content_description"
+            app:circularflow_radiusInDP="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/tv_recipe_social_rank"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/social_rank_placeholder"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_recipe_publisher" />
+        <LinearLayout
+            android:id="@+id/recipe_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/img_recipe_photo">
 
+            <TextView
+                android:id="@+id/tv_recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_recipe_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_recipe_publisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_recipe_title" />
+
+            <TextView
+                android:id="@+id/tv_recipe_social_rank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/social_rank_placeholder" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/ingredients_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@id/recipe_info">
+
+            <LinearLayout
+                android:id="@+id/rv_ingredients_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    tools:layout_editor_absoluteX="24dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</ScrollView>

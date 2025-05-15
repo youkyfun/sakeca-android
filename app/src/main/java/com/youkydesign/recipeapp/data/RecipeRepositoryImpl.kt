@@ -1,6 +1,5 @@
 package com.youkydesign.recipeapp.data
 
-import android.util.Log
 import com.youkydesign.recipeapp.data.local.LocalRecipeDataSource
 import com.youkydesign.recipeapp.data.network.ApiResponse
 import com.youkydesign.recipeapp.data.network.NetworkRecipeDataSource
@@ -21,13 +20,12 @@ class RecipeRepositoryImpl @Inject constructor(
         networkDataSource.searchRecipes(query).map { response ->
             when (response) {
                 is ApiResponse.Success -> Resource.Success(data = response.data.map {
-                    DataMapper.mapResponseToDomain(it)
+                    DataMapper.mapListItemResponseToDomain(it)
                 })
 
                 is ApiResponse.Empty -> Resource.Success(emptyList())
                 is ApiResponse.Error -> Resource.Error(response.errorMessage)
             }
-
         }
 
     override fun getRecipe(rId: String): Flow<Resource<Recipe?>> =
@@ -46,7 +44,6 @@ class RecipeRepositoryImpl @Inject constructor(
 
             override suspend fun createCall(): Flow<ApiResponse<RecipeResponse>> {
                 val response = networkDataSource.getRecipe(rId)
-                Log.d("RecipeRepositoryImpl", "response: $response")
                 return response
             }
 

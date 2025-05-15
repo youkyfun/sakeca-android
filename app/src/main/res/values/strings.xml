@@ -9,4 +9,5 @@
     <string name="tv_recipe_title">Recipe title</string>
     <string name="social_rank_placeholder">9.98</string>
     <string name="recipe_image_content_description">Recipe Image</string>
+    <string name="ingredients_placeholder">Ingredients</string>
 </resources>

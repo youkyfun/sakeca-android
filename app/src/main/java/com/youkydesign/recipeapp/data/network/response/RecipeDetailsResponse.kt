@@ -32,5 +32,5 @@ data class RecipeResponse(
     val title: String,
 
     @field:SerializedName("source_url")
-    val sourceUrl: String
+    val sourceUrl: String,
 )
