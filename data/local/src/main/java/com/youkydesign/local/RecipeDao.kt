@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.data.local
+package com.youkydesign.local
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,9 +13,6 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE recipeId = :recipeId")
     fun getRecipeById(recipeId: String): Flow<RecipeEntity?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipes(recipes: List<RecipeEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(recipe: RecipeEntity)

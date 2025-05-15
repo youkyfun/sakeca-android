@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
 
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
@@ -72,11 +73,6 @@ dependencies {
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-
-    // Room
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)

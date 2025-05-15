@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.data.local
+package com.youkydesign.local
 
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

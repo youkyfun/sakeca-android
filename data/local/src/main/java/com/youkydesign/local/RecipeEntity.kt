@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.data.local
+package com.youkydesign.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
