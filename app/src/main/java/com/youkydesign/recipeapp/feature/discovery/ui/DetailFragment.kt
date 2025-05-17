@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.core.domain.UiResource
 import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
@@ -80,23 +81,37 @@ class DetailFragment : Fragment() {
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
+
                         setIngredientList(resource.data!!.ingredients)
 
-//                        if (resource.data!!.isFavorite) {
-//                            favoriteAction.setImageResource(R.drawable.favorite)
-//                        } else {
-//                            favoriteAction.setImageResource(R.drawable.favorite_border)
-//                        }
+                        if (resource.data!!.isFavorite) {
+                            binding.fabFavorite.setImageResource(R.drawable.favorite)
+                            fabFavorite.setOnClickListener {
+                                recipeViewModel.setFavoriteRecipe(resource.data!!, false)
+                                Snackbar.make(
+                                    requireView(),
+                                    "Removed from favorite",
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                    .show()
+                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                            }
+                        } else {
+                            binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                            fabFavorite.setOnClickListener {
+                                recipeViewModel.setFavoriteRecipe(resource.data!!, true)
+                                Snackbar.make(
+                                    requireView(),
+                                    "Added to favorite",
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                    .show()
+                                binding.fabFavorite.setImageResource(R.drawable.favorite)
+                            }
+                        }
                     }
                 }
-
             }
-//            favoriteAction.setOnClickListener {
-//                recipeViewModel.setFavoriteRecipe(
-//                    recipeViewModel.recipeDetailState.value!!.data!!,
-//                    !recipeViewModel.recipeDetailState.value!!.data!!.isFavorite
-//                )
-//            }
         }
         return view
     }
