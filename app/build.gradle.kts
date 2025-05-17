@@ -39,20 +39,18 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        viewBinding  = true
+        viewBinding = true
     }
 }
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":navigation"))
+    implementation(project(":feature:discovery"))
 
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-
-    // Views/Fragments integration
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
 
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
@@ -60,30 +58,14 @@ dependencies {
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
 
-    // JSON serialization library, works with the Kotlin serialization plugin
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.gson)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.glide)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor)
-
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

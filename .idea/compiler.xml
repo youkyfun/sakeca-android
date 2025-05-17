@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="Recipe_App.domain" target="21" />
+      <module name="Recipe_App.network" target="21" />
       <module name="RestCountriesApp.app" target="21" />
     </bytecodeTargetLevel>
   </component>
