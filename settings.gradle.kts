@@ -21,7 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Recipe App"
 include(":app")
-include(":data:local")
 include(":core")
-include(":data:network")
-include(":feature:discovery")
