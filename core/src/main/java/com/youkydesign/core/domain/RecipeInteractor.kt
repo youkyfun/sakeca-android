@@ -1,10 +1,8 @@
 package com.youkydesign.core.domain
 
-import dagger.Module
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@Module
 class RecipeInteractor @Inject constructor(private val recipeRepository: IRecipeRepository) :
     RecipeUseCase {
     override fun searchRecipes(query: String): Flow<UiResource<List<Recipe>>> =

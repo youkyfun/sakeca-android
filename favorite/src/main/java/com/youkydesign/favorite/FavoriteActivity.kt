@@ -11,14 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.youkydesign.core.di.RecipeModuleDependencies
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
 import com.youkydesign.favorite.databinding.ActivityFavoriteBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
-import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import com.youkydesign.recipeapp.feature.discovery.ui.DetailFragment
 import javax.inject.Inject
 
@@ -27,13 +25,15 @@ class FavoriteActivity : AppCompatActivity() {
     private lateinit var rvFavoriteRecipes: RecyclerView
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: FavoriteViewModelFactory
 
     private val viewModel: FavoriteRecipeViewModel by viewModels {
         factory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val dependencies = (application as RecipeApplication).appComponent
+        DaggerFavoriteComponent.factory().create(this, dependencies).inject(this)
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
