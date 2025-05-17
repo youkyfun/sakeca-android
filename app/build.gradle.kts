@@ -45,8 +45,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":navigation"))
-    implementation(project(":feature:discovery"))
 
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
@@ -61,6 +59,13 @@ dependencies {
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
+
+
+    implementation(libs.glide)
+
+    // Views/Fragments integration
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

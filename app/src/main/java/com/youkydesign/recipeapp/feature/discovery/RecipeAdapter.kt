@@ -1,12 +1,12 @@
-package com.youkydesign.discovery
+package com.youkydesign.recipeapp.feature.discovery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.youkydesign.discovery.databinding.ItemRowRecipeBinding
 import com.youkydesign.core.domain.Recipe
+import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 
 class RecipeAdapter(val recipeList: List<Recipe>) :
     RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {

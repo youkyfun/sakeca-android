@@ -38,7 +38,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature"))
 
     implementation(libs.glide)
 

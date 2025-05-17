@@ -1,6 +1,6 @@
-package com.youkydesign.discovery.ui
+package com.youkydesign.recipeapp.feature.discovery.ui
 
-import com.youkydesign.discovery.R
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.youkydesign.discovery.RecipeAdapter
-import com.youkydesign.discovery.ViewModelFactory
-import com.youkydesign.discovery.databinding.FragmentHomeBinding
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
+import com.youkydesign.recipeapp.R
+import com.youkydesign.recipeapp.RecipeApplication
+import com.youkydesign.recipeapp.databinding.FragmentHomeBinding
+import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
+import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
@@ -30,10 +32,10 @@ class HomeFragment : Fragment() {
         factory
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (requireActivity().application as RecipeApplication).appComponent.inject(this)
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as RecipeApplication).appComponent.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

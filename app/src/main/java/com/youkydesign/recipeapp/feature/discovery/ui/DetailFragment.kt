@@ -1,5 +1,6 @@
-package com.youkydesign.discovery.ui
+package com.youkydesign.recipeapp.feature.discovery.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.youkydesign.discovery.IngredientsAdapter
-import com.youkydesign.discovery.ViewModelFactory
-import com.youkydesign.discovery.databinding.FragmentDetailBinding
 import com.youkydesign.core.domain.UiResource
+import com.youkydesign.recipeapp.RecipeApplication
+import com.youkydesign.recipeapp.databinding.FragmentDetailBinding
+import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
+import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 
@@ -28,10 +30,10 @@ class DetailFragment : Fragment() {
         factory
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (requireActivity().application as RecipeApplication).appComponent.inject(this)
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as RecipeApplication).appComponent.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

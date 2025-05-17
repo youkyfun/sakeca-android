@@ -1,10 +1,9 @@
-package com.youkydesign.discovery
+package com.youkydesign.recipeapp.feature.discovery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.youkydesign.core.domain.RecipeUseCase
-import com.youkydesign.discovery.ui.RecipeViewModel
-import com.youkydesign.feature.di.FeatureScope
+import com.youkydesign.recipeapp.feature.discovery.ui.RecipeViewModel
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :

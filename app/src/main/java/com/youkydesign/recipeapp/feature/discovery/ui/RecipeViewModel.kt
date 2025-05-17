@@ -1,4 +1,4 @@
-package com.youkydesign.discovery.ui
+package com.youkydesign.recipeapp.feature.discovery.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

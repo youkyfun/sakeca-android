@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.youkydesign.discovery.ui.DetailFragment">
+    tools:context=".feature.discovery.ui.DetailFragment">
 
     <LinearLayout
         android:id="@+id/scrollview_child_container"
@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:contentDescription="@string/recipe_image_content_description"
-            app:circularflow_radiusInDP="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -76,17 +75,16 @@
                 android:id="@+id/rv_ingredients_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_ingredients"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
-                    tools:layout_editor_absoluteX="24dp"
-                    android:layout_weight="1"
-                    />
+                    tools:layout_editor_absoluteX="24dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

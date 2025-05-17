@@ -36,6 +36,13 @@ android {
 }
 
 dependencies {
+    // Feature module support for Fragments
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+
+    // Testing Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
+
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
