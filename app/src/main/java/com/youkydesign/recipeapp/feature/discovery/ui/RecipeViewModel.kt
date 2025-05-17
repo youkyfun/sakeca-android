@@ -49,4 +49,10 @@ class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
                 }
         }
     }
+
+    fun setFavoriteRecipe(recipe: Recipe, isFavorite: Boolean) {
+        viewModelScope.launch {
+            recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
+        }
+    }
 }

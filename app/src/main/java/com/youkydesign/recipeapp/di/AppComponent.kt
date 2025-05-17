@@ -1,6 +1,7 @@
 package com.youkydesign.recipeapp.di
 
 import com.youkydesign.core.di.CoreComponent
+import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.recipeapp.feature.discovery.ui.DetailFragment
 import com.youkydesign.recipeapp.feature.discovery.ui.HomeFragment
 import dagger.Component

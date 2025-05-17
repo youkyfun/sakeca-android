@@ -18,7 +18,7 @@ data class RecipeEntity(
 
     @ColumnInfo(name = "publisher")
     val publisher: String,
-    
+
     @ColumnInfo(name = "publisherUrl")
     val publisherUrl: String,
 
@@ -29,5 +29,8 @@ data class RecipeEntity(
     val socialRank: Double,
 
     @ColumnInfo(name = "ingredients")
-    val ingredients: List<String>
+    val ingredients: List<String>,
+
+    @ColumnInfo(name = "isFavorite")
+    val isFavorite: Boolean = false
 )

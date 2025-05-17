@@ -1,6 +1,7 @@
 package com.youkydesign.recipeapp.feature.discovery.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
 import com.youkydesign.recipeapp.R
@@ -59,7 +62,15 @@ class HomeFragment : Fragment() {
             searchBar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.favorite_action -> {
-                        // TODO Navigate to FavoriteFragment using deeplink
+                        try {
+                            installFavoriteModule()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Module not installed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         true
                     }
 
@@ -113,6 +124,15 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    private fun moveToFavorite() {
+        startActivity(
+            Intent(
+                requireActivity(),
+                Class.forName("com.youkydesign.favorite.FavoriteActivity")
+            )
+        )
+    }
+
     private fun setRecipeList(recipeList: List<Recipe>) {
         val adapter = RecipeAdapter(recipeList)
         binding.rvRecipes.adapter = adapter
@@ -125,6 +145,32 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun installFavoriteModule() {
+        val splitInstallManager = SplitInstallManagerFactory.create(requireActivity())
+        val moduleFavorite = "favorite"
+        if (splitInstallManager.installedModules.contains(moduleFavorite)) {
+            moveToFavorite()
+            Toast.makeText(requireContext(), "Open module", Toast.LENGTH_SHORT).show()
+        } else {
+            val request = SplitInstallRequest.newBuilder()
+                .addModule(moduleFavorite)
+                .build()
+
+            splitInstallManager.startInstall(request)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Success installing module",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    moveToFavorite()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error installing module", Toast.LENGTH_SHORT)
+                        .show()
+                }
+        }
+    }
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {

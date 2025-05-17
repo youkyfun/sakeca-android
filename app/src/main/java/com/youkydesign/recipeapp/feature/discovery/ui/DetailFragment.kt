@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.youkydesign.core.domain.UiResource
+import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.databinding.FragmentDetailBinding
 import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
@@ -46,11 +48,16 @@ class DetailFragment : Fragment() {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvIngredients.layoutManager = layoutManager
+
+        rvIngredients = binding.rvIngredients
+        rvIngredients.setHasFixedSize(true)
+
         recipeViewModel.getRecipe(arguments?.getString("rid").toString())
 
         with(binding) {
             recipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
-
                 when (resource) {
                     is UiResource.Error -> {
                         showLoading(false)
@@ -74,10 +81,22 @@ class DetailFragment : Fragment() {
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
                         setIngredientList(resource.data!!.ingredients)
+
+//                        if (resource.data!!.isFavorite) {
+//                            favoriteAction.setImageResource(R.drawable.favorite)
+//                        } else {
+//                            favoriteAction.setImageResource(R.drawable.favorite_border)
+//                        }
                     }
                 }
 
             }
+//            favoriteAction.setOnClickListener {
+//                recipeViewModel.setFavoriteRecipe(
+//                    recipeViewModel.recipeDetailState.value!!.data!!,
+//                    !recipeViewModel.recipeDetailState.value!!.data!!.isFavorite
+//                )
+//            }
         }
         return view
     }

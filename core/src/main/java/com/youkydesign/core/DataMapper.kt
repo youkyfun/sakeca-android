@@ -15,7 +15,20 @@ object DataMapper {
         imageUrl = input.imageUrl,
         socialRank = input.socialRank,
         publisherUrl = input.publisherUrl,
-        ingredients = input.ingredients
+        ingredients = input.ingredients,
+        isFavorite = input.isFavorite
+    )
+
+    fun mapDomainToEntity(input: Recipe) = RecipeEntity(
+        publisher = input.publisher,
+        title = input.title,
+        sourceUrl = input.sourceUrl,
+        recipeId = input.recipeId,
+        imageUrl = input.imageUrl,
+        socialRank = input.socialRank,
+        publisherUrl = input.publisherUrl,
+        ingredients = input.ingredients,
+        isFavorite = input.isFavorite
     )
 
     fun mapListItemResponseToDomain(input: RecipesItem) = Recipe(

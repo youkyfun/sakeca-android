@@ -12,5 +12,6 @@ data class Recipe(
     val imageUrl: String,
     val socialRank: Double,
     val publisherUrl: String,
-    val ingredients: List<String> = emptyList<String>()
+    val ingredients: List<String> = emptyList<String>(),
+    val isFavorite: Boolean = false
 ) : Parcelable

@@ -9,6 +9,12 @@ class LocalRecipeDataSource @Inject constructor(private val recipeDao: RecipeDao
     fun getRecipe(rId: String): Flow<RecipeEntity?> = recipeDao.getRecipeById(rId)
 
     suspend fun insertRecipe(recipe: RecipeEntity) {
-        recipeDao.insertRecipe(recipe)
+        recipeDao.saveRecipe(recipe)
     }
+
+    suspend fun setFavoriteRecipe(newRecipe: RecipeEntity) {
+        recipeDao.setFavoriteRecipe(newRecipe)
+    }
+
+    fun getFavoriteRecipes(): Flow<List<RecipeEntity>> = recipeDao.getFavoriteRecipes()
 }
