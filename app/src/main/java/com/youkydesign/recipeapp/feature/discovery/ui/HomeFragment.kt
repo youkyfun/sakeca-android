@@ -180,9 +180,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun toRecipeDetail(user: Recipe) {
-        val bundle = Bundle()
-        bundle.putString("rid", user.recipeId)
-        view?.findNavController()?.navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+    private fun toRecipeDetail(recipe: Recipe) {
+        val toDetailFragment = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+        toDetailFragment.rId = recipe.recipeId
+        view?.findNavController()?.navigate(toDetailFragment)
     }
 }

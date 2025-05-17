@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favorite_nav_graph"
+    app:startDestination="@id/favoriteMainFragment">
+
+    <fragment
+        android:id="@+id/favoriteMainFragment"
+        app:moduleName="favorite"
+        android:name="com.youkydesign.favorite.FavoriteMainFragment"
+        android:label="fragment_favorite_main"
+        tools:layout="@layout/fragment_favorite_main" >
+        <action
+            android:id="@+id/action_favorite_to_detail"
+            app:destination="@id/fav_detail_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/fav_detail_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fav_detail_fragment"
+        android:name="com.youkydesign.recipeapp.feature.discovery.ui.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="rId"
+            app:argType="string"
+            android:defaultValue="rId" />
+        <action
+            android:id="@+id/action_fav_detail_fragment_to_favoriteMainFragment"
+            app:destination="@id/favoriteMainFragment" />
+    </fragment>
+</navigation>

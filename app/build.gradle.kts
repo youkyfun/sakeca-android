@@ -53,8 +53,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Feature module support for Fragments
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
@@ -69,9 +67,10 @@ dependencies {
 
     implementation(libs.glide)
 
-    // Views/Fragments integration
+    // Views/Fragments integration/Dynamic Feature support
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

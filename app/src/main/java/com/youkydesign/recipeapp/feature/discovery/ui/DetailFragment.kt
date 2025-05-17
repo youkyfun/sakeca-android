@@ -49,13 +49,21 @@ class DetailFragment : Fragment() {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.detailTopAppBar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvIngredients.layoutManager = layoutManager
-
         rvIngredients = binding.rvIngredients
-        rvIngredients.setHasFixedSize(true)
 
-        recipeViewModel.getRecipe(arguments?.getString("rid").toString())
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val rId = DetailFragmentArgs.fromBundle(arguments as Bundle).rId
+        recipeViewModel.getRecipe(rId)
 
         with(binding) {
             recipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
@@ -113,7 +121,6 @@ class DetailFragment : Fragment() {
                 }
             }
         }
-        return view
     }
 
     override fun onDestroy() {
