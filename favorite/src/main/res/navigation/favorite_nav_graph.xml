@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/favoriteMainFragment"
         app:moduleName="favorite"
-        android:name="com.youkydesign.favorite.FavoriteMainFragment"
+        android:name="com.youkydesign.favorite.presentation.FavoriteMainFragment"
         android:label="fragment_favorite_main"
         tools:layout="@layout/fragment_favorite_main" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/fav_detail_fragment"
-        android:name="com.youkydesign.recipeapp.feature.discovery.ui.DetailFragment"
+        android:name="com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragment"
         android:label="DetailFragment" >
         <argument
             android:name="rId"

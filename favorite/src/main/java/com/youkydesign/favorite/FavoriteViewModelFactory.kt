@@ -3,6 +3,7 @@ package com.youkydesign.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.youkydesign.core.domain.RecipeUseCase
+import com.youkydesign.favorite.presentation.FavoriteRecipeViewModel
 import com.youkydesign.recipeapp.di.AppScope
 import javax.inject.Inject
 

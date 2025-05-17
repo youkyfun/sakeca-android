@@ -1,4 +1,4 @@
-package com.youkydesign.favorite
+package com.youkydesign.favorite.presentation
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
+import com.youkydesign.favorite.FavoriteViewModelFactory
 import com.youkydesign.favorite.databinding.FragmentFavoriteMainBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.recipeapp.RecipeApplication

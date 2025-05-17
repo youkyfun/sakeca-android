@@ -1,4 +1,4 @@
-package com.youkydesign.favorite
+package com.youkydesign.favorite.presentation
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

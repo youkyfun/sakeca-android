@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.feature.discovery.ui
+package com.youkydesign.recipeapp.feature.discovery.ui.discovery
 
 import android.content.Context
 import android.content.Intent

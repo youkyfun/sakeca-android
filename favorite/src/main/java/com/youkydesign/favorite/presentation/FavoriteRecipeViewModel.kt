@@ -1,4 +1,4 @@
-package com.youkydesign.favorite
+package com.youkydesign.favorite.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

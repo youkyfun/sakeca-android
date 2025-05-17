@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.feature.discovery.ui
+package com.youkydesign.recipeapp.feature.discovery.ui.detail
 
 import android.content.Context
 import android.os.Bundle
@@ -20,7 +20,6 @@ import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
 import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
-
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +28,7 @@ class DetailFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private val recipeViewModel: RecipeViewModel by viewModels {
+    private val detailRecipeViewModel: DetailRecipeViewModel by viewModels {
         factory
     }
 
@@ -63,10 +62,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rId = DetailFragmentArgs.fromBundle(arguments as Bundle).rId
-        recipeViewModel.getRecipe(rId)
+        detailRecipeViewModel.getRecipe(rId)
 
         with(binding) {
-            recipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
+            detailRecipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
                 when (resource) {
                     is UiResource.Error -> {
                         showLoading(false)
@@ -95,7 +94,7 @@ class DetailFragment : Fragment() {
                         if (resource.data!!.isFavorite) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
                             fabFavorite.setOnClickListener {
-                                recipeViewModel.setFavoriteRecipe(resource.data!!, false)
+                                detailRecipeViewModel.setFavoriteRecipe(resource.data!!, false)
                                 Snackbar.make(
                                     requireView(),
                                     "Removed from favorite",
@@ -107,7 +106,7 @@ class DetailFragment : Fragment() {
                         } else {
                             binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
-                                recipeViewModel.setFavoriteRecipe(resource.data!!, true)
+                                detailRecipeViewModel.setFavoriteRecipe(resource.data!!, true)
                                 Snackbar.make(
                                     requireView(),
                                     "Added to favorite",

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".feature.discovery.ui.DetailFragment">
+    tools:context=".feature.discovery.ui.detail.DetailFragment">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
