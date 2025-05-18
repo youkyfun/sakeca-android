@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
 dagger = "2.51.1"
 featureDeliveryKtx = "2.1.0"
 glide = "4.16.0"
