@@ -1,6 +1,7 @@
 package com.youkydesign.core.di
 
 import android.content.Context
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.youkydesign.core.domain.IRecipeRepository
 import dagger.BindsInstance
 import dagger.Component

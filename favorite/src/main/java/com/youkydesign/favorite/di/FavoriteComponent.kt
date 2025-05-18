@@ -1,6 +1,7 @@
 package com.youkydesign.favorite.di
 
 import android.content.Context
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.youkydesign.core.di.FavoriteModuleDependencies
 import com.youkydesign.favorite.presentation.FavoriteActivity
 import com.youkydesign.favorite.presentation.FavoriteMainFragment
@@ -23,4 +24,5 @@ interface FavoriteComponent {
         ): FavoriteComponent
 
     }
+
 }

@@ -16,6 +16,9 @@
                 android:name="rId"
                 android:defaultValue="rId" />
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_favorite_nav_graph"
+            app:destination="@id/favorite_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -32,8 +35,8 @@
             android:id="@+id/action_detailFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+                app:popUpTo="@id/homeFragment"
+                app:popUpToInclusive="true" />
     </fragment>
     <include-dynamic
         android:id="@+id/favorite_nav_graph"
