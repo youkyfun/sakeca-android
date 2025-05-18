@@ -20,8 +20,7 @@ import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 class DetailFragment : Fragment() {
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentDetailBinding
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -43,7 +42,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -95,7 +94,7 @@ class DetailFragment : Fragment() {
 
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 
-                        if (resource.data?.isFavorite != null) {
+                        if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)

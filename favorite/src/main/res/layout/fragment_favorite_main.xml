@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:menu="@menu/favorite_menu"
             app:navigationIcon="@drawable/arrow_back"
             app:title="Favorite recipes" />
 

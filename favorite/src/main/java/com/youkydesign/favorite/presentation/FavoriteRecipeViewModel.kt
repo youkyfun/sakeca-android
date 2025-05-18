@@ -27,10 +27,19 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                     _favoriteRecipes.value = UiResource.Error(it.message.toString())
                 }
                 .collect { state: UiResource<List<Recipe>> ->
-                    if (state is UiResource.Success) {
-                        _favoriteRecipes.value = UiResource.Success(state.data!!)
-                    } else if (state is UiResource.Error) {
-                        _favoriteRecipes.value = UiResource.Error(state.message!!)
+                    when (state) {
+                        is UiResource.Idle -> {}
+                        is UiResource.Loading -> {
+                            _favoriteRecipes.value = UiResource.Loading()
+                        }
+
+                        is UiResource.Success -> {
+                            _favoriteRecipes.value = UiResource.Success(state.data!!)
+                        }
+
+                        is UiResource.Error -> {
+                            _favoriteRecipes.value = UiResource.Error(state.message!!)
+                        }
                     }
                 }
         }

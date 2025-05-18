@@ -29,9 +29,7 @@
             android:id="@+id/scrollview_child_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/detail_app_bar_layout"
@@ -47,7 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
-                    app:menu="@menu/details_menu"
                     app:navigationIcon="@drawable/arrow_back"
                     app:title="Details" />
 
@@ -80,6 +77,8 @@
                 android:id="@+id/recipe_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical"
@@ -110,6 +109,8 @@
                 android:id="@+id/tv_ingredients_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="@string/tv_ingredients_title"

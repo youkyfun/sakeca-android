@@ -25,21 +25,30 @@ class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMode
                         UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
                 }
                 .collect { state: UiResource<Recipe?> ->
-                    if (state is UiResource.Success) {
-                        if (state.data == null) {
-                            _recipeDetailState.value =
-                                UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
-                            return@collect
-                        } else {
-                            _recipeDetailState.value = UiResource.Success(state.data!!)
+                    when (state) {
+                        is UiResource.Error -> {
+                            if (state.message == null) {
+                                _recipeDetailState.value =
+                                    UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                                return@collect
+                            } else {
+                                _recipeDetailState.value = UiResource.Error(state.message!!)
+                            }
                         }
-                    } else if (state is UiResource.Error) {
-                        if (state.message == null) {
-                            _recipeDetailState.value =
-                                UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
-                            return@collect
-                        } else {
-                            _recipeDetailState.value = UiResource.Error(state.message!!)
+
+                        is UiResource.Idle -> {}
+                        is UiResource.Loading -> {
+                            _recipeDetailState.value = UiResource.Loading()
+                        }
+
+                        is UiResource.Success<*> -> {
+                            if (state.data == null) {
+                                _recipeDetailState.value =
+                                    UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                                return@collect
+                            } else {
+                                _recipeDetailState.value = UiResource.Success(state.data!!)
+                            }
                         }
                     }
                 }

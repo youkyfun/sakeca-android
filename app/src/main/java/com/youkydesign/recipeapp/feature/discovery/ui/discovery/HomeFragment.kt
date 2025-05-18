@@ -23,8 +23,7 @@ import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentHomeBinding
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -46,7 +45,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())

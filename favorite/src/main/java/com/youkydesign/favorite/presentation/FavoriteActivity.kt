@@ -9,15 +9,14 @@ import androidx.navigation.NavController
 import com.youkydesign.favorite.databinding.ActivityFavoriteBinding
 
 class FavoriteActivity : AppCompatActivity() {
-    private var _binding: ActivityFavoriteBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityFavoriteBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        _binding = ActivityFavoriteBinding.inflate(layoutInflater)
+        binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -28,10 +27,5 @@ class FavoriteActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

@@ -20,8 +20,7 @@ import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
 import javax.inject.Inject
 
 class FavoriteMainFragment : Fragment() {
-    private var _binding: FragmentFavoriteMainBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFavoriteMainBinding
 
     @Inject
     lateinit var factory: FavoriteViewModelFactory
@@ -46,7 +45,7 @@ class FavoriteMainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())
@@ -90,11 +89,6 @@ class FavoriteMainFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun showLoading(isLoading: Boolean) {
