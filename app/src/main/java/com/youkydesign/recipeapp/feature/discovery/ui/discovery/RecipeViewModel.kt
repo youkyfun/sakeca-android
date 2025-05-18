@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.core.domain.UiResource
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {

@@ -2,7 +2,6 @@ package com.youkydesign.recipeapp.feature.discovery.ui.discovery
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -146,7 +145,6 @@ class HomeFragment : Fragment() {
         val moduleFavorite = "favorite"
         if (splitInstallManager.installedModules.contains(moduleFavorite)) {
             moveToFavorite()
-            Toast.makeText(requireContext(), "Open module", Toast.LENGTH_SHORT).show()
         } else {
             val request = SplitInstallRequest.newBuilder()
                 .addModule(moduleFavorite)
