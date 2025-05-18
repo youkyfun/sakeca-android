@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
 import com.youkydesign.favorite.FavoriteViewModelFactory
@@ -23,7 +22,6 @@ import javax.inject.Inject
 class FavoriteMainFragment : Fragment() {
     private var _binding: FragmentFavoriteMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var rvFavoriteRecipes: RecyclerView
 
     @Inject
     lateinit var factory: FavoriteViewModelFactory
@@ -53,9 +51,7 @@ class FavoriteMainFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFavoriteRecipes.layoutManager = layoutManager
-
-        rvFavoriteRecipes = binding.rvFavoriteRecipes
-        rvFavoriteRecipes.setHasFixedSize(true)
+        binding.rvFavoriteRecipes.setHasFixedSize(true)
 
         binding.favTopAppBar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
@@ -89,12 +85,11 @@ class FavoriteMainFragment : Fragment() {
                     if (resource.data != null) {
                         binding.tvNoFavorite.visibility = View.GONE
                         binding.rvFavoriteRecipes.visibility = View.VISIBLE
-                        setRecipeList(resource.data!!)
+                        setRecipeList(resource.data ?: emptyList())
                     }
                 }
             }
         }
-
     }
 
     override fun onDestroy() {

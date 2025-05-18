@@ -1,5 +1,6 @@
 package com.youkydesign.core.di
 
+import com.youkidesign.core.BuildConfig
 import com.youkydesign.core.data.network.ApiService
 import dagger.Module
 import dagger.Provides
@@ -12,10 +13,17 @@ import java.util.concurrent.TimeUnit
 @Module
 class NetworkModule {
 
+    val loggingLevel =
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
+
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(loggingLevel))
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
@@ -24,7 +32,7 @@ class NetworkModule {
     @Provides
     fun provideRecipeApiService(client: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://forkify-api.herokuapp.com/api/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

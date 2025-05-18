@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.core.domain.UiResource
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
@@ -25,16 +26,32 @@ class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMode
                 }
                 .collect { state: UiResource<Recipe?> ->
                     if (state is UiResource.Success) {
-                        _recipeDetailState.value = UiResource.Success(state.data!!)
+                        if (state.data == null) {
+                            _recipeDetailState.value =
+                                UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                            return@collect
+                        } else {
+                            _recipeDetailState.value = UiResource.Success(state.data!!)
+                        }
                     } else if (state is UiResource.Error) {
-                        _recipeDetailState.value = UiResource.Error(state.message!!)
+                        if (state.message == null) {
+                            _recipeDetailState.value =
+                                UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                            return@collect
+                        } else {
+                            _recipeDetailState.value = UiResource.Error(state.message!!)
+                        }
                     }
                 }
         }
     }
 
-    fun setFavoriteRecipe(recipe: Recipe, isFavorite: Boolean) {
+    fun setFavoriteRecipe(recipe: Recipe?, isFavorite: Boolean) {
         viewModelScope.launch {
+            if (recipe == null) {
+                cancel()
+                return@launch
+            }
             recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
         }
     }

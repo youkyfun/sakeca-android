@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.core.domain.UiResource
@@ -23,7 +22,6 @@ import javax.inject.Inject
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var rvIngredients: RecyclerView
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -54,7 +52,6 @@ class DetailFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvIngredients.layoutManager = layoutManager
-        rvIngredients = binding.rvIngredients
 
         return view
     }
@@ -83,18 +80,25 @@ class DetailFragment : Fragment() {
 
                     is UiResource.Success -> {
                         showLoading(false)
+                        if (resource.data == null) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Sorry, something went wrong! We can't get this recipe right now.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         Glide.with(binding.imgRecipePhoto).load(resource.data?.imageUrl)
                             .into(binding.imgRecipePhoto)
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
 
-                        setIngredientList(resource.data!!.ingredients)
+                        setIngredientList(resource.data?.ingredients ?: emptyList())
 
-                        if (resource.data!!.isFavorite) {
+                        if (resource.data?.isFavorite != null) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
                             fabFavorite.setOnClickListener {
-                                detailRecipeViewModel.setFavoriteRecipe(resource.data!!, false)
+                                detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 Snackbar.make(
                                     requireView(),
                                     "Removed from favorite",
@@ -106,7 +110,7 @@ class DetailFragment : Fragment() {
                         } else {
                             binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
-                                detailRecipeViewModel.setFavoriteRecipe(resource.data!!, true)
+                                detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 Snackbar.make(
                                     requireView(),
                                     "Added to favorite",
@@ -120,11 +124,6 @@ class DetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun setIngredientList(ingredientList: List<String>) {

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.recipeapp.di.AppScope
-import com.youkydesign.recipeapp.feature.discovery.ui.discovery.RecipeViewModel
 import com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailRecipeViewModel
+import com.youkydesign.recipeapp.feature.discovery.ui.discovery.RecipeViewModel
 import javax.inject.Inject
 
 @AppScope
@@ -13,11 +13,10 @@ class ViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseC
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
-            return RecipeViewModel(recipeUseCase) as T
-        } else if (modelClass.isAssignableFrom(DetailRecipeViewModel::class.java)) {
-            return DetailRecipeViewModel(recipeUseCase) as T
+        return when (modelClass) {
+            RecipeViewModel::class.java -> RecipeViewModel(recipeUseCase) as T
+            DetailRecipeViewModel::class.java -> DetailRecipeViewModel(recipeUseCase) as T
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }

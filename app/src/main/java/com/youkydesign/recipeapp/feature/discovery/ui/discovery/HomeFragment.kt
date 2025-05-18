@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.youkydesign.core.domain.Recipe
@@ -26,7 +25,6 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var rvRecipes: RecyclerView
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -53,9 +51,7 @@ class HomeFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvRecipes.layoutManager = layoutManager
-
-        rvRecipes = binding.rvRecipes
-        rvRecipes.setHasFixedSize(true)
+        binding.rvRecipes.setHasFixedSize(true)
 
         with(binding) {
             searchBar.inflateMenu(R.menu.app_menu)
@@ -105,7 +101,7 @@ class HomeFragment : Fragment() {
                         return@observe
                     }
                     if (resource.data != null) {
-                        setRecipeList(resource.data!!)
+                        setRecipeList(resource.data ?: emptyList())
                     }
                 }
 
@@ -117,11 +113,6 @@ class HomeFragment : Fragment() {
                 is UiResource.Idle -> {}
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun moveToFavorite() {

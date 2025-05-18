@@ -36,10 +36,10 @@ class RecipeRepositoryImpl @Inject constructor(
         object : NetworkBoundResource<Recipe?, RecipeResponse>() {
             override fun loadFromDB(): Flow<Recipe?> {
                 return localDataSource.getRecipe(rId).map {
-                    if (it == null) {
-                        null
-                    } else {
+                    if (it != null) {
                         DataMapper.mapEntityToDomain(it)
+                    } else {
+                        null
                     }
                 }
             }
