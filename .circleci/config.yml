@@ -35,8 +35,3 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/debug/
           destination: artifact-file
-
-workflows:
-  build_and_test:
-    jobs:
-      - build
