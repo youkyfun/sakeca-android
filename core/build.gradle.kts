@@ -46,6 +46,9 @@ dependencies {
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 
+    //Security / Database Encryption
+    implementation(libs.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
 
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)

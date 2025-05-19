@@ -21,6 +21,8 @@ navigationUi = "2.9.0"
 pagingRuntimeKtx = "3.3.6"
 retrofit = "3.0.0"
 roomVersion = "2.7.1"
+androidDatabaseSqlcipher = "4.5.4"
+sqliteKtx = "2.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,6 +56,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
+androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqliteKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
