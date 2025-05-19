@@ -23,7 +23,8 @@ import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -44,8 +45,8 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())
@@ -96,12 +97,12 @@ class HomeFragment : Fragment() {
                 is UiResource.Success -> {
                     showLoading(false)
                     if (resource.data.isNullOrEmpty()) {
-                        Toast.makeText(requireContext(), "No data", Toast.LENGTH_SHORT).show()
+                        binding.rvRecipes.visibility = View.GONE
+                        binding.tvNoRecipe.visibility = View.VISIBLE
                         return@observe
                     }
-                    if (resource.data != null) {
-                        setRecipeList(resource.data ?: emptyList())
-                    }
+                    binding.tvNoRecipe.visibility = View.GONE
+                    setRecipeList(resource.data ?: emptyList())
                 }
 
                 is UiResource.Error -> {
@@ -112,6 +113,11 @@ class HomeFragment : Fragment() {
                 is UiResource.Idle -> {}
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun moveToFavorite() {

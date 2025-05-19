@@ -11,4 +11,5 @@
     <string name="title_favorite">Favorite</string>
     <string name="fab_to_favorite">Add to Favorite</string>
     <string name="tv_ingredients_title">Ingredients</string>
+    <string name="latest_recipes_title">Latest Recipes</string>
 </resources>

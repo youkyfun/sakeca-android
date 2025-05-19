@@ -20,7 +20,7 @@ class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMode
         _recipeDetailState.value = UiResource.Loading()
         viewModelScope.launch {
             recipeUseCase.getRecipe(rId)
-                .catch { exception ->
+                .catch {
                     _recipeDetailState.value =
                         UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
                 }

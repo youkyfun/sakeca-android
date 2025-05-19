@@ -20,7 +20,8 @@ import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
 import javax.inject.Inject
 
 class DetailFragment : Fragment() {
-    private lateinit var binding: FragmentDetailBinding
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -34,15 +35,11 @@ class DetailFragment : Fragment() {
         (requireActivity().application as RecipeApplication).appComponent.inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -123,6 +120,11 @@ class DetailFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setIngredientList(ingredientList: List<String>) {

@@ -29,6 +29,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_latest_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/latest_recipes_title"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBar" />
+
+    <TextView
         android:id="@+id/tvNoRecipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,9 +52,10 @@
         android:text="@string/tv_no_recipe"
         android:textAlignment="center"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBar" />
+        app:layout_constraintTop_toBottomOf="@id/tv_latest_recipe" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recipes"
@@ -52,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBar" />
+        app:layout_constraintTop_toBottomOf="@id/tv_latest_recipe" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -64,6 +81,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_latest_recipe"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

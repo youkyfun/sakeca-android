@@ -20,7 +20,8 @@ import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
 import javax.inject.Inject
 
 class FavoriteMainFragment : Fragment() {
-    private lateinit var binding: FragmentFavoriteMainBinding
+    private var _binding: FragmentFavoriteMainBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var factory: FavoriteViewModelFactory
@@ -36,16 +37,12 @@ class FavoriteMainFragment : Fragment() {
         DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())
@@ -81,14 +78,17 @@ class FavoriteMainFragment : Fragment() {
                         binding.tvNoFavorite.visibility = View.VISIBLE
                         return@observe
                     }
-                    if (resource.data != null) {
-                        binding.tvNoFavorite.visibility = View.GONE
-                        binding.rvFavoriteRecipes.visibility = View.VISIBLE
-                        setRecipeList(resource.data ?: emptyList())
-                    }
+                    binding.tvNoFavorite.visibility = View.GONE
+                    binding.rvFavoriteRecipes.visibility = View.VISIBLE
+                    setRecipeList(resource.data ?: emptyList())
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun showLoading(isLoading: Boolean) {

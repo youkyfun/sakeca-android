@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
-    fun getSavedRecipes(): Flow<List<RecipeEntity>>
+    fun getCachedRecipes(): Flow<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes WHERE isFavorite = 1")
     fun getFavoriteRecipes(): Flow<List<RecipeEntity>>

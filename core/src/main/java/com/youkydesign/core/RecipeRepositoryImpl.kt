@@ -20,6 +20,19 @@ class RecipeRepositoryImpl @Inject constructor(
     private val localDataSource: LocalRecipeDataSource,
     private val networkDataSource: NetworkRecipeDataSource
 ) : IRecipeRepository {
+    override fun getAllCachedRecipes(): Flow<UiResource<List<Recipe>>> = flow {
+        localDataSource.getAllCachedRecipes().collect { recipeList ->
+            if (recipeList.isEmpty()) {
+                emit(UiResource.Success(emptyList()))
+                return@collect
+            } else {
+                emit(UiResource.Success(recipeList.map {
+                    DataMapper.mapEntityToDomain(it)
+                }))
+            }
+        }
+    }
+
     override fun searchRecipes(query: String): Flow<UiResource<List<Recipe>>> =
         networkDataSource.searchRecipes(query).map { response ->
             when (response) {

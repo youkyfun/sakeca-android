@@ -5,6 +5,8 @@ import javax.inject.Inject
 
 class RecipeInteractor @Inject constructor(private val recipeRepository: IRecipeRepository) :
     RecipeUseCase {
+    override fun getAllCachedRecipes(): Flow<UiResource<List<Recipe>>> = recipeRepository.getAllCachedRecipes()
+
     override fun searchRecipes(query: String): Flow<UiResource<List<Recipe>>> =
         recipeRepository.searchRecipes(query)
 

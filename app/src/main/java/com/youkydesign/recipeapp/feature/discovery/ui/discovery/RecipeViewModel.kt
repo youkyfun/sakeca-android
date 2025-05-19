@@ -15,7 +15,16 @@ class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
     val searchResult: LiveData<UiResource<List<Recipe>>> = _searchResult
 
     init {
-        searchRecipes("pizza")
+        getAllCachedRecipes()
+    }
+
+    private fun getAllCachedRecipes() {
+        _searchResult.value = UiResource.Loading()
+        viewModelScope.launch {
+            recipeUseCase.getAllCachedRecipes().collect { state: UiResource<List<Recipe>> ->
+                _searchResult.value = state
+            }
+        }
     }
 
     fun searchRecipes(query: String) {
