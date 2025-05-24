@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.feature.discovery.ui.detail
+package com.youkydesign.favorite.ui.details
 
 import android.content.Context
 import android.os.Bundle
@@ -12,34 +12,38 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.core.domain.UiResource
-import com.youkydesign.recipeapp.R
+import com.youkydesign.favorite.FavoriteViewModelFactory
+import com.youkydesign.favorite.databinding.FragmentFavoriteDetailsBinding
+import com.youkydesign.favorite.di.DaggerFavoriteComponent
+import com.youkydesign.favorite.ui.main.FavoriteRecipeViewModel
 import com.youkydesign.recipeapp.RecipeApplication
-import com.youkydesign.recipeapp.databinding.FragmentDetailBinding
 import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
-import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
+import com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragmentArgs
 import javax.inject.Inject
 
-class DetailFragment : Fragment() {
-    private var _binding: FragmentDetailBinding? = null
+
+class FavoriteDetailsFragment : Fragment() {
+    private var _binding: FragmentFavoriteDetailsBinding? = null
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: FavoriteViewModelFactory
 
-    private val detailRecipeViewModel: DetailRecipeViewModel by viewModels {
+    private val detailRecipeViewModel: FavoriteRecipeViewModel by viewModels {
         factory
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity().application as RecipeApplication).appComponent.inject(this)
+        val dependencies = (requireActivity().application as RecipeApplication).appComponent
+        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -92,7 +96,7 @@ class DetailFragment : Fragment() {
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite)
+                            binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 Snackbar.make(
@@ -101,10 +105,10 @@ class DetailFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                                binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite_border)
                             }
                         } else {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                            binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 Snackbar.make(
@@ -113,7 +117,7 @@ class DetailFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite)
+                                binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite)
                             }
                         }
                     }

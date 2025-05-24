@@ -6,27 +6,25 @@
 
     <fragment
         android:id="@+id/favoriteMainFragment"
-        android:name="com.youkydesign.favorite.presentation.FavoriteMainFragment"
+        android:name="com.youkydesign.favorite.ui.main.FavoriteMainFragment"
         android:label="fragment_favorite_main"
         app:moduleName="favorite"
         tools:layout="@layout/fragment_favorite_main">
         <action
-            android:id="@+id/action_favorite_to_detail"
-            app:destination="@id/fav_detail_fragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/fav_detail_fragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_favoriteMainFragment_to_favoriteDetailsFragment"
+            app:destination="@id/favoriteDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fav_detail_fragment"
-        android:name="com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragment"
-        android:label="DetailFragment">
+        android:id="@+id/favoriteDetailsFragment"
+        android:name="com.youkydesign.favorite.ui.details.FavoriteDetailsFragment"
+        android:label="fragment_favorite_details"
+        tools:layout="@layout/fragment_favorite_details" >
+        <action
+            android:id="@+id/action_favoriteDetailsFragment_to_favoriteMainFragment"
+            app:destination="@id/favoriteMainFragment" />
         <argument
             android:name="rId"
-            android:defaultValue="rId"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_fav_detail_fragment_to_favoriteMainFragment"
-            app:destination="@id/favoriteMainFragment" />
+            app:argType="string"
+            android:defaultValue="rId" />
     </fragment>
 </navigation>

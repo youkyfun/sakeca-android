@@ -4,6 +4,7 @@ import com.youkidesign.core.BuildConfig
 import com.youkydesign.core.data.network.ApiService
 import dagger.Module
 import dagger.Provides
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,10 +23,16 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
+        val hostName = "forkify-api.herokuapp.com"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostName, "sha256/E6N34jNy4y5V+XdkUDda5lAab65zxERycdxZ9cosxSI=")
+            .build()
+
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(loggingLevel))
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
             .build()
     }
 

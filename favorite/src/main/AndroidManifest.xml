@@ -14,7 +14,7 @@
 
     <application>
         <activity
-            android:name=".presentation.FavoriteActivity"
+            android:name=".ui.main.FavoriteActivity"
             android:exported="false" />
     </application>
 

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -95,22 +97,34 @@ class HomeFragment : Fragment() {
                 }
 
                 is UiResource.Success -> {
+                    binding.searchBar.setText("")
                     showLoading(false)
-                    if (resource.data.isNullOrEmpty()) {
-                        binding.rvRecipes.visibility = View.GONE
-                        binding.tvNoRecipe.visibility = View.VISIBLE
-                        return@observe
+                    when {
+                        resource.data.isNullOrEmpty() -> {
+                            binding.rvRecipes.isGone = true
+                            binding.tvNoRecipe.isVisible = true
+                            return@observe
+                        }
+
+                        else -> {
+                            binding.rvRecipes.isVisible = true
+                            binding.tvNoRecipe.isGone = true
+                            setRecipeList(
+                                resource.data ?: emptyList()
+                            )
+                        }
                     }
-                    binding.tvNoRecipe.visibility = View.GONE
-                    setRecipeList(resource.data ?: emptyList())
                 }
 
                 is UiResource.Error -> {
+                    binding.searchBar.setText("")
                     showLoading(false)
                     Toast.makeText(requireContext(), "Can't load data", Toast.LENGTH_SHORT).show()
                 }
 
-                is UiResource.Idle -> {}
+                is UiResource.Idle -> {
+                    binding.searchBar.setText("")
+                }
             }
         }
     }

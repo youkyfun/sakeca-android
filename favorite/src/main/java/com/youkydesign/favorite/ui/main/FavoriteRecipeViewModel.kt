@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.feature.discovery.ui.detail
+package com.youkydesign.favorite.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,58 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+    private val _favoriteRecipes: MutableLiveData<UiResource<List<Recipe>>> =
+        MutableLiveData(UiResource.Idle())
+    val favoriteRecipes: LiveData<UiResource<List<Recipe>>> = _favoriteRecipes
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
+
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
+
+
+    init {
+        getFavoriteRecipes()
+    }
+
+    fun getFavoriteRecipes() {
+        _favoriteRecipes.value = UiResource.Loading()
+        viewModelScope.launch {
+            recipeUseCase.getFavoriteRecipes()
+                .catch {
+                    _favoriteRecipes.value =
+                        UiResource.Error(it.message ?: "An unknown error occurred")
+                }
+                .collect { state: UiResource<List<Recipe>> ->
+                    when (state) {
+                        is UiResource.Idle -> {}
+                        is UiResource.Loading -> {
+                            _favoriteRecipes.value = UiResource.Loading()
+                        }
+
+                        is UiResource.Success -> {
+                            _favoriteRecipes.value = UiResource.Success(state.data ?: emptyList())
+                        }
+
+                        is UiResource.Error -> {
+                            _favoriteRecipes.value =
+                                UiResource.Error(state.message ?: "Something went wrong")
+                        }
+                    }
+                }
+        }
+    }
+
+    fun setFavoriteRecipe(recipe: Recipe?, isFavorite: Boolean) {
+        viewModelScope.launch {
+            if (recipe == null) {
+                cancel()
+                return@launch
+            }
+            recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
+            getFavoriteRecipes()
+        }
+    }
 
     fun getRecipe(rId: String) {
         _recipeDetailState.value = UiResource.Loading()
@@ -52,16 +100,6 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                         }
                     }
                 }
-        }
-    }
-
-    fun setFavoriteRecipe(recipe: Recipe?, isFavorite: Boolean) {
-        viewModelScope.launch {
-            if (recipe == null) {
-                cancel()
-                return@launch
-            }
-            recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
         }
     }
 }

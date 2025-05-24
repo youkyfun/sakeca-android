@@ -21,8 +21,4 @@ open class RecipeApplication : Application() {
         super.attachBaseContext(base)
         SplitCompat.install(this)
     }
-
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

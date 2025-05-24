@@ -1,4 +1,4 @@
-package com.youkydesign.favorite.presentation
+package com.youkydesign.favorite.ui.main
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -41,7 +43,6 @@ class FavoriteMainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -50,7 +51,7 @@ class FavoriteMainFragment : Fragment() {
         binding.rvFavoriteRecipes.setHasFixedSize(true)
 
         binding.favTopAppBar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         return view
@@ -58,29 +59,44 @@ class FavoriteMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favoriteViewModel.favoriteRecipes.observe(requireActivity()) { resource ->
-            when (resource) {
-                is UiResource.Loading -> {
-                    showLoading(true)
-                }
-
-                is UiResource.Error -> {
-                    showLoading(false)
-                    Toast.makeText(requireActivity(), "Can't load data", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                is UiResource.Idle -> {}
-                is UiResource.Success -> {
-                    showLoading(false)
-                    if (resource.data.isNullOrEmpty()) {
-                        binding.rvFavoriteRecipes.visibility = View.VISIBLE
-                        binding.tvNoFavorite.visibility = View.VISIBLE
-                        return@observe
+        favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner) { resource ->
+            if (_binding != null) {
+                when (resource) {
+                    is UiResource.Loading -> {
+                        showLoading(true)
                     }
-                    binding.tvNoFavorite.visibility = View.GONE
-                    binding.rvFavoriteRecipes.visibility = View.VISIBLE
-                    setRecipeList(resource.data ?: emptyList())
+
+                    is UiResource.Error -> {
+                        showLoading(false)
+                        Toast.makeText(requireActivity(), "Can't load data", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    is UiResource.Idle -> {
+                        binding.tvNoFavorite.visibility = View.VISIBLE
+                    }
+
+                    is UiResource.Success -> {
+                        showLoading(false)
+                        when {
+                            resource.data.isNullOrEmpty() -> {
+                                binding.rvFavoriteRecipes.isGone = true
+                                binding.tvNoFavorite.isVisible = true
+                                return@observe
+                            }
+
+                            else -> {
+                                binding.rvFavoriteRecipes.isVisible = true
+                                binding.tvNoFavorite.isGone = true
+                                setRecipeList(
+                                    resource.data ?: emptyList()
+                                )
+                            }
+                        }
+                        binding.tvNoFavorite.visibility = View.GONE
+                        binding.rvFavoriteRecipes.visibility = View.VISIBLE
+                        setRecipeList(resource.data ?: emptyList())
+                    }
                 }
             }
         }
@@ -113,7 +129,7 @@ class FavoriteMainFragment : Fragment() {
 
     private fun toRecipeDetail(recipe: Recipe) {
         val toDetailFragment =
-            FavoriteMainFragmentDirections.actionFavoriteToDetail()
+            FavoriteMainFragmentDirections.actionFavoriteMainFragmentToFavoriteDetailsFragment()
         toDetailFragment.rId = recipe.recipeId
         view?.findNavController()?.navigate(toDetailFragment)
     }
