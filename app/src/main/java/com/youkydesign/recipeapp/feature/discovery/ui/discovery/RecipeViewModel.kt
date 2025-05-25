@@ -18,14 +18,6 @@ class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
         searchRecipes("chicken")
     }
 
-    private fun getAllCachedRecipes() {
-        _searchResult.value = UiResource.Loading()
-        viewModelScope.launch {
-            recipeUseCase.getAllCachedRecipes().collect { state: UiResource<List<Recipe>> ->
-                _searchResult.value = state
-            }
-        }
-    }
 
     fun searchRecipes(query: String) {
         _searchResult.value = UiResource.Loading()
