@@ -57,6 +57,9 @@ dependencies {
 
     implementation(libs.feature.delivery.ktx)
 
+    // Splashscreen API
+    implementation(libs.androidx.core.splashscreen)
+
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)

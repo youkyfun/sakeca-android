@@ -73,7 +73,7 @@ class FavoriteMainFragment : Fragment() {
                     }
 
                     is UiResource.Idle -> {
-                        binding.tvNoFavorite.visibility = View.VISIBLE
+                        binding.favEmptyContainer.visibility = View.VISIBLE
                     }
 
                     is UiResource.Success -> {
@@ -81,19 +81,19 @@ class FavoriteMainFragment : Fragment() {
                         when {
                             resource.data.isNullOrEmpty() -> {
                                 binding.rvFavoriteRecipes.isGone = true
-                                binding.tvNoFavorite.isVisible = true
+                                binding.favEmptyContainer.isVisible = true
                                 return@observe
                             }
 
                             else -> {
                                 binding.rvFavoriteRecipes.isVisible = true
-                                binding.tvNoFavorite.isGone = true
+                                binding.favEmptyContainer.isGone = true
                                 setRecipeList(
                                     resource.data ?: emptyList()
                                 )
                             }
                         }
-                        binding.tvNoFavorite.visibility = View.GONE
+                        binding.favEmptyContainer.visibility = View.GONE
                         binding.rvFavoriteRecipes.visibility = View.VISIBLE
                         setRecipeList(resource.data ?: emptyList())
                     }

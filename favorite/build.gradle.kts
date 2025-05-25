@@ -31,11 +31,14 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":app"))
 
-// Kotlin Flow
+    // Lottie
+    implementation(libs.lottie)
+
+    // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-// Dagger
+    // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 

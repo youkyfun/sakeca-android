@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.3"
+coreSplashscreen = "1.0.1"
 dagger = "2.56.2"
 featureDeliveryKtx = "2.1.0"
 flexbox = "3.0.0"
@@ -25,8 +26,11 @@ retrofit = "3.0.0"
 roomVersion = "2.7.1"
 androidDatabaseSqlcipher = "4.5.4"
 sqliteKtx = "2.5.1"
+lottie = "6.4.1"
 
 [libraries]
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
