@@ -159,7 +159,7 @@ class HomeFragment : Fragment() {
                             applyTo(mainContainer)
                         }
                     }
-                    Toast.makeText(requireContext(), "Can't load data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT).show()
                 }
 
                 is UiResource.Idle -> {
