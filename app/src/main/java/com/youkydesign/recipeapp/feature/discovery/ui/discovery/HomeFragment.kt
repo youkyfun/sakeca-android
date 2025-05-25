@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -65,7 +67,7 @@ class HomeFragment : Fragment() {
                         } catch (e: Exception) {
                             Toast.makeText(
                                 requireContext(),
-                                "Module not installed",
+                                "Module not installed: $e",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -81,6 +83,11 @@ class HomeFragment : Fragment() {
                 searchBar.setText(searchView.text)
                 searchView.hide()
                 recipeViewModel.searchRecipes(searchBar.text.toString())
+
+                val searchQuery = binding.searchBar.text
+                val title = "Search result for $searchQuery"
+                binding.tvSectionTitle.text = title
+
                 false
             }
         }
@@ -92,38 +99,71 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recipeViewModel.searchResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
-                is UiResource.Loading -> {
-                    showLoading(true)
-                }
+                is UiResource.Loading -> showLoading(true)
 
                 is UiResource.Success -> {
-                    binding.searchBar.setText("")
                     showLoading(false)
                     when {
                         resource.data.isNullOrEmpty() -> {
+                            binding.searchBar.setText("")
                             binding.rvRecipes.isGone = true
                             binding.tvNoRecipe.isVisible = true
-                            return@observe
+
+                            setupSearchRecommendations()
                         }
 
                         else -> {
                             binding.rvRecipes.isVisible = true
                             binding.tvNoRecipe.isGone = true
-                            setRecipeList(
-                                resource.data ?: emptyList()
-                            )
+                            binding.searchRecommendationContainer.isVisible = false
+                            binding.searchBar.setText("")
+
+                            setRecipeList(resource.data ?: emptyList())
                         }
                     }
                 }
 
                 is UiResource.Error -> {
-                    binding.searchBar.setText("")
-                    showLoading(false)
+                    with(binding) {
+                        showLoading(false)
+                        tvNoRecipe.isVisible = true
+
+                        tvNoRecipe.text = getString(R.string.recommended_recipes)
+                        val message = "No recipe found for \"${searchBar.text}\""
+                        tvNoRecipe.text = message
+                        searchBar.setText("")
+
+                        setupSearchRecommendations()
+
+                        ConstraintSet().apply {
+                            clone(homeFragment)
+                            connect(
+                                searchRecommendationContainer.id,
+                                ConstraintSet.TOP,
+                                tvNoRecipe.id,
+                                ConstraintSet.BOTTOM
+                            )
+                            connect(
+                                tvSectionTitle.id,
+                                ConstraintSet.TOP,
+                                searchRecommendationContainer.id,
+                                ConstraintSet.BOTTOM
+                            )
+                            connect(
+                                rvRecipes.id,
+                                ConstraintSet.TOP,
+                                tvSectionTitle.id,
+                                ConstraintSet.BOTTOM
+                            )
+                            applyTo(homeFragment)
+                        }
+                    }
                     Toast.makeText(requireContext(), "Can't load data", Toast.LENGTH_SHORT).show()
                 }
 
                 is UiResource.Idle -> {
                     binding.searchBar.setText("")
+                    binding.tvSectionTitle.text = getString(R.string.recommended_recipes)
                 }
             }
         }
@@ -188,5 +228,36 @@ class HomeFragment : Fragment() {
         val toDetailFragment = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
         toDetailFragment.rId = recipe.recipeId
         view?.findNavController()?.navigate(toDetailFragment)
+    }
+
+    private fun setupSearchRecommendations() {
+        with(binding) {
+            searchRecommendationContainer.isVisible = true
+
+            flexboxChipContainer.removeAllViews()
+            resources.getStringArray(R.array.search_recommendation)
+                .forEachIndexed { index, item ->
+                    val chip = CustomAssistChip(requireContext()).apply {
+                        id = View.generateViewId() + index
+                        setText(item)
+                        setChipIcon(
+                            ContextCompat.getDrawable(requireContext(), R.drawable.arrow_outward)
+                        )
+                        setOnClickListener {
+                            val title = "Search result for $item"
+                            binding.tvSectionTitle.text = title
+
+                            searchBar.setText("")
+                            searchView.hide()
+                            recipeViewModel.searchRecipes(item)
+                        }
+                        layoutParams = ViewGroup.MarginLayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        ).apply { setMargins(8, 8, 8, 8) }
+                    }
+                    flexboxChipContainer.addView(chip)
+                }
+        }
     }
 }

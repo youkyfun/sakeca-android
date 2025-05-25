@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".feature.discovery.ui.discovery.HomeFragment">
@@ -29,33 +30,64 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_latest_recipe"
+        android:id="@+id/tvNoRecipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="@string/latest_recipes_title"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/tv_no_recipe"
+        android:textAlignment="center"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchBar" />
 
+    <LinearLayout
+        android:id="@+id/search_recommendation_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNoRecipe">
+
+        <TextView
+            android:id="@+id/tv_search_recommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/search_recommendation_title"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexbox_chip_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap" />
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/tvNoRecipe"
+        android:id="@+id/tv_section_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/tv_no_recipe"
-        android:textAlignment="center"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/latest_recipes_title"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_latest_recipe" />
+        app:layout_constraintTop_toBottomOf="@id/search_recommendation_container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recipes"
@@ -66,10 +98,10 @@
         android:scrollbarSize="4dp"
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_latest_recipe" />
+        app:layout_constraintTop_toBottomOf="@id/tv_section_title" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -81,6 +113,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_latest_recipe"
+        app:layout_constraintTop_toTopOf="@+id/tv_section_title"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

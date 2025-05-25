@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Flexbox Layout
+    implementation(libs.flexbox)
 
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)

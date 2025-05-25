@@ -12,4 +12,20 @@
     <string name="fab_to_favorite">Add to Favorite</string>
     <string name="tv_ingredients_title">Ingredients</string>
     <string name="latest_recipes_title">Latest Recipes</string>
+    <string name="recommended_recipes">Recommended recipes</string>
+    <string name="search_recommendation_title">Try something like</string>
+    <string name="food_recipe_placeholder">Food Recipe</string>
+    <string name="search_result">Search result</string>
+    <string name="viral_recipes">Viral recipes</string>
+
+    <string-array name="search_recommendation">
+        <item>apple</item>
+        <item>tomato</item>
+        <item>cucumber</item>
+        <item>broccoli</item>
+        <item>strawberry</item>
+        <item>raspberry</item>
+        <item>donuts</item>
+        <item>curry</item>
+    </string-array>
 </resources>

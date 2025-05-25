@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomOutlinedAssistChip">
+        <attr name="android:text" format="string" />
+        <attr name="android:textColor" format="color" />
+        <attr name="chipIcon" format="reference" />
+        <attr name="chipIconTint" format="color" />
+        <attr name="chipBackgroundColor" format="color" />
+        <attr name="outlineColor" format="color" />
+        <attr name="outlineWidth" format="dimension" />
+        <attr name="cornerRadius" format="dimension" />
+        <!-- Add any other attributes you need -->
+    </declare-styleable>
+</resources>
