@@ -81,7 +81,7 @@
         android:layout_marginBottom="32dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:text="@string/latest_recipes_title"
+        android:text="@string/recommended_recipes"
         android:textAlignment="textStart"
         android:textSize="20sp"
         android:textStyle="bold"

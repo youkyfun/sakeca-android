@@ -128,7 +128,7 @@ class HomeFragment : Fragment() {
                         showLoading(false)
                         tvNoRecipe.isVisible = true
 
-                        tvNoRecipe.text = getString(R.string.recommended_recipes)
+                        tvSectionTitle.text = getString(R.string.recommended_recipes)
                         val message = "No recipe found for \"${searchBar.text}\""
                         tvNoRecipe.text = message
                         searchBar.setText("")
