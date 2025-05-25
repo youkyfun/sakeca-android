@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
                         setupSearchRecommendations()
 
                         ConstraintSet().apply {
-                            clone(homeFragment)
+                            clone(mainContainer)
                             connect(
                                 searchRecommendationContainer.id,
                                 ConstraintSet.TOP,
@@ -155,7 +155,7 @@ class HomeFragment : Fragment() {
                                 tvSectionTitle.id,
                                 ConstraintSet.BOTTOM
                             )
-                            applyTo(homeFragment)
+                            applyTo(mainContainer)
                         }
                     }
                     Toast.makeText(requireContext(), "Can't load data", Toast.LENGTH_SHORT).show()
