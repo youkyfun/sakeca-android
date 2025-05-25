@@ -38,7 +38,6 @@ class CustomAssistChip @JvmOverloads constructor(
     private var textPaddingStart = 0f
     private var textPaddingEnd = 24f
     private var verticalPadding = 24f
-    private var margins = 8f
 
     init {
         attrs?.let {
