@@ -104,5 +104,4 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     debugImplementation(libs.leakcanary.android)
-
 }
