@@ -3,6 +3,7 @@ agp = "8.9.3"
 coreSplashscreen = "1.0.1"
 dagger = "2.56.2"
 featureDeliveryKtx = "2.1.0"
+firebaseBom = "33.14.0"
 flexbox = "3.0.0"
 glide = "4.16.0"
 kotlin = "2.1.0"
@@ -27,9 +28,14 @@ roomVersion = "2.7.1"
 androidDatabaseSqlcipher = "4.5.4"
 sqliteKtx = "2.5.1"
 lottie = "6.4.1"
+shimmer = "0.5.0"
 
 [libraries]
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleRuntimeKtx" }

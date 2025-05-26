@@ -5,6 +5,8 @@ plugins {
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -54,6 +56,14 @@ android {
 
 dependencies {
     implementation(project(":core"))
+
+    // Shimmer
+    implementation(libs.shimmer)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     implementation(libs.feature.delivery.ktx)
 
