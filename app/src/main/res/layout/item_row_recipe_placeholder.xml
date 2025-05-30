@@ -5,11 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
-    card_view:cardCornerRadius="24dp">
+    card_view:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +16,7 @@
             android:id="@+id/img_recipe_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/orange_super_light"
+            android:background="@color/orange_light"
             android:contentDescription="@string/recipe_image"
             android:scaleType="centerCrop"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/orange_super_light"
+            android:background="@color/orange_light"
             android:maxLines="3"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -46,10 +42,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@color/orange_super_light"
+            android:background="@color/orange_light"
             android:ellipsize="end"
             android:maxLines="1"
-            card_view:layout_constraintCircleRadius="24dp"
+            card_view:layout_constraintCircleRadius="16dp"
             card_view:layout_constraintEnd_toEndOf="@+id/tv_recipe_title"
             card_view:layout_constraintStart_toStartOf="@+id/tv_recipe_title"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
