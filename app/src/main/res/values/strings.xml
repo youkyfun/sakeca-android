@@ -10,11 +10,13 @@
     <string name="ingredients_placeholder">Ingredients</string>
     <string name="title_favorite">Favorite</string>
     <string name="fab_to_favorite">Add to Favorite</string>
-    <string name="tv_ingredients_title">Ingredients</string>
+    <string name="tv_ingredients_title">Recipe Ingredients</string>
     <string name="recommended_recipes">Give it a shot</string>
     <string name="search_recommendation_title">Try something like</string>
     <string name="food_recipe_placeholder">Food Recipe</string>
     <string name="search_result">Search result</string>
+    <string name="add_to_shopping_list">Add to shopping list</string>
+    <string name="coming_soon">* Coming soon</string>
 
     <string-array name="search_recommendation">
         <item>apple</item>

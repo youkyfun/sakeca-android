@@ -5,7 +5,7 @@
         <item
             android:id="@+id/favorite_action"
             android:icon="@drawable/favorite_border"
-            android:tint="@color/white"
+            android:tint="@color/tw_slate_50"
             android:title="@string/favorite_recipe"
             app:showAsAction="ifRoom" />
     </group>

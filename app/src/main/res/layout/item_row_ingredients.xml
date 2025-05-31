@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:orientation="vertical"
     card_view:cardCornerRadius="4dp">
 
-    <TextView
-        android:id="@+id/tv_ingredient_item"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ing_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ingredients_placeholder"
-        android:padding="8dp"
-        />
+        android:orientation="horizontal"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintLeft_toLeftOf="parent"
+        card_view:layout_constraintRight_toRightOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
 
-</androidx.cardview.widget.CardView>
+        <CheckBox
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="false" />
+
+        <TextView
+            android:id="@+id/tv_ingredient_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="16dp"
+            android:text="@string/ingredients_placeholder" />
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintLeft_toLeftOf="parent"
+        card_view:layout_constraintRight_toRightOf="parent"
+        card_view:layout_constraintTop_toBottomOf="@+id/ing_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

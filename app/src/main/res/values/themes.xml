@@ -1,8 +1,9 @@
 <resources>
     <style name="Base.Theme.RecipeApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/orange_light</item>
-        <item name="colorPrimaryVariant">@color/orange_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/tw_slate_950</item>
+        <item name="colorPrimaryVariant">@color/tw_slate_200</item>
+        <item name="colorOnPrimary">@color/tw_slate_50</item>
+        <item name="colorAccent">@color/tw_emerald_500</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
