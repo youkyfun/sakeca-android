@@ -88,7 +88,7 @@ class RecipeRepositoryImpl @Inject constructor(
                 initialLoadSize = INITIAL_LOAD_SIZE
             )
 
-            val pager = Pager(
+            Pager(
                 config = config,
                 pagingSourceFactory = {
                     localDataSource.getFavoriteRecipes(sortType)
