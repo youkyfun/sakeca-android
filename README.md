@@ -1,1 +1,1 @@
-[![youkyfun](https://circleci.com/gh/youkyfun/RecipeAppXML.svg?style=svg)](https://circleci.com/gh/youkyfun/RecipeAppXML)
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/S8YX4LYNS6NpeS5oryKkCP/a1uVoZVMPrLLv517aW26g/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/S8YX4LYNS6NpeS5oryKkCP/a1uVoZVMPrLLv517aW26g/tree/main)
