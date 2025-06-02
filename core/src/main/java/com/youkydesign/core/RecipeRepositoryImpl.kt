@@ -1,5 +1,6 @@
 package com.youkydesign.core
 
+import androidx.paging.map
 import com.youkydesign.core.data.local.LocalRecipeDataSource
 import com.youkydesign.core.data.network.ApiResponse
 import com.youkydesign.core.data.network.NetworkRecipeDataSource
@@ -74,21 +75,20 @@ class RecipeRepositoryImpl @Inject constructor(
         recipe: Recipe,
         isFavorite: Boolean
     ) {
+        val date = System.currentTimeMillis()
         val newRecipe = DataMapper.mapDomainToEntity(recipe)
-        localDataSource.setFavoriteRecipe(newRecipe.copy(isFavorite = isFavorite))
+        localDataSource.setFavoriteRecipe(newRecipe.copy(isFavorite = isFavorite, date = date))
     }
 
-    override fun getFavoriteRecipes(): Flow<UiResource<List<Recipe>>> = flow {
-        val favoriteRecipes = localDataSource.getFavoriteRecipes()
-        favoriteRecipes.collect { recipeList ->
-            if (recipeList.isEmpty()) {
-                emit(UiResource.Success(emptyList()))
-                return@collect
-            } else {
-                emit(UiResource.Success(recipeList.map {
-                    DataMapper.mapEntityToDomain(it)
-                }))
+    override fun getFavoriteRecipes(sortType: RecipeSortType): Flow<UiResource<List<Recipe>>> =
+        flow {
+            val favoriteRecipes = localDataSource.getFavoriteRecipes(sortType)
+            favoriteRecipes.collect { recipeList ->
+                recipeList.map {
+                    val recipe = DataMapper.mapEntityToDomain(it)
+                    emit(UiResource.Success(listOf(recipe)))
+                }
+
             }
-        }
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 }

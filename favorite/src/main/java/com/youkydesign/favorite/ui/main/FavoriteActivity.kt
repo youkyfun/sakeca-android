@@ -14,7 +14,6 @@ class FavoriteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)

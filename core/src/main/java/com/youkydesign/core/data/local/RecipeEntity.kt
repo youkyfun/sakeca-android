@@ -32,5 +32,8 @@ data class RecipeEntity(
     val ingredients: List<String>,
 
     @ColumnInfo(name = "isFavorite")
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+
+    @ColumnInfo(name = "date")
+    val date: Long? = null
 )

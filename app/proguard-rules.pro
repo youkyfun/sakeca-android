@@ -21,4 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 -keep,includedescriptorclasses class net.sqlcipher.** { *; }
+-keep,includedescriptorclasses class com.youkydesign.core.RecipeSortType { *; }
+-keep,includedescriptorclasses class com.youkydesign.core.SortUtils { *; }
 -keep,includedescriptorclasses interface net.sqlcipher.** { *; }

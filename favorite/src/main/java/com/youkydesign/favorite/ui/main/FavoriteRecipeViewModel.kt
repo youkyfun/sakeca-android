@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.core.domain.UiResource
@@ -22,13 +23,13 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
 
 
     init {
-        getFavoriteRecipes()
+        getFavoriteRecipes(RecipeSortType.BY_DATE)
     }
 
-    fun getFavoriteRecipes() {
+    fun getFavoriteRecipes(sortType: RecipeSortType) {
         _favoriteRecipes.value = UiResource.Loading()
         viewModelScope.launch {
-            recipeUseCase.getFavoriteRecipes()
+            recipeUseCase.getFavoriteRecipes(sortType)
                 .catch {
                     _favoriteRecipes.value =
                         UiResource.Error(it.message ?: "An unknown error occurred")
@@ -60,7 +61,7 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                 return@launch
             }
             recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
-            getFavoriteRecipes()
+            getFavoriteRecipes(RecipeSortType.BY_DATE)
         }
     }
 

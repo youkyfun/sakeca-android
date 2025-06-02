@@ -6,19 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
 import com.youkydesign.favorite.FavoriteViewModelFactory
+import com.youkydesign.favorite.R
 import com.youkydesign.favorite.databinding.FragmentFavoriteMainBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.recipeapp.RecipeApplication
-import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
 import javax.inject.Inject
 
 class FavoriteMainFragment : Fragment() {
@@ -39,6 +41,23 @@ class FavoriteMainFragment : Fragment() {
         DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
     }
 
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(
+            menu: android.view.Menu,
+            menuInflater: android.view.MenuInflater
+        ) {
+            menuInflater.inflate(R.menu.favorite_app_bar_menu, menu)
+        }
+
+        override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
+            when (menuItem.itemId) {
+                R.id.sort_by_date -> {}
+                R.id.sort_by_recipe_name -> {}
+            }
+            return true
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +72,7 @@ class FavoriteMainFragment : Fragment() {
         binding.favTopAppBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         return view
     }
@@ -116,10 +136,10 @@ class FavoriteMainFragment : Fragment() {
     }
 
     private fun setRecipeList(recipeList: List<Recipe>) {
-        val adapter = RecipeAdapter(recipeList)
+        val adapter = FavoriteAdapter(recipeList)
         binding.rvFavoriteRecipes.adapter = adapter
 
-        adapter.setOnItemClickCallback(object : RecipeAdapter.OnItemClickCallback {
+        adapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Recipe) {
                 toRecipeDetail(data)
             }

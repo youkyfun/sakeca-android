@@ -1,15 +1,16 @@
-package com.youkydesign.recipeapp.feature.discovery
+package com.youkydesign.favorite.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 
-internal class RecipeAdapter(val recipeList: List<Recipe>) :
-    RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+internal class FavoriteAdapter(val recipeList: List<Recipe>) :
+    PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -54,5 +55,24 @@ internal class RecipeAdapter(val recipeList: List<Recipe>) :
 
     interface OnItemClickCallback {
         fun onItemClicked(data: Recipe)
+    }
+
+    companion object {
+        private val DIFF_CALBACK = object : DiffUtil.ItemCallback<Recipe>() {
+            override fun areItemsTheSame(
+                oldItem: Recipe,
+                newItem: Recipe
+            ): Boolean {
+                return oldItem.recipeId == newItem.recipeId
+            }
+
+            override fun areContentsTheSame(
+                oldItem: Recipe,
+                newItem: Recipe
+            ): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 }

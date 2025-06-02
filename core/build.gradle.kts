@@ -19,6 +19,11 @@ android {
 
     buildTypes {
         debug {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "BASE_URL", "\"https://forkify-api.herokuapp.com/api/\"")
         }
         release {
@@ -75,6 +80,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging.v271)
 
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.core.ktx)
