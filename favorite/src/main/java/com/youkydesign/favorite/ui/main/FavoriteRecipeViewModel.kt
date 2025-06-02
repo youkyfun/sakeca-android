@@ -1,5 +1,6 @@
 package com.youkydesign.favorite.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +35,9 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                     _favoriteRecipes.value =
                         UiResource.Error(it.message ?: "An unknown error occurred")
                 }
-                .collect { state: UiResource<List<Recipe>> ->
+                .collect { state ->
+                    Log.d("VM", "getFavoriteRecipes: $state")
+
                     when (state) {
                         is UiResource.Idle -> {}
                         is UiResource.Loading -> {

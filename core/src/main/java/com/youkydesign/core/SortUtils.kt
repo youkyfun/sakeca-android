@@ -2,8 +2,8 @@ package com.youkydesign.core
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 
-object SortUtils {
-    fun geSortedQuery(sortType: RecipeSortType): SimpleSQLiteQuery {
+internal object SortUtils {
+    fun getSortedQuery(sortType: RecipeSortType): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM recipes ")
         when (sortType) {
             RecipeSortType.BY_DATE -> {
