@@ -1,13 +1,10 @@
 package com.youkydesign.favorite.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
@@ -17,22 +14,47 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
-    private val _filter = MutableLiveData<RecipeSortType>()
-
-    val favoriteRecipes: LiveData<PagingData<Recipe>> = _filter.switchMap {
-        recipeUseCase.getFavoriteRecipes(it).cachedIn(viewModelScope).asLiveData()
-    }
+    private val _favoriteRecipes: MutableLiveData<UiResource<List<Recipe>>> =
+        MutableLiveData(UiResource.Idle())
+    val favoriteRecipes: LiveData<UiResource<List<Recipe>>> = _favoriteRecipes
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
 
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
 
+
     init {
-        _filter.value = RecipeSortType.BY_DATE_ASC
+        getFavoriteRecipes(RecipeSortType.BY_DATE)
     }
 
-    fun filter(filterType: RecipeSortType) {
-        _filter.value = filterType
+    fun getFavoriteRecipes(sortType: RecipeSortType) {
+        _favoriteRecipes.value = UiResource.Loading()
+        viewModelScope.launch {
+            recipeUseCase.getFavoriteRecipes(sortType)
+                .catch {
+                    _favoriteRecipes.value =
+                        UiResource.Error(it.message ?: "An unknown error occurred")
+                }
+                .collect { state ->
+                    Log.d("VM", "getFavoriteRecipes: $state")
+
+                    when (state) {
+                        is UiResource.Idle -> {}
+                        is UiResource.Loading -> {
+                            _favoriteRecipes.value = UiResource.Loading()
+                        }
+
+                        is UiResource.Success -> {
+                            _favoriteRecipes.value = UiResource.Success(state.data ?: emptyList())
+                        }
+
+                        is UiResource.Error -> {
+                            _favoriteRecipes.value =
+                                UiResource.Error(state.message ?: "Something went wrong")
+                        }
+                    }
+                }
+        }
     }
 
     fun setFavoriteRecipe(recipe: Recipe?, isFavorite: Boolean) {
@@ -42,6 +64,7 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                 return@launch
             }
             recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
+            getFavoriteRecipes(RecipeSortType.BY_DATE)
         }
     }
 

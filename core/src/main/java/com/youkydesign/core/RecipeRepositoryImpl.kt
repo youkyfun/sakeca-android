@@ -1,6 +1,8 @@
 package com.youkydesign.core
 
-import androidx.paging.PagingData
+import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.youkydesign.core.data.local.LocalRecipeDataSource
 import com.youkydesign.core.data.network.ApiResponse
@@ -9,10 +11,8 @@ import com.youkydesign.core.data.network.response.RecipeResponse
 import com.youkydesign.core.domain.IRecipeRepository
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -81,13 +81,28 @@ class RecipeRepositoryImpl @Inject constructor(
         localDataSource.setFavoriteRecipe(newRecipe.copy(isFavorite = isFavorite, date = date))
     }
 
-    override fun getFavoriteRecipes(sortType: RecipeSortType): Flow<PagingData<Recipe>> =
+    override fun getFavoriteRecipes(sortType: RecipeSortType): Flow<UiResource<List<Recipe>>> =
         flow {
-            val favoriteRecipes = localDataSource.getFavoriteRecipes(sortType)
-            favoriteRecipes.collect {
-                emit(it.map { recipeEntity ->
-                    DataMapper.mapEntityToDomain(recipeEntity)
-                })
+            val config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                initialLoadSize = INITIAL_LOAD_SIZE
+            )
+
+            Pager(
+                config = config,
+                pagingSourceFactory = {
+                    localDataSource.getFavoriteRecipes(sortType)
+                }
+            ).flow.map { pagingData ->
+                pagingData.map {
+                    Log.d("Repository", "getFavoriteRecipes: $it")
+                    DataMapper.mapEntityToDomain(it)
+                }
             }
-        }.flowOn(Dispatchers.IO)
+        }
+
+    companion object {
+        const val PAGE_SIZE = 5
+        const val INITIAL_LOAD_SIZE = 10
+    }
 }

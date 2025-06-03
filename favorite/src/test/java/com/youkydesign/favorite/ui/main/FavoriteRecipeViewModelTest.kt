@@ -1,6 +1,7 @@
 package com.youkydesign.favorite.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.core.domain.UiResource
@@ -95,12 +96,13 @@ class FavoriteRecipeViewModelTest {
 
     @Test
     fun `getFavoriteRecipes  returns favorite recipes`() = runTest {
+        val sortType = RecipeSortType.BY_DATE
         // Given
         val favoriteRecipes = listOf(recipe)
         val expectedState = UiResource.Success(favoriteRecipes)
-        whenever(recipeUseCase.getFavoriteRecipes()).thenReturn(flowOf(expectedState))
+        whenever(recipeUseCase.getFavoriteRecipes(sortType)).thenReturn(flowOf(expectedState))
         // When
-        viewModel.getFavoriteRecipes()
+        viewModel.getFavoriteRecipes(sortType)
         // Then
         val actualState = viewModel.favoriteRecipes.value
         assertEquals(expectedState.data, actualState?.data)
