@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -81,10 +80,6 @@ class FavoriteDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
-        actionBar?.title = "Recipe details"
-        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val rId = DetailFragmentArgs.fromBundle(arguments as Bundle).rId
         detailRecipeViewModel.getRecipe(rId)

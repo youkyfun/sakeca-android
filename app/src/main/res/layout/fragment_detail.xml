@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back"
-            app:title="Details" />
+            app:title="@string/detail_screen_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

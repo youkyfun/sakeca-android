@@ -11,10 +11,6 @@
         <item name="colorSecondary">@color/tw_emerald_500</item>
         <item name="colorSecondaryVariant">@color/tw_emerald_500</item>
         <item name="colorOnSecondary">@color/tw_slate_950</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize other attributes as needed -->
-
         <item name="colorSurface">@color/tw_slate_50</item> x
         <item name="colorOnSurface">@color/tw_emerald_500</item>
         <item name="colorSurfaceContainer">@color/tw_slate_50</item>
