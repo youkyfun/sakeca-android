@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 
-internal class FavoriteAdapter() :
+internal class FavoriteAdapter :
     PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback

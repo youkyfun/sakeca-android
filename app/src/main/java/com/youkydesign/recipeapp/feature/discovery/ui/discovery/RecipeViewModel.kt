@@ -18,7 +18,6 @@ class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
         searchRecipes("chicken")
     }
 
-
     fun searchRecipes(query: String) {
         _searchResult.value = UiResource.Loading()
         viewModelScope.launch {
