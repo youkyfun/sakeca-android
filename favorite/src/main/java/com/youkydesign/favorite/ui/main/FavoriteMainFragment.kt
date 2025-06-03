@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.MenuProvider
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.domain.Recipe
-import com.youkydesign.core.domain.UiResource
 import com.youkydesign.favorite.FavoriteViewModelFactory
 import com.youkydesign.favorite.R
 import com.youkydesign.favorite.databinding.FragmentFavoriteMainBinding
@@ -41,23 +39,6 @@ class FavoriteMainFragment : Fragment() {
         DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
     }
 
-    private val menuProvider = object : MenuProvider {
-        override fun onCreateMenu(
-            menu: android.view.Menu,
-            menuInflater: android.view.MenuInflater
-        ) {
-            menuInflater.inflate(R.menu.favorite_app_bar_menu, menu)
-        }
-
-        override fun onMenuItemSelected(menuItem: android.view.MenuItem): Boolean {
-            when (menuItem.itemId) {
-                R.id.sort_by_date -> {}
-                R.id.sort_by_recipe_name -> {}
-            }
-            return true
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,53 +53,27 @@ class FavoriteMainFragment : Fragment() {
         binding.favTopAppBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        binding.favTopAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.sort_action -> {
+                    showSortingMenu()
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner) { resource ->
-            if (_binding != null) {
-                when (resource) {
-                    is UiResource.Loading -> {
-                        showLoading(true)
-                    }
-
-                    is UiResource.Error -> {
-                        showLoading(false)
-                        Toast.makeText(requireActivity(), "Can't load data", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                    is UiResource.Idle -> {
-                        binding.favEmptyContainer.visibility = View.VISIBLE
-                    }
-
-                    is UiResource.Success -> {
-                        showLoading(false)
-                        when {
-                            resource.data.isNullOrEmpty() -> {
-                                binding.rvFavoriteRecipes.isGone = true
-                                binding.favEmptyContainer.isVisible = true
-                                return@observe
-                            }
-
-                            else -> {
-                                binding.rvFavoriteRecipes.isVisible = true
-                                binding.favEmptyContainer.isGone = true
-                                setRecipeList(
-                                    resource.data ?: emptyList()
-                                )
-                            }
-                        }
-                        binding.favEmptyContainer.visibility = View.GONE
-                        binding.rvFavoriteRecipes.visibility = View.VISIBLE
-                        setRecipeList(resource.data ?: emptyList())
-                    }
-                }
-            }
+        favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
+            showLoading(true)
+            setRecipeList(it)
+            showLoading(false)
         }
     }
 
@@ -129,22 +84,60 @@ class FavoriteMainFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding.pbFavorite.visibility = View.VISIBLE
+            binding.loadingShimmer.visibility = View.VISIBLE
         } else {
-            binding.pbFavorite.visibility = View.GONE
+            binding.loadingShimmer.visibility = View.GONE
         }
     }
 
-    private fun setRecipeList(recipeList: List<Recipe>) {
-        val adapter = FavoriteAdapter(recipeList)
+    private fun showSortingMenu() {
+        val view = requireActivity().findViewById<View>(R.id.sort_action) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.sort_favorite, menu)
+
+            setOnMenuItemClickListener {
+                val (sortTextRes, sortType) = when (it.itemId) {
+                    R.id.sort_date_asc -> R.string.sort_favorite_by_oldest to RecipeSortType.BY_DATE_ASC
+                    R.id.sort_date_desc -> R.string.sort_favorite_by_latest to RecipeSortType.BY_DATE_DESC
+                    R.id.sort_name -> R.string.sort_favorite_by_name to RecipeSortType.BY_NAME
+                    else -> R.string.sort_favorite_by_latest to RecipeSortType.BY_DATE_DESC
+                }
+
+                binding.tvFavoriteBy.text = requireContext().getString(sortTextRes)
+                favoriteViewModel.filter(sortType)
+                true
+            }
+            show()
+        }
+    }
+
+    private fun setRecipeList(favoriteRecipes: PagingData<Recipe>) {
+        val adapter = FavoriteAdapter()
         binding.rvFavoriteRecipes.adapter = adapter
 
         adapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Recipe) {
                 toRecipeDetail(data)
             }
-
         })
+
+        adapter.submitData(lifecycle, favoriteRecipes)
+        adapter.addLoadStateListener { loadState ->
+            val isEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            showEmptyData(isEmpty)
+        }
+    }
+
+    private fun showEmptyData(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.tvFavoriteBy.visibility = View.GONE
+            binding.favEmptyContainer.visibility = View.VISIBLE
+            binding.rvFavoriteRecipes.visibility = View.GONE
+        } else {
+            binding.tvFavoriteBy.visibility = View.VISIBLE
+            binding.favEmptyContainer.visibility = View.GONE
+            binding.rvFavoriteRecipes.visibility = View.VISIBLE
+        }
     }
 
     private fun toRecipeDetail(recipe: Recipe) {
@@ -153,5 +146,4 @@ class FavoriteMainFragment : Fragment() {
         toDetailFragment.rId = recipe.recipeId
         view?.findNavController()?.navigate(toDetailFragment)
     }
-
 }

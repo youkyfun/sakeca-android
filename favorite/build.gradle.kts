@@ -31,6 +31,9 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":app"))
 
+    // Shimmer
+    implementation(libs.shimmer)
+
     // Lottie
     implementation(libs.lottie)
 

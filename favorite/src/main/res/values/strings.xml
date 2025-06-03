@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tv_no_favorite">No Favorite Recipe</string>
-    <string name="sort_by_date">By Date</string>
-    <string name="sort_by_recipe_name">By Recipe Name</string>
-    <string name="sort_favorite_by_name">Sort favorite by name</string>
-    <string name="sort_favorite_by_added_date">Sort favorite by added date</string>
+    <string name="tv_no_favorite">Oh no favorite recipe,\ndid you still cooking?</string>
+    <string name="sort_list">Sort list action</string>
+    <string name="sort_date_asc">Latest</string>
+    <string name="sort_date_desc">Oldest</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_favorite_by_latest">Showing favorite by latest</string>
+    <string name="sort_favorite_by_oldest">Showing favorite by oldest</string>
+    <string name="sort_favorite_by_name">Showing favorite by name</string>
 </resources>

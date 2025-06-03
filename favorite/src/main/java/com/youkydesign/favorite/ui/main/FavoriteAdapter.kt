@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 
-internal class FavoriteAdapter(val recipeList: List<Recipe>) :
+internal class FavoriteAdapter() :
     PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -31,16 +31,14 @@ internal class FavoriteAdapter(val recipeList: List<Recipe>) :
         holder: RecipeViewHolder,
         position: Int
     ) {
-        val recipe = recipeList[position]
+        val recipe = getItem(position) as Recipe
 
         holder.bind(recipe)
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(recipeList[holder.bindingAdapterPosition])
+            onItemClickCallback.onItemClicked(recipe)
         }
 
     }
-
-    override fun getItemCount(): Int = recipeList.size
 
     class RecipeViewHolder(val binding: ItemRowRecipeBinding) : ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
