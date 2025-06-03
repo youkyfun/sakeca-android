@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tv_no_favorite">Oh no favorite recipe,\ndid you still cooking?</string>
+    <string name="tv_no_favorite">Oh no favorite recipe, did you still cooking?</string>
     <string name="sort_list">Sort list action</string>
     <string name="sort_date_asc">Latest</string>
     <string name="sort_date_desc">Oldest</string>
