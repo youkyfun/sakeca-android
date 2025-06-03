@@ -7,7 +7,6 @@
     android:fillViewport="true"
     tools:context=".ui.details.FavoriteDetailsFragment">
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_favorite"
         android:layout_width="wrap_content"
@@ -31,47 +30,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/detail_app_bar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:liftOnScroll="true">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/detail_top_app_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="?attr/actionBarSize"
-                    app:navigationIcon="@drawable/arrow_back"
-                    app:title="Details" />
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@android:style/Widget.ProgressBar.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:forceHasOverlappingRendering="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
             <ImageView
                 android:id="@+id/img_recipe_photo"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="320dp"
                 android:contentDescription="@string/recipe_image_content_description"
+                android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detail_app_bar_layout"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic" />
+
+            <View
+                android:id="@+id/image_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/grad_white_background"
+                app:layout_constraintBottom_toBottomOf="@+id/img_recipe_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
                 android:id="@+id/recipe_info"
@@ -88,8 +65,9 @@
                     android:id="@+id/tv_recipe_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/tv_recipe_title"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tv_recipe_publisher"
@@ -105,19 +83,34 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_ingredients_title"
+            <LinearLayout
+                android:id="@+id/ingredients_title_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/tv_ingredients_title"
-                android:textSize="24sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recipe_info" />
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recipe_info">
+
+                <TextView
+                    android:id="@+id/tv_ingredients_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tv_ingredients_title"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/tw_emerald_500"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_ingredients_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/ingredients_amount_placeholder"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ingredients"
@@ -127,7 +120,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredients_title" />
+                app:layout_constraintTop_toBottomOf="@id/ingredients_title_container" />
 
             <Button
                 android:id="@+id/btn_add_to_shopping_list"
@@ -154,4 +147,38 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detail_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tw_slate_50_transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/detail_top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/arrow_back"
+            app:title="Details" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_app_bar_layout"
+        app:shimmer_auto_start="true">
+
+        <include layout="@layout/fragment_detail_placeholder" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

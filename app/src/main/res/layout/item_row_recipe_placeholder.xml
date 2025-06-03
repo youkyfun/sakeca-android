@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+    android:id="@+id/card_view_placeholder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -12,42 +12,37 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <ImageView
-            android:id="@+id/img_recipe_image"
+        <!-- Shimmer for Image -->
+        <View
+            android:id="@+id/img_recipe_image_placeholder"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/tw_emerald_300"
-            android:contentDescription="@string/recipe_image"
-            android:scaleType="centerCrop"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_recipe_title"
+        <!-- Shimmer for Recipe Title -->
+        <View
+            android:id="@+id/tv_recipe_title_placeholder"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/tw_emerald_300"
-            android:maxLines="3"
-            android:textSize="24sp"
-            android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/img_recipe_image" />
+            card_view:layout_constraintTop_toBottomOf="@+id/img_recipe_image_placeholder" />
 
-        <TextView
-            android:id="@+id/tv_recipe_publisher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <!-- Shimmer for Recipe Publisher -->
+        <View
+            android:id="@+id/tv_recipe_publisher_placeholder"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
             android:layout_marginTop="8dp"
             android:background="@color/tw_emerald_300"
-            android:ellipsize="end"
-            android:maxLines="1"
-            card_view:layout_constraintCircleRadius="16dp"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_recipe_title"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_recipe_title"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_recipe_title" />
+            card_view:layout_constraintEnd_toEndOf="@+id/tv_recipe_title_placeholder"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_recipe_title_placeholder"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_recipe_title_placeholder" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

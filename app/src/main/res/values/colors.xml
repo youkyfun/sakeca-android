@@ -2,6 +2,7 @@
 <resources>
     <color name="tw_slate_950">#020617</color>
     <color name="tw_slate_50">#f8fafc</color>
+    <color name="tw_slate_50_transparent">#00f8fafc</color>
 
     <color name="tw_slate_200">#e2e8f0</color>
     <color name="tw_slate_400">#64748b</color>

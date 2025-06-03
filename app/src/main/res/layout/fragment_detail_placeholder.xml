@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".feature.discovery.ui.detail.DetailFragment">
+
+    <!-- Shimmer for FloatingActionButton -->
+    <View
+        android:id="@+id/fab_favorite_placeholder"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@color/tw_emerald_300"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollable_recipe_details_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollview_child_container_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Shimmer for Image -->
+            <View
+                android:id="@+id/img_recipe_photo_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:background="@color/tw_emerald_300"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/recipe_info_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/img_recipe_photo_placeholder">
+
+                <View
+                    android:id="@+id/tv_recipe_title_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/tw_emerald_300" />
+
+                <!-- Shimmer for Recipe Publisher -->
+                <View
+                    android:id="@+id/tv_recipe_publisher_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/tw_emerald_300" />
+
+                <!-- Shimmer for Social Rank -->
+                <View
+                    android:id="@+id/tv_recipe_social_rank_placeholder"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:background="@color/tw_emerald_300" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ingredients_title_container_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recipe_info_placeholder">
+
+                <!-- Shimmer for Ingredients Title -->
+                <View
+                    android:id="@+id/tv_ingredients_title_placeholder"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/tw_emerald_300" />
+
+                <!-- Shimmer for Ingredients Amount -->
+                <View
+                    android:id="@+id/tv_ingredients_amount_placeholder"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/tw_emerald_300" />
+            </LinearLayout>
+
+            <!-- Shimmer for RecyclerView Items (example with a few placeholders) -->
+            <LinearLayout
+                android:id="@+id/rv_ingredients_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredients_title_container_placeholder">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/tw_emerald_300" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/tw_emerald_300" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/tw_emerald_300" />
+            </LinearLayout>
+
+
+            <!-- Shimmer for Button -->
+            <View
+                android:id="@+id/btn_add_to_shopping_list_placeholder"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/tw_emerald_300"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_ingredients_placeholder" />
+
+            <!-- Optional: Shimmer for the 'Coming soon' text if desired -->
+            <View
+                android:layout_width="120dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/tw_emerald_300"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_add_to_shopping_list_placeholder" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

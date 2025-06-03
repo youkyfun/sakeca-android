@@ -10,7 +10,7 @@
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
 
     <style name="sectionTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/tw_slate_950</item>
+        <item name="android:textColor">@color/tw_emerald_500</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textAlignment">textStart</item>

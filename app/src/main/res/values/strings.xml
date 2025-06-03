@@ -17,6 +17,7 @@
     <string name="search_result">Search result</string>
     <string name="add_to_shopping_list">Add to shopping list</string>
     <string name="coming_soon">* Coming soon</string>
+    <string name="ingredients_amount_placeholder">5 items</string>
 
     <string-array name="search_recommendation">
         <item>apple</item>

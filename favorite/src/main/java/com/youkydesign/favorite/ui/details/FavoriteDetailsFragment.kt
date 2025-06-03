@@ -1,13 +1,19 @@
 package com.youkydesign.favorite.ui.details
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -16,15 +22,28 @@ import com.youkydesign.favorite.FavoriteViewModelFactory
 import com.youkydesign.favorite.databinding.FragmentFavoriteDetailsBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.favorite.ui.main.FavoriteRecipeViewModel
+import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
 import com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragmentArgs
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class FavoriteDetailsFragment : Fragment() {
     private var _binding: FragmentFavoriteDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+    private var scrollJob: Job? = null
+
+    private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var lastKnownScrollPosition = 0
 
     @Inject
     lateinit var factory: FavoriteViewModelFactory
@@ -38,6 +57,7 @@ class FavoriteDetailsFragment : Fragment() {
         val dependencies = (requireActivity().application as RecipeApplication).appComponent
         DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +78,11 @@ class FavoriteDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
+        actionBar?.title = "Recipe details"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         val rId = DetailFragmentArgs.fromBundle(arguments as Bundle).rId
         detailRecipeViewModel.getRecipe(rId)
 
@@ -96,7 +121,7 @@ class FavoriteDetailsFragment : Fragment() {
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
-                            binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite)
+                            binding.fabFavorite.setImageResource(R.drawable.favorite)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 Snackbar.make(
@@ -105,10 +130,10 @@ class FavoriteDetailsFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite_border)
+                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             }
                         } else {
-                            binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite_border)
+                            binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 Snackbar.make(
@@ -117,18 +142,86 @@ class FavoriteDetailsFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(com.youkydesign.recipeapp.R.drawable.favorite)
+                                binding.fabFavorite.setImageResource(R.drawable.favorite)
                             }
                         }
                     }
                 }
             }
+
+            scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
+                scrollJob?.cancel()
+                scrollJob = fragmentScope.launch {
+                    val scrollY: Int = scrollableRecipeDetails.scrollY
+                    renderTopAppBarAnimated(scrollY)
+                }
+            }
+            scrollableRecipeDetails.viewTreeObserver.addOnScrollChangedListener(
+                scrollChangedListener
+            )
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        scrollChangedListener?.let {
+            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        lastKnownScrollPosition = 0
+        scrollJob?.cancel()
+        scrollChangedListener = null
+        viewLifecycleOwner.lifecycleScope.cancel()
+        fragmentScope.cancel()
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        scrollChangedListener?.let {
+            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        lastKnownScrollPosition = 0
+        scrollJob?.cancel()
+        scrollChangedListener = null
+        viewLifecycleOwner.lifecycleScope.cancel()
+        fragmentScope.cancel()
+        scrollJob?.cancel()
+    }
+
+    private fun renderTopAppBarAnimated(scrollPosition: Int) {
+        val transparentColor =
+            ResourcesCompat.getColor(resources, R.color.tw_slate_50_transparent, null)
+        val filledColor = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
+
+        // This animation should be started with #start()
+        val colorAnimationScroll =
+            ValueAnimator.ofObject(ArgbEvaluator(), transparentColor, filledColor)
+        colorAnimationScroll.duration = 250
+
+        colorAnimationScroll.addUpdateListener { animator ->
+            binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+        }
+
+        // This animation should be started with #start()
+        val colorAnimationTop =
+            ValueAnimator.ofObject(ArgbEvaluator(), filledColor, transparentColor)
+        colorAnimationTop.duration = 250
+
+        colorAnimationTop.addUpdateListener { animator ->
+            binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+        }
+
+        // Only run animation if the scroll direction changes relative to the threshold
+        val crossedThresholdUpwards = lastKnownScrollPosition >= 860 && scrollPosition < 860
+        val crossedThresholdDownwards = lastKnownScrollPosition < 860 && scrollPosition >= 860
+
+        if (crossedThresholdUpwards) {
+            if (!colorAnimationTop.isRunning) colorAnimationTop.start()
+        } else if (crossedThresholdDownwards) {
+            if (!colorAnimationScroll.isRunning) colorAnimationScroll.start()
+        }
+
+        lastKnownScrollPosition = scrollPosition
     }
 
     private fun setIngredientList(ingredientList: List<String>) {
@@ -137,10 +230,8 @@ class FavoriteDetailsFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.scrollviewChildContainer.visibility =
+            if (isLoading) View.GONE else View.VISIBLE
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
