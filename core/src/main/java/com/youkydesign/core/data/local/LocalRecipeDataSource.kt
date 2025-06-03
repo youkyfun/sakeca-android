@@ -1,6 +1,5 @@
 package com.youkydesign.core.data.local
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.SortUtils
