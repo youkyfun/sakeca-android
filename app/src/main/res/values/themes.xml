@@ -1,14 +1,44 @@
 <resources>
 
     <style name="Base.Theme.RecipeApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/tw_slate_950</item>
-        <item name="colorPrimaryVariant">@color/tw_slate_200</item>
+        <item name="colorPrimary">@color/tw_emerald_500</item>
+        <item name="colorPrimaryVariant">@color/tw_emerald_300</item>
         <item name="colorOnPrimary">@color/tw_slate_50</item>
         <item name="colorAccent">@color/tw_emerald_500</item>
+        <item name="android:windowBackground">@color/tw_slate_50</item>
+        <!-- Primary brand color. -->
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/tw_emerald_500</item>
+        <item name="colorSecondaryVariant">@color/tw_emerald_500</item>
+        <item name="colorOnSecondary">@color/tw_slate_950</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize other attributes as needed -->
+
+        <item name="colorSurface">@color/tw_slate_50</item> x
+        <item name="colorOnSurface">@color/tw_emerald_500</item>
+        <item name="colorSurfaceContainer">@color/tw_slate_50</item>
+        <item name="materialButtonStyle">@style/Widget.MyApp.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MyApp.Button.Outlined</item>
+        <item name="borderlessButtonStyle">@style/Widget.MyApp.Button.TextButton</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
+    <style name="Widget.MyApp.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
+    </style>
+    <style name="Widget.MyApp.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/colorPrimary</item>
+    </style>
 
+    <style name="Widget.MyApp.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/colorPrimary</item>
+    </style>
     <style name="sectionTextViewStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/tw_emerald_500</item>
         <item name="android:textStyle">bold</item>

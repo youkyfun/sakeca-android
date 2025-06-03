@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_container"
+    style="@style/Theme.RecipeApp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".feature.discovery.ui.discovery.HomeFragment">
@@ -23,6 +24,8 @@
             android:minHeight="?attr/actionBarSize"
             android:paddingStart="0dp"
             android:paddingEnd="16dp"
+            android:foregroundTint="@color/tw_emerald_500"
+            app:navigationIconTint="@color/tw_emerald_500"
             app:menu="@menu/app_menu"
             app:title="Lapaaarrr😤!!" />
 
