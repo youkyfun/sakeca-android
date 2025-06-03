@@ -3,12 +3,15 @@ package com.youkydesign.core.data.network
 import com.youkydesign.core.data.network.response.RecipeResponse
 import com.youkydesign.core.data.network.response.RecipesItem
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(FlowPreview::class)
 @Singleton
 class NetworkRecipeDataSource @Inject constructor(private val apiService: ApiService) {
     fun searchRecipes(query: String): Flow<ApiResponse<List<RecipesItem>>> = flow {
@@ -23,7 +26,7 @@ class NetworkRecipeDataSource @Inject constructor(private val apiService: ApiSer
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.toString()))
         }
-    }.flowOn(Dispatchers.IO)
+    }.debounce(1000).flowOn(Dispatchers.IO)
 
     fun getRecipe(rId: String): Flow<ApiResponse<RecipeResponse>> = flow {
         try {
@@ -38,5 +41,5 @@ class NetworkRecipeDataSource @Inject constructor(private val apiService: ApiSer
         } catch (e: Exception) {
             emit(ApiResponse.Error("Failed to fetch recipe: ${e.message}"))
         }
-    }.flowOn(Dispatchers.IO)
+    }.debounce(1000).flowOn(Dispatchers.IO)
 }

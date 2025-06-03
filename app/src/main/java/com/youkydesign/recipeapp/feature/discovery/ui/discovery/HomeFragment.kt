@@ -4,9 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -15,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.youkydesign.core.domain.Recipe
@@ -54,9 +56,22 @@ class HomeFragment : Fragment() {
         binding.rvRecipes.setHasFixedSize(true)
 
         with(binding) {
-            searchBar.inflateMenu(R.menu.app_menu)
-            searchBar.setOnMenuItemClickListener {
+            mainTopAppBar.setOnClickListener {
+                recipeViewModel.searchRecipes("chicken")
+            }
+            mainTopAppBar.setOnMenuItemClickListener {
                 when (it.itemId) {
+                    R.id.search_action -> {
+                        if (searchBar.isGone) {
+                            binding.searchBar.animate().alpha(0f).setDuration(400)
+                                .withEndAction {
+                                    binding.searchBar.visibility = VISIBLE
+                                    binding.searchBar.alpha = 1f
+                                }
+                        }
+                        true
+                    }
+
                     R.id.favorite_action -> {
                         try {
                             installFavoriteModule()
@@ -93,6 +108,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvRecipes.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 40 && binding.searchBar.isVisible) {
+                    binding.searchBar.animate().alpha(0.0f).setDuration(400)
+                        .withEndAction { binding.searchBar.visibility = GONE }
+                    binding.tvNoRecipe.animate().alpha(0.0f).setDuration(400)
+                        .withEndAction { binding.tvNoRecipe.visibility = GONE }
+                }
+            }
+        })
         recipeViewModel.searchResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is UiResource.Loading -> showLoading(true)
@@ -109,12 +135,10 @@ class HomeFragment : Fragment() {
                         }
 
                         else -> {
-                            binding.rvRecipes.isVisible = true
                             binding.tvNoRecipe.isGone = true
                             binding.searchRecommendationContainer.isVisible = false
-                            binding.searchBar.setText("")
 
-                            setRecipeList(resource.data ?: emptyList())
+                            renderRecyclerViewAnimated(resource.data ?: emptyList())
                         }
                     }
                 }
@@ -124,45 +148,33 @@ class HomeFragment : Fragment() {
                         showLoading(false)
                         tvNoRecipe.isVisible = true
 
-                        tvSectionTitle.text = getString(R.string.recommended_recipes)
+                        tvSectionTitle.isVisible = false
+                        rvRecipes.isVisible = false
                         val message = "No recipe found for \"${searchBar.text}\""
                         tvNoRecipe.text = message
                         searchBar.setText("")
 
                         setupSearchRecommendations()
-
-                        ConstraintSet().apply {
-                            clone(mainContainer)
-                            connect(
-                                searchRecommendationContainer.id,
-                                ConstraintSet.TOP,
-                                tvNoRecipe.id,
-                                ConstraintSet.BOTTOM
-                            )
-                            connect(
-                                tvSectionTitle.id,
-                                ConstraintSet.TOP,
-                                searchRecommendationContainer.id,
-                                ConstraintSet.BOTTOM
-                            )
-                            connect(
-                                rvRecipes.id,
-                                ConstraintSet.TOP,
-                                tvSectionTitle.id,
-                                ConstraintSet.BOTTOM
-                            )
-                            applyTo(mainContainer)
-                        }
                     }
                     Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT).show()
                 }
 
                 is UiResource.Idle -> {
-                    binding.searchBar.setText("")
                     binding.tvSectionTitle.text = getString(R.string.recommended_recipes)
+                    renderRecyclerViewAnimated(resource.data ?: emptyList())
                 }
             }
         }
+    }
+
+    private fun renderRecyclerViewAnimated(data: List<Recipe>) {
+        binding.rvRecipes.animate().alpha(1f).setDuration(400)
+            .withEndAction {
+                binding.rvRecipes.visibility = VISIBLE
+            }
+
+
+        setRecipeList(data)
     }
 
     override fun onDestroyView() {
@@ -214,9 +226,12 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
+            binding.progressBar.animate().alpha(1f).setDuration(400)
+                .withEndAction { binding.progressBar.visibility = VISIBLE }
+            binding.progressBar.visibility = VISIBLE
         } else {
-            binding.progressBar.visibility = View.GONE
+            binding.progressBar.animate().alpha(0f).setDuration(400)
+                .withEndAction { binding.progressBar.visibility = GONE }
         }
     }
 
