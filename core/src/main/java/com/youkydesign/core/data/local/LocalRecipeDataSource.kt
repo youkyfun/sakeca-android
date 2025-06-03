@@ -25,7 +25,6 @@ class LocalRecipeDataSource @Inject constructor(private val recipeDao: RecipeDao
     fun getFavoriteRecipes(sortType: RecipeSortType): PagingSource<Int, RecipeEntity> {
         val query = SortUtils.getSortedQuery(sortType)
         val getFavoriteRecipes = recipeDao.getFavoriteRecipes(query)
-        Log.d("LocalData", "getFavoriteRecipes: $getFavoriteRecipes")
 
         return getFavoriteRecipes
     }

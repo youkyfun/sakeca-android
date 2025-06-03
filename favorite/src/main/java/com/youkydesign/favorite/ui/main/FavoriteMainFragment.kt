@@ -104,7 +104,7 @@ class FavoriteMainFragment : Fragment() {
                 }
 
                 binding.tvFavoriteBy.text = requireContext().getString(sortTextRes)
-                favoriteViewModel.filter(sortType)
+                favoriteViewModel.sort(sortType)
                 true
             }
             show()
