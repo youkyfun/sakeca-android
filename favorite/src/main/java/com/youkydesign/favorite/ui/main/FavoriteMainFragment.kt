@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.paging.LoadState
@@ -28,6 +29,8 @@ class FavoriteMainFragment : Fragment() {
     @Inject
     lateinit var factory: FavoriteViewModelFactory
 
+    private lateinit var adapter: FavoriteAdapter
+
     private val favoriteViewModel: FavoriteRecipeViewModel by viewModels {
         factory
     }
@@ -46,12 +49,18 @@ class FavoriteMainFragment : Fragment() {
         _binding = FragmentFavoriteMainBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        adapter = FavoriteAdapter()
+
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFavoriteRecipes.layoutManager = layoutManager
         binding.rvFavoriteRecipes.setHasFixedSize(true)
 
         binding.favTopAppBar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        viewLifecycleOwner.lifecycle.run {
+            favoriteViewModel.sort()
         }
 
         binding.favTopAppBar.setOnMenuItemClickListener { menuItem ->
@@ -70,16 +79,40 @@ class FavoriteMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.rvFavoriteRecipes.adapter = adapter
+        adapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Recipe) {
+                toRecipeDetail(data)
+            }
+        })
+        adapter.addLoadStateListener { loadState ->
+            val isEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            showEmptyData(isEmpty)
+
+            val isRefreshNotLoading = loadState.refresh is LoadState.NotLoading
+            showLoading(!isRefreshNotLoading)
+        }
+
+        adapter.refresh()
+        setFragmentResultListener("itemDeletedKey") { _, _ ->
+            favoriteViewModel.sort()
+        }
         favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
-            showLoading(true)
             setRecipeList(it)
-            showLoading(false)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (binding.rvFavoriteRecipes.adapter as? FavoriteAdapter)?.setOnItemClickCallback(null)
+        binding.rvFavoriteRecipes.adapter = null
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        favoriteViewModel.sort()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -112,20 +145,7 @@ class FavoriteMainFragment : Fragment() {
     }
 
     private fun setRecipeList(favoriteRecipes: PagingData<Recipe>) {
-        val adapter = FavoriteAdapter()
-        binding.rvFavoriteRecipes.adapter = adapter
-
-        adapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Recipe) {
-                toRecipeDetail(data)
-            }
-        })
-
         adapter.submitData(lifecycle, favoriteRecipes)
-        adapter.addLoadStateListener { loadState ->
-            val isEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
-            showEmptyData(isEmpty)
-        }
     }
 
     private fun showEmptyData(isEmpty: Boolean) {

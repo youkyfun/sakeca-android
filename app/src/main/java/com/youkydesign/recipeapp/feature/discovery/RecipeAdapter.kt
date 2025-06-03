@@ -31,7 +31,6 @@ internal class RecipeAdapter(val recipeList: List<Recipe>) :
         position: Int
     ) {
         val recipe = recipeList[position]
-
         holder.bind(recipe)
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(recipeList[holder.bindingAdapterPosition])

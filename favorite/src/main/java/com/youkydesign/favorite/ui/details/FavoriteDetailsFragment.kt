@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class FavoriteDetailsFragment : Fragment() {
 
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private var scrollJob: Job? = null
+    private var favoriteRemovalTimer: CountDownTimer? = null
+    private var currentSnackbar: Snackbar? = null
 
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var lastKnownScrollPosition = 0
@@ -122,20 +125,47 @@ class FavoriteDetailsFragment : Fragment() {
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
+
                             fabFavorite.setOnClickListener {
+
+                                // Immediately remove from favorites
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
-                                Snackbar.make(
+                                detailRecipeViewModel.sort()
+                                _binding?.fabFavorite?.setImageResource(R.drawable.favorite_border)
+
+                                currentSnackbar = Snackbar.make(
                                     requireView(),
                                     "Removed from favorite",
-                                    Snackbar.LENGTH_SHORT
+                                    Snackbar.LENGTH_LONG
                                 )
-                                    .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+
+                                currentSnackbar?.setAction("OK") {
+                                    favoriteRemovalTimer?.cancel()
+                                }
+                                currentSnackbar?.addCallback(object : Snackbar.Callback() {
+                                    override fun onDismissed(
+                                        transientBottomBar: Snackbar?,
+                                        event: Int
+                                    ) {
+                                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_CONSECUTIVE) {
+                                            favoriteRemovalTimer?.cancel()
+                                        }
+                                    }
+                                })
+                                currentSnackbar?.show()
+
+                                favoriteRemovalTimer =
+                                    object : CountDownTimer(3000, 1000) { // 3 seconds
+                                        override fun onTick(millisUntilFinished: Long) {}
+                                        override fun onFinish() {}
+                                    }.start()
                             }
                         } else {
                             binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
+                                detailRecipeViewModel.sort()
+
                                 Snackbar.make(
                                     requireView(),
                                     "Added to favorite",

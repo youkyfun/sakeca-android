@@ -12,9 +12,9 @@ import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 internal class FavoriteAdapter :
     PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALBACK) {
 
-    private lateinit var onItemClickCallback: OnItemClickCallback
+    private var onItemClickCallback: OnItemClickCallback? = null
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback?) {
         this.onItemClickCallback = onItemClickCallback
     }
 
@@ -32,10 +32,9 @@ internal class FavoriteAdapter :
         position: Int
     ) {
         val recipe = getItem(position) as Recipe
-
         holder.bind(recipe)
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(recipe)
+            onItemClickCallback?.onItemClicked(recipe)
         }
 
     }
