@@ -21,12 +21,12 @@
             android:id="@+id/main_top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foregroundTint="@color/tw_emerald_500"
             android:minHeight="?attr/actionBarSize"
             android:paddingStart="0dp"
             android:paddingEnd="16dp"
-            android:foregroundTint="@color/tw_emerald_500"
-            app:navigationIconTint="@color/tw_emerald_500"
             app:menu="@menu/app_menu"
+            app:navigationIconTint="@color/tw_emerald_500"
             app:title="Lapaaarrr😤!!" />
 
         <com.google.android.material.search.SearchBar
@@ -49,70 +49,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvNoRecipe"
+    <ScrollView
+        android:id="@+id/home_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
-        android:text="@string/tv_no_recipe"
-        android:textAlignment="center"
+        android:padding="16dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout">
 
-    <LinearLayout
-        android:id="@+id/search_recommendation_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNoRecipe">
-
-        <TextView
-            android:id="@+id/tv_search_recommendation"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/search_recommendation_title"
-            android:textAlignment="textStart"
-            android:textSize="16sp" />
+            android:orientation="vertical">
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexbox_chip_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            app:alignContent="stretch"
-            app:alignItems="stretch"
-            app:flexWrap="wrap" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvNoRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="64dp"
+                android:text="@string/tv_no_recipe"
+                android:textAlignment="center"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_section_title"
-        style="@style/sectionTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/recommended_recipes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
+            <TextView
+                android:id="@+id/tv_craving"
+                style="@style/sectionTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/craving_text" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section_title" />
+            <LinearLayout
+                android:id="@+id/search_recommendation_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_search_recommendation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/search_recommendation_title"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flexbox_chip_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:alignContent="stretch"
+                    app:alignItems="stretch"
+                    app:flexWrap="wrap" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_section_title"
+                style="@style/sectionTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recommended_recipes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recipes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/progressBar"
@@ -120,7 +129,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_section_title"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
         app:shimmer_auto_start="true">
 
         <LinearLayout

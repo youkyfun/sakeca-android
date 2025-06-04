@@ -2,7 +2,6 @@ package com.youkydesign.recipeapp.feature.discovery.ui.discovery
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
@@ -11,6 +10,7 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.youkydesign.recipeapp.R
@@ -22,10 +22,10 @@ class CustomAssistChip @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private var chipText: String? = "Assist Chip"
-    private var chipTextColor: Int = Color.BLACK
+    private var twSlate400: Int = ResourcesCompat.getColor(resources, R.color.tw_slate_950, null)
     private var chipIcon: Drawable? = null
-    private var chipIconTint: Int? = null
-    private var outlineColorVal: Int = Color.DKGRAY
+    private var chipIconTint: Int = twSlate400
+    private var twSlate200: Int = ResourcesCompat.getColor(resources, R.color.tw_slate_200, null)
     private var outlineWidthVal: Float = 4f
     private var cornerRadiusVal: Float = 32f
 
@@ -33,11 +33,11 @@ class CustomAssistChip @JvmOverloads constructor(
     private val outlinePaint: Paint
     private val contentRect = RectF()
     private val textBounds = Rect()
-    private var iconSize = 0f
+    private var iconSize = 24f
     private var iconPadding = 16f
     private var textPaddingStart = 0f
     private var textPaddingEnd = 24f
-    private var verticalPadding = 24f
+    private var verticalPadding = 32f
 
     init {
         attrs?.let {
@@ -49,10 +49,6 @@ class CustomAssistChip @JvmOverloads constructor(
             ) {
 
                 chipText = getString(R.styleable.CustomOutlinedAssistChip_android_text) ?: chipText
-                chipTextColor = getColor(
-                    R.styleable.CustomOutlinedAssistChip_android_textColor,
-                    chipTextColor
-                )
 
                 getDrawable(R.styleable.CustomOutlinedAssistChip_chipIcon)?.let {
                     chipIcon =
@@ -60,13 +56,9 @@ class CustomAssistChip @JvmOverloads constructor(
                 }
                 if (hasValue(R.styleable.CustomOutlinedAssistChip_chipIconTint)) {
                     chipIconTint =
-                        getColor(R.styleable.CustomOutlinedAssistChip_chipIconTint, Color.BLACK)
+                        getColor(R.styleable.CustomOutlinedAssistChip_chipIconTint, twSlate400)
                 }
 
-                outlineColorVal = getColor(
-                    R.styleable.CustomOutlinedAssistChip_outlineColor,
-                    outlineColorVal
-                )
                 outlineWidthVal = getDimension(
                     R.styleable.CustomOutlinedAssistChip_outlineWidth,
                     outlineWidthVal
@@ -79,7 +71,7 @@ class CustomAssistChip @JvmOverloads constructor(
         }
 
         textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = chipTextColor
+            color = twSlate400
             textSize = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 14f, resources.displayMetrics
             )
@@ -88,7 +80,7 @@ class CustomAssistChip @JvmOverloads constructor(
 
         outlinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
-            color = outlineColorVal
+            color = twSlate200
             strokeWidth = outlineWidthVal
         }
 
@@ -108,7 +100,7 @@ class CustomAssistChip @JvmOverloads constructor(
             TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
         )
 
-        chipIconTint?.let { tint ->
+        chipIconTint.let { tint ->
             chipIcon?.let { icon ->
                 DrawableCompat.setTint(icon, tint)
             }
@@ -181,13 +173,13 @@ class CustomAssistChip @JvmOverloads constructor(
 
     fun setChipIcon(drawable: Drawable?) {
         chipIcon = drawable?.mutate()
-        chipIconTint?.let { tint -> chipIcon?.let { icon -> DrawableCompat.setTint(icon, tint) } }
+        chipIconTint.let { tint -> chipIcon?.let { icon -> DrawableCompat.setTint(icon, tint) } }
         requestLayout()
         invalidate()
     }
 
     fun setOutlineColor(color: Int) {
-        outlineColorVal = color
+        twSlate200 = color
         outlinePaint.color = color
         invalidate()
     }

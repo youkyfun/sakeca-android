@@ -60,6 +60,12 @@ class HomeFragment : Fragment() {
 
         with(binding) {
             mainTopAppBar.setOnClickListener {
+                if (tvCraving.isGone) {
+                    tvCraving.visibility = VISIBLE
+                }
+                if (searchRecommendationContainer.isGone) {
+                    searchRecommendationContainer.visibility = VISIBLE
+                }
                 recipeViewModel.searchRecipes("chicken")
             }
             mainTopAppBar.setOnMenuItemClickListener {
@@ -111,6 +117,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupSearchRecommendations()
+
         binding.rvRecipes.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -136,13 +145,10 @@ class HomeFragment : Fragment() {
                                 binding.rvRecipes.isGone = true
                                 binding.tvNoRecipe.isVisible = true
 
-                                setupSearchRecommendations()
                             }
 
                             else -> {
                                 binding.tvNoRecipe.isGone = true
-                                binding.searchRecommendationContainer.isVisible = false
-
                                 renderRecyclerViewAnimated(resource.data ?: emptyList())
                             }
                         }
@@ -153,13 +159,14 @@ class HomeFragment : Fragment() {
                             showLoading(false)
                             tvNoRecipe.isVisible = true
 
+                            setupSearchRecommendations()
+                            tvCraving.isVisible = false
                             tvSectionTitle.isVisible = false
                             rvRecipes.isVisible = false
                             val message = "No recipe found for \"${searchBar.text}\""
                             tvNoRecipe.text = message
                             binding.searchBar.setText("")
 
-                            setupSearchRecommendations()
                         }
                         Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT)
                             .show()
@@ -232,14 +239,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.animate().alpha(1f).setDuration(400)
-                .withEndAction { binding.progressBar.visibility = VISIBLE }
-            binding.progressBar.visibility = VISIBLE
-        } else {
-            binding.progressBar.animate().alpha(0f).setDuration(400)
-                .withEndAction { binding.progressBar.visibility = GONE }
-        }
+        val targetAlpha = if (isLoading) 1f else 0f
+        binding.progressBar.animate().alpha(targetAlpha).setDuration(400)
+            .withEndAction {
+                binding.progressBar.visibility = if (isLoading) VISIBLE else GONE
+                binding.homeContent.visibility = if (isLoading) GONE else VISIBLE
+            }.start()
+        binding.progressBar.visibility = if (isLoading) VISIBLE else binding.progressBar.visibility
     }
 
     private fun toRecipeDetail(recipe: Recipe) {
@@ -250,8 +256,9 @@ class HomeFragment : Fragment() {
 
     private fun setupSearchRecommendations() {
         with(binding) {
-            searchRecommendationContainer.isVisible = true
-
+            if (flexboxChipContainer.isGone) {
+                flexboxChipContainer.visibility = VISIBLE
+            }
             flexboxChipContainer.removeAllViews()
             resources.getStringArray(R.array.search_recommendation)
                 .forEachIndexed { index, item ->
@@ -262,11 +269,10 @@ class HomeFragment : Fragment() {
                             ContextCompat.getDrawable(requireContext(), R.drawable.arrow_outward)
                         )
                         setOnClickListener {
-                            val title = "Search result for $item"
-                            binding.tvSectionTitle.text = title
-
                             searchBar.setText("")
                             searchView.hide()
+                            tvSectionTitle.visibility = VISIBLE
+                            searchRecommendationContainer.visibility = GONE
                             recipeViewModel.searchRecipes(item)
                         }
                         layoutParams = ViewGroup.MarginLayoutParams(
