@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
-
     // Views/Fragments integration/Dynamic Feature support
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
