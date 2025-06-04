@@ -13,6 +13,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.databinding.FragmentHomeBinding
 import com.youkydesign.recipeapp.feature.discovery.RecipeAdapter
 import com.youkydesign.recipeapp.feature.discovery.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
@@ -119,49 +122,53 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        recipeViewModel.searchResult.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is UiResource.Loading -> showLoading(true)
 
-                is UiResource.Success -> {
-                    showLoading(false)
-                    when {
-                        resource.data.isNullOrEmpty() -> {
+        lifecycleScope.launch {
+            recipeViewModel.searchResult.collectLatest { resource ->
+                when (resource) {
+                    is UiResource.Loading -> showLoading(true)
+
+                    is UiResource.Success -> {
+                        showLoading(false)
+                        when {
+                            resource.data.isNullOrEmpty() -> {
+                                binding.searchBar.setText("")
+                                binding.rvRecipes.isGone = true
+                                binding.tvNoRecipe.isVisible = true
+
+                                setupSearchRecommendations()
+                            }
+
+                            else -> {
+                                binding.tvNoRecipe.isGone = true
+                                binding.searchRecommendationContainer.isVisible = false
+
+                                renderRecyclerViewAnimated(resource.data ?: emptyList())
+                            }
+                        }
+                    }
+
+                    is UiResource.Error -> {
+                        with(binding) {
+                            showLoading(false)
+                            tvNoRecipe.isVisible = true
+
+                            tvSectionTitle.isVisible = false
+                            rvRecipes.isVisible = false
+                            val message = "No recipe found for \"${searchBar.text}\""
+                            tvNoRecipe.text = message
                             binding.searchBar.setText("")
-                            binding.rvRecipes.isGone = true
-                            binding.tvNoRecipe.isVisible = true
 
                             setupSearchRecommendations()
                         }
-
-                        else -> {
-                            binding.tvNoRecipe.isGone = true
-                            binding.searchRecommendationContainer.isVisible = false
-
-                            renderRecyclerViewAnimated(resource.data ?: emptyList())
-                        }
+                        Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                }
 
-                is UiResource.Error -> {
-                    with(binding) {
-                        showLoading(false)
-                        tvNoRecipe.isVisible = true
-
-                        tvSectionTitle.isVisible = false
-                        rvRecipes.isVisible = false
-                        val message = "No recipe found for \"${searchBar.text}\""
-                        tvNoRecipe.text = message
-                        searchBar.setText("")
-
-                        setupSearchRecommendations()
+                    is UiResource.Idle -> {
+                        binding.tvSectionTitle.text = getString(R.string.recommended_recipes)
+                        renderRecyclerViewAnimated(resource.data ?: emptyList())
                     }
-                    Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT).show()
-                }
-
-                is UiResource.Idle -> {
-                    binding.tvSectionTitle.text = getString(R.string.recommended_recipes)
-                    renderRecyclerViewAnimated(resource.data ?: emptyList())
                 }
             }
         }

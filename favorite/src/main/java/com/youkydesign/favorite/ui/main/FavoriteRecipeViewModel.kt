@@ -3,35 +3,47 @@ package com.youkydesign.favorite.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.youkydesign.core.RecipeSortType
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.RecipeUseCase
 import com.youkydesign.core.domain.UiResource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
-    private val _filter = MutableLiveData<RecipeSortType>()
-    val favoriteRecipes: LiveData<PagingData<Recipe>> = _filter.switchMap {
-        recipeUseCase.getFavoriteRecipes(it).cachedIn(viewModelScope).asLiveData()
-    }
+    private val _favoriteRecipes: MutableStateFlow<PagingData<Recipe>> =
+        MutableStateFlow(PagingData.empty())
+    val favoriteRecipes: StateFlow<PagingData<Recipe>> = _favoriteRecipes.asStateFlow()
+
+
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
 
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
 
     init {
-        _filter.value = RecipeSortType.BY_DATE_DESC
+        this@FavoriteRecipeViewModel.getFavoriteRecipes()
     }
 
-    fun sort(sortType: RecipeSortType = RecipeSortType.BY_DATE_DESC) {
-        _filter.value = sortType
+    fun getFavoriteRecipes(sortType: RecipeSortType = RecipeSortType.BY_DATE_DESC) {
+        viewModelScope.launch {
+            recipeUseCase.getFavoriteRecipes(sortType)
+                .catch {
+                    _favoriteRecipes.value = PagingData.empty()
+                }
+                .collect {
+                    _favoriteRecipes.value = it
+                }
+        }
     }
 
     fun setFavoriteRecipe(recipe: Recipe?, isFavorite: Boolean) {

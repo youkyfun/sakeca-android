@@ -125,7 +125,7 @@ class FavoriteDetailsFragment : Fragment() {
 
                                 // Immediately remove from favorites
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
-                                detailRecipeViewModel.sort()
+                                detailRecipeViewModel.getFavoriteRecipes()
                                 _binding?.fabFavorite?.setImageResource(R.drawable.favorite_border)
 
                                 currentSnackbar = Snackbar.make(
@@ -159,7 +159,7 @@ class FavoriteDetailsFragment : Fragment() {
                             binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
-                                detailRecipeViewModel.sort()
+                                detailRecipeViewModel.getFavoriteRecipes()
 
                                 Snackbar.make(
                                     requireView(),

@@ -2,10 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="21">
+      <module name="Recipe_App.app" target="23" />
+      <module name="Recipe_App.core" target="23" />
       <module name="Recipe_App.data" target="21" />
       <module name="Recipe_App.data.local" target="21" />
       <module name="Recipe_App.data.network" target="21" />
       <module name="Recipe_App.domain" target="21" />
+      <module name="Recipe_App.favorite" target="23" />
       <module name="Recipe_App.feature" target="21" />
       <module name="Recipe_App.feature.discovery" target="21" />
       <module name="Recipe_App.navigation" target="21" />

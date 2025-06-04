@@ -9,6 +9,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -20,6 +21,8 @@ import com.youkydesign.favorite.R
 import com.youkydesign.favorite.databinding.FragmentFavoriteMainBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.recipeapp.RecipeApplication
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FavoriteMainFragment : Fragment() {
@@ -60,7 +63,7 @@ class FavoriteMainFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycle.run {
-            favoriteViewModel.sort()
+            favoriteViewModel.getFavoriteRecipes()
         }
 
         binding.favTopAppBar.setOnMenuItemClickListener { menuItem ->
@@ -96,10 +99,12 @@ class FavoriteMainFragment : Fragment() {
 
         adapter.refresh()
         setFragmentResultListener("itemDeletedKey") { _, _ ->
-            favoriteViewModel.sort()
+            favoriteViewModel.getFavoriteRecipes()
         }
-        favoriteViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
-            setRecipeList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            favoriteViewModel.favoriteRecipes.collectLatest {
+                setRecipeList(it)
+            }
         }
     }
 
@@ -112,7 +117,7 @@ class FavoriteMainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        favoriteViewModel.sort()
+        favoriteViewModel.getFavoriteRecipes()
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -137,7 +142,7 @@ class FavoriteMainFragment : Fragment() {
                 }
 
                 binding.tvFavoriteBy.text = requireContext().getString(sortTextRes)
-                favoriteViewModel.sort(sortType)
+                favoriteViewModel.getFavoriteRecipes(sortType)
                 true
             }
             show()
