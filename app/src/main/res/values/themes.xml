@@ -47,7 +47,7 @@
     </style>
 
     <style name="baseTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/tw_slate_400</item>
+        <item name="android:textColor">@color/tw_slate_700</item>
         <item name="android:textSize">14sp</item>
     </style>
 </resources>
