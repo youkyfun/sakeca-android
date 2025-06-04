@@ -75,12 +75,14 @@
 
                 <TextView
                     android:id="@+id/tv_recipe_publisher"
+                    style="@style/baseTextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tv_recipe_title" />
 
                 <TextView
                     android:id="@+id/tv_recipe_social_rank"
+                    style="@style/baseTextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/social_rank_placeholder"
@@ -105,10 +107,11 @@
                     android:text="@string/tv_ingredients_title"
                     android:textAlignment="textStart"
                     android:textColor="@color/tw_emerald_500"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_ingredients_amount"
+                    style="@style/baseTextViewStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -140,6 +143,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_ingredients" />
 
             <TextView
+                style="@style/baseTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/coming_soon"
@@ -167,7 +171,8 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back"
-            app:title="@string/detail_screen_title" />
+            app:navigationIconTint="@color/tw_slate_50"
+            app:titleTextColor="@color/tw_slate_50" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

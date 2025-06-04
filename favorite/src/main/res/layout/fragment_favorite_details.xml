@@ -166,7 +166,8 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back"
-            app:title="@string/detail_screen_title" />
+            app:navigationIconTint="@color/tw_slate_50"
+            app:titleTextColor="@color/tw_slate_50" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

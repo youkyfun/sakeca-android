@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+    android:id="@+id/item_row_ingredients"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    card_view:cardCornerRadius="4dp">
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/item_ingredients_background"
+    android:orientation="horizontal"
+    card_view:cardCornerRadius="16dp"
+    card_view:layout_constraintBottom_toBottomOf="parent"
+    card_view:layout_constraintLeft_toLeftOf="parent"
+    card_view:layout_constraintRight_toRightOf="parent"
+    card_view:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/ing_layout"
+    <CheckBox
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="false" />
+
+    <TextView
+        android:id="@+id/tv_ingredient_item"
+        style="@style/baseTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintLeft_toLeftOf="parent"
-        card_view:layout_constraintRight_toRightOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent">
-
-        <CheckBox
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:clickable="false" />
-
-        <TextView
-            android:id="@+id/tv_ingredient_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="16dp"
-            android:text="@string/ingredients_placeholder" />
-    </LinearLayout>
-
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintLeft_toLeftOf="parent"
-        card_view:layout_constraintRight_toRightOf="parent"
-        card_view:layout_constraintTop_toBottomOf="@+id/ing_layout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/ingredients_placeholder" />
+</LinearLayout>

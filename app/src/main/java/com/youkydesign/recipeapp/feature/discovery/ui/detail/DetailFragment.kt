@@ -104,6 +104,7 @@ class DetailFragment : Fragment() {
                         }
                         Glide.with(binding.imgRecipePhoto).load(resource.data?.imageUrl)
                             .into(binding.imgRecipePhoto)
+                        TITLE_SCREEN = resource.data?.title ?: TITLE_SCREEN
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
@@ -179,6 +180,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun renderTopAppBarAnimated(scrollPosition: Int) {
+
+        val slate50Color = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
+        val slate400Color = ResourcesCompat.getColor(resources, R.color.tw_slate_400, null)
+        val slate950Color = ResourcesCompat.getColor(resources, R.color.tw_slate_950, null)
         val transparentColor =
             ResourcesCompat.getColor(resources, R.color.tw_slate_50_transparent, null)
         val filledColor = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
@@ -189,7 +194,10 @@ class DetailFragment : Fragment() {
         colorAnimationScroll.duration = 250
 
         colorAnimationScroll.addUpdateListener { animator ->
+            binding.detailTopAppBar.setNavigationIconTint(slate400Color)
+            binding.detailTopAppBar.setTitleTextColor(slate950Color)
             binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+            binding.detailTopAppBar.setTitle(TITLE_SCREEN)
         }
 
         // This animation should be started with #start()
@@ -198,7 +206,10 @@ class DetailFragment : Fragment() {
         colorAnimationTop.duration = 250
 
         colorAnimationTop.addUpdateListener { animator ->
+            binding.detailTopAppBar.setTitleTextColor(slate50Color)
+            binding.detailTopAppBar.setNavigationIconTint(slate50Color)
             binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+            binding.detailTopAppBar.setTitle(null)
         }
 
         // Only run animation if the scroll direction changes relative to the threshold
@@ -208,7 +219,9 @@ class DetailFragment : Fragment() {
         if (crossedThresholdUpwards) {
             if (!colorAnimationTop.isRunning) colorAnimationTop.start()
         } else if (crossedThresholdDownwards) {
-            if (!colorAnimationScroll.isRunning) colorAnimationScroll.start()
+            if (!colorAnimationScroll.isRunning) {
+                colorAnimationScroll.start()
+            }
         }
 
         lastKnownScrollPosition = scrollPosition
@@ -223,5 +236,9 @@ class DetailFragment : Fragment() {
         binding.scrollviewChildContainer.visibility =
             if (isLoading) View.GONE else View.VISIBLE
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        var TITLE_SCREEN = "Details"
     }
 }

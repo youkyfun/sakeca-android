@@ -10,7 +10,6 @@
     <string name="ingredients_placeholder">Ingredients</string>
     <string name="title_favorite">Favorite</string>
     <string name="fab_to_favorite">Add to Favorite</string>
-    <string name="detail_screen_title">Recipe Details</string>
     <string name="tv_ingredients_title">Recipe Ingredients</string>
     <string name="recommended_recipes">Give it a shot</string>
     <string name="search_recommendation_title">Try something like</string>
