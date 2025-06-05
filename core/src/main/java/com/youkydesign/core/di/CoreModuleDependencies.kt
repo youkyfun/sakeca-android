@@ -2,6 +2,6 @@ package com.youkydesign.core.di
 
 import com.youkydesign.core.domain.RecipeUseCase
 
-interface FavoriteModuleDependencies {
+interface CoreModuleDependencies {
     fun provideRecipeUseCase(): RecipeUseCase
 }

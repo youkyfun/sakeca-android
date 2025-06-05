@@ -1,19 +1,16 @@
-package com.youkydesign.favorite
+package com.youkydesign.discovery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.youkydesign.core.domain.RecipeUseCase
-import com.youkydesign.favorite.ui.main.FavoriteRecipeViewModel
-import com.youkydesign.recipeapp.AppScope
 import javax.inject.Inject
 
-@AppScope
-class FavoriteViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+class ViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        when (modelClass) {
-            FavoriteRecipeViewModel::class.java -> return FavoriteRecipeViewModel(recipeUseCase) as T
+        return when (modelClass) {
+            RecipeViewModel::class.java -> RecipeViewModel(recipeUseCase) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
