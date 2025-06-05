@@ -8,4 +8,5 @@
     <string name="sort_favorite_by_latest">Showing favorite by latest</string>
     <string name="sort_favorite_by_oldest">Showing favorite by oldest</string>
     <string name="sort_favorite_by_name">Showing favorite by name</string>
+    <string name="favorite_screen">Favorite screen</string>
 </resources>

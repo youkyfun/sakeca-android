@@ -56,6 +56,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":core:designsystem"))
 
     // Shimmer
     implementation(libs.shimmer)

@@ -22,6 +22,7 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.core.domain.UiResource
+import com.youkydesign.designsystem.CustomAssistChip
 import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.databinding.FragmentHomeBinding
@@ -180,7 +181,8 @@ class HomeFragment : Fragment() {
                     }
 
                     is UiResource.Idle -> {
-                        binding.tvSectionTitle.text = getString(R.string.recommended_recipes)
+                        binding.tvSectionTitle.text =
+                            getString(com.youkydesign.designsystem.R.string.recommended_recipes)
                         renderRecyclerViewAnimated(resource.data ?: emptyList())
                     }
                 }
@@ -262,13 +264,16 @@ class HomeFragment : Fragment() {
                 flexboxChipContainer.visibility = VISIBLE
             }
             flexboxChipContainer.removeAllViews()
-            resources.getStringArray(R.array.search_recommendation)
+            resources.getStringArray(com.youkydesign.designsystem.R.array.search_recommendation)
                 .forEachIndexed { index, item ->
                     val chip = CustomAssistChip(requireContext()).apply {
                         id = View.generateViewId() + index
                         setText(item)
                         setChipIcon(
-                            ContextCompat.getDrawable(requireContext(), R.drawable.arrow_outward)
+                            ContextCompat.getDrawable(
+                                requireContext(),
+                                com.youkydesign.designsystem.R.drawable.arrow_outward
+                            )
                         )
                         setOnClickListener {
                             searchBar.setText("")

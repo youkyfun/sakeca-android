@@ -121,11 +121,8 @@ class FavoriteMainFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.loadingShimmer.visibility = View.VISIBLE
-        } else {
-            binding.loadingShimmer.visibility = View.GONE
-        }
+        binding.loadingShimmer.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.favoriteContentContainer.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
     private fun showSortingMenu() {
@@ -154,15 +151,8 @@ class FavoriteMainFragment : Fragment() {
     }
 
     private fun showEmptyData(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.tvFavoriteBy.visibility = View.GONE
-            binding.favEmptyContainer.visibility = View.VISIBLE
-            binding.rvFavoriteRecipes.visibility = View.GONE
-        } else {
-            binding.tvFavoriteBy.visibility = View.VISIBLE
-            binding.favEmptyContainer.visibility = View.GONE
-            binding.rvFavoriteRecipes.visibility = View.VISIBLE
-        }
+        binding.favEmptyContainer.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.favoriteContentContainer.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
 
     private fun toRecipeDetail(recipe: Recipe) {

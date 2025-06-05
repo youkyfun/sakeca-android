@@ -22,7 +22,6 @@ import com.youkydesign.favorite.FavoriteViewModelFactory
 import com.youkydesign.favorite.databinding.FragmentFavoriteDetailsBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
 import com.youkydesign.favorite.ui.main.FavoriteRecipeViewModel
-import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
 import com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragmentArgs
@@ -118,14 +117,14 @@ class FavoriteDetailsFragment : Fragment() {
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite)
+                            binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite)
 
                             fabFavorite.setOnClickListener {
 
                                 // Immediately remove from favorites
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 detailRecipeViewModel.getFavoriteRecipes()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
 
                                 currentSnackbar = Snackbar.make(
                                     requireView(),
@@ -155,7 +154,7 @@ class FavoriteDetailsFragment : Fragment() {
                                     }.start()
                             }
                         } else {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                            binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 detailRecipeViewModel.getFavoriteRecipes()
@@ -166,7 +165,7 @@ class FavoriteDetailsFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite)
+                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite)
                             }
                         }
                     }
@@ -213,8 +212,16 @@ class FavoriteDetailsFragment : Fragment() {
 
     private fun renderTopAppBarAnimated(scrollPosition: Int) {
         val transparentColor =
-            ResourcesCompat.getColor(resources, R.color.tw_slate_50_transparent, null)
-        val filledColor = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
+            ResourcesCompat.getColor(
+                resources,
+                com.youkydesign.designsystem.R.color.tw_slate_50_transparent,
+                null
+            )
+        val filledColor = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_50,
+            null
+        )
 
         // This animation should be started with #start()
         val colorAnimationScroll =

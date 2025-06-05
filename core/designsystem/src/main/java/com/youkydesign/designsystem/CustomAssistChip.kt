@@ -1,6 +1,4 @@
-@file:Suppress("unused")
-
-package com.youkydesign.recipeapp.feature.discovery.ui.discovery
+package com.youkydesign.designsystem
 
 import android.content.Context
 import android.graphics.Canvas
@@ -15,7 +13,6 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
-import com.youkydesign.recipeapp.R
 
 @Suppress("unused")
 class CustomAssistChip @JvmOverloads constructor(

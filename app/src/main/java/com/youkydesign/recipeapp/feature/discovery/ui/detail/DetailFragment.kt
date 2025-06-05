@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.core.domain.UiResource
-import com.youkydesign.recipeapp.R
 import com.youkydesign.recipeapp.RecipeApplication
 import com.youkydesign.recipeapp.databinding.FragmentDetailBinding
 import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
@@ -113,7 +112,7 @@ class DetailFragment : Fragment() {
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite)
+                            binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 Snackbar.make(
@@ -122,10 +121,10 @@ class DetailFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
                             }
                         } else {
-                            binding.fabFavorite.setImageResource(R.drawable.favorite_border)
+                            binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 Snackbar.make(
@@ -134,7 +133,7 @@ class DetailFragment : Fragment() {
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .show()
-                                binding.fabFavorite.setImageResource(R.drawable.favorite)
+                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite)
                             }
                         }
                     }
@@ -181,12 +180,32 @@ class DetailFragment : Fragment() {
 
     private fun renderTopAppBarAnimated(scrollPosition: Int) {
 
-        val slate50Color = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
-        val slate400Color = ResourcesCompat.getColor(resources, R.color.tw_slate_400, null)
-        val slate950Color = ResourcesCompat.getColor(resources, R.color.tw_slate_950, null)
+        val slate50Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_50,
+            null
+        )
+        val slate400Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_400,
+            null
+        )
+        val slate950Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_950,
+            null
+        )
         val transparentColor =
-            ResourcesCompat.getColor(resources, R.color.tw_slate_50_transparent, null)
-        val filledColor = ResourcesCompat.getColor(resources, R.color.tw_slate_50, null)
+            ResourcesCompat.getColor(
+                resources,
+                com.youkydesign.designsystem.R.color.tw_slate_50_transparent,
+                null
+            )
+        val filledColor = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_50,
+            null
+        )
 
         // This animation should be started with #start()
         val colorAnimationScroll =
