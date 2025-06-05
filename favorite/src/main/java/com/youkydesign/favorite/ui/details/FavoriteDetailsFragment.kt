@@ -36,8 +36,7 @@ import javax.inject.Inject
 
 
 class FavoriteDetailsFragment : Fragment() {
-    private var _binding: FragmentFavoriteDetailsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFavoriteDetailsBinding
 
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private var scrollJob: Job? = null
@@ -65,7 +64,7 @@ class FavoriteDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFavoriteDetailsBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -126,7 +125,7 @@ class FavoriteDetailsFragment : Fragment() {
                                 // Immediately remove from favorites
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 detailRecipeViewModel.getFavoriteRecipes()
-                                _binding?.fabFavorite?.setImageResource(R.drawable.favorite_border)
+                                binding.fabFavorite.setImageResource(R.drawable.favorite_border)
 
                                 currentSnackbar = Snackbar.make(
                                     requireView(),
@@ -197,7 +196,6 @@ class FavoriteDetailsFragment : Fragment() {
         scrollChangedListener = null
         viewLifecycleOwner.lifecycleScope.cancel()
         fragmentScope.cancel()
-        _binding = null
     }
 
     override fun onStop() {
