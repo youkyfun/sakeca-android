@@ -158,7 +158,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/detail_app_bar_layout"
         android:layout_width="match_parent"

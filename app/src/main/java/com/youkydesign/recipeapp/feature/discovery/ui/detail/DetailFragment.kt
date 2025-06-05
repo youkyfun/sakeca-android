@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -33,7 +32,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailFragment : Fragment() {
-    private lateinit var binding: FragmentDetailBinding
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
+
 
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private var scrollJob: Job? = null
@@ -57,7 +58,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -155,27 +156,27 @@ class DetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        scrollChangedListener?.let {
-            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
-        }
-        lastKnownScrollPosition = 0
-        scrollJob?.cancel()
-        scrollChangedListener = null
-        viewLifecycleOwner.lifecycleScope.cancel()
-        fragmentScope.cancel()
+        cleanUpResources()
+        _binding = null
     }
 
     override fun onStop() {
         super.onStop()
+        cleanUpScrollRelatedResources()
+    }
+
+    private fun cleanUpScrollRelatedResources() {
         scrollChangedListener?.let {
-            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
+            _binding?.scrollableRecipeDetails?.viewTreeObserver?.removeOnScrollChangedListener(it)
         }
         lastKnownScrollPosition = 0
         scrollJob?.cancel()
         scrollChangedListener = null
-        viewLifecycleOwner.lifecycleScope.cancel()
+    }
+
+    private fun cleanUpResources() {
+        cleanUpScrollRelatedResources()
         fragmentScope.cancel()
-        scrollJob?.cancel()
     }
 
     private fun renderTopAppBarAnimated(scrollPosition: Int) {

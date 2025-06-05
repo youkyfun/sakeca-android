@@ -7,8 +7,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="12dp"
-    android:elevation="0dp"
-    card_view:cardCornerRadius="12dp">
+    android:background="@color/tw_slate_100"
+    android:backgroundTint="@color/tw_slate_100"
+    card_view:cardCornerRadius="16dp"
+    card_view:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -70,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/view_recipe"
                 android:textAlignment="textEnd"
-                android:textColor="@color/tw_emerald_500"
+                android:textColor="@color/tw_slate_950"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

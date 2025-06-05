@@ -32,7 +32,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+    private var _searchBarText: String? = null
+    private val searchBarText get() = _searchBarText!!
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -50,11 +53,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvRecipes.layoutManager = layoutManager
+        binding.rvRecipes.layoutManager = layoutManager // Use binding directly
         binding.rvRecipes.setHasFixedSize(true)
 
         with(binding) {
@@ -103,15 +106,20 @@ class HomeFragment : Fragment() {
                 searchView.hide()
                 recipeViewModel.searchRecipes(searchBar.text.toString())
 
-                val searchQuery = binding.searchBar.text
-                val title = "Search result for $searchQuery"
-                binding.tvSectionTitle.text = title
+                _searchBarText = binding.searchBar.text.toString()
+                binding.tvSectionTitle.text = searchBarText
 
                 false
             }
         }
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _searchBarText = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -163,7 +171,7 @@ class HomeFragment : Fragment() {
                             tvSectionTitle.isVisible = false
                             rvRecipes.isVisible = false
                             val message = "No recipe found for \"${searchBar.text}\""
-                            tvNoRecipe.text = message
+                            tvNoRecipe.text = message // Use binding directly
                             binding.searchBar.setText("")
 
                         }
