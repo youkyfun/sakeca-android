@@ -24,6 +24,9 @@
 -keep,includedescriptorclasses class com.youkydesign.core.SortUtils { *; }
 -keep,includedescriptorclasses interface net.sqlcipher.** { *; }
 
+-keep class androidx.constraintlayout.widget.R$* { *; }
+-keep public class * extends androidx.constraintlayout.widget.ConstraintLayout { *; }
+
 -keep class com.youkydesign.core.di.CoreComponent { *; }
 -keep class com.youkydesign.core.di.CoreComponent$Factory { *; }
 -keep class com.youkydesign.core.di.DaggerCoreComponent { *; }

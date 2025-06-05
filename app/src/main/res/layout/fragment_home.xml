@@ -56,7 +56,6 @@
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
         android:paddingBottom="32dp"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,16 +142,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_section_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <View
-        android:id="@+id/image_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="@drawable/grad_white_background"
-        android:rotation="180"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout" />
 
     <View
         android:id="@+id/image_overlay_2"
