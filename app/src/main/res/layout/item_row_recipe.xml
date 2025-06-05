@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="12dp"
     android:elevation="0dp"
     card_view:cardCornerRadius="12dp">
 
@@ -26,6 +26,7 @@
             tools:src="@tools:sample/avatars" />
 
         <LinearLayout
+            android:id="@+id/recipe_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -54,5 +55,23 @@
                 tools:text="recipe publisher" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/recipe_cta_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/tw_slate_200"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            card_view:layout_constraintTop_toBottomOf="@id/recipe_content">
+
+            <TextView
+                style="@style/baseTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view_recipe"
+                android:textAlignment="textEnd"
+                android:textColor="@color/tw_emerald_500"
+                android:textStyle="bold" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

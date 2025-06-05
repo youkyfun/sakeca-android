@@ -19,6 +19,7 @@
     <string name="coming_soon">* Coming soon</string>
     <string name="ingredients_amount_placeholder">5 items</string>
     <string name="craving_text">What are you craving today?</string>
+    <string name="view_recipe">View recipe</string>
 
     <string-array name="search_recommendation">
         <item>apple</item>

@@ -53,6 +53,7 @@
         android:id="@+id/home_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="32dp"
         android:padding="16dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,6 +123,24 @@
         </LinearLayout>
     </ScrollView>
 
+    <View
+        android:id="@+id/image_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/grad_white_background"
+        android:rotation="180"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout" />
+
+    <View
+        android:id="@+id/image_overlay_2"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/grad_white_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/progressBar"
