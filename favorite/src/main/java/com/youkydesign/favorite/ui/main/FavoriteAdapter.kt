@@ -10,7 +10,7 @@ import com.youkydesign.core.domain.Recipe
 import com.youkydesign.recipeapp.databinding.ItemRowRecipeBinding
 
 internal class FavoriteAdapter :
-    PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALBACK) {
+    PagingDataAdapter<Recipe, FavoriteAdapter.RecipeViewHolder>(DIFF_CALLBACK) {
 
     private var onItemClickCallback: OnItemClickCallback? = null
 
@@ -55,7 +55,7 @@ internal class FavoriteAdapter :
     }
 
     companion object {
-        private val DIFF_CALBACK = object : DiffUtil.ItemCallback<Recipe>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Recipe>() {
             override fun areItemsTheSame(
                 oldItem: Recipe,
                 newItem: Recipe

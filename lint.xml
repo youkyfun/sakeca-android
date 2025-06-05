@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Disable the IconMissingDensityFolder check in this project -->
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+
+    <!-- Ignore the ObsoleteLayoutParam issue in the specified files -->
+    <issue id="ObsoleteLayoutParam">
+        <ignore path="res/layout/activation.xml" />
+        <ignore path="res/layout-xlarge/activation.xml" />
+    </issue>
+
+    <!-- Ignore the UselessLeaf issue in the specified file -->
+    <issue id="UselessLeaf">
+        <ignore path="res/layout/main.xml" />
+    </issue>
+
+    <!-- Ignore the UnusedSymbol issue in the specified file -->
+    <issue id="GradleDependency">
+        <ignore path="gradle/libs.versions.toml" />
+    </issue>
+    <issue id="NewerVersionAvailable">
+        <ignore path="gradle/libs.versions.toml" />
+    </issue>
+
+    <!-- Change the severity of hardcoded strings to "error" -->
+    <issue id="HardcodedText" severity="error" />
+
+    <issue id="UnusedSymbol">
+        <ignore regexp=".*Scope\.kt" />
+        <ignore regexp=".*Module\.kt" />
+        <ignore regexp=".*Component\.kt" />
+        <!-- For Java files, you might use: -->
+        <ignore regexp=".*Scope\.java" />
+        <ignore regexp=".*Module\.java" />
+        <ignore regexp=".*Component\.java" />
+    </issue>
+
+    <!-- Ignore the UnusedProperty and UnAssigned issue in the specified file -->
+    <issue id="all">
+        <ignore path="\*/di/\*" />
+    </issue>
+</lint>

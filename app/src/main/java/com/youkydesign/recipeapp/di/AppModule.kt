@@ -5,6 +5,7 @@ import com.youkydesign.core.domain.RecipeUseCase
 import dagger.Binds
 import dagger.Module
 
+@Suppress("unused")
 @Module
 abstract class AppModule {
     @Binds

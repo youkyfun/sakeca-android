@@ -1,3 +1,5 @@
+@file:Suppress("RedundantSuppression", "unused")
+
 package com.youkydesign.recipeapp.feature.discovery.ui.detail
 
 import android.animation.ArgbEvaluator
@@ -30,7 +32,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +45,7 @@ class DetailFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private val detailRecipeViewModel: DetailRecipeViewModel by viewModels {
+    private val detailRecipeViewModel: DetailRecipeViewModel by viewModels<DetailRecipeViewModel> {
         factory
     }
 
@@ -238,6 +239,7 @@ class DetailFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
+    @Suppress("unused")
     companion object {
         var TITLE_SCREEN = "Details"
     }

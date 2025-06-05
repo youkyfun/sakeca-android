@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.youkydesign.recipeapp.feature.discovery.ui.discovery
 
 import android.content.Context
@@ -15,6 +17,7 @@ import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.youkydesign.recipeapp.R
 
+@Suppress("unused")
 class CustomAssistChip @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -37,7 +40,7 @@ class CustomAssistChip @JvmOverloads constructor(
     private var iconPadding = 16f
     private var textPaddingStart = 0f
     private var textPaddingEnd = 24f
-    private var verticalPadding = 32f
+    private var verticalPadding: Float = 32f
 
     init {
         attrs?.let {
@@ -178,6 +181,7 @@ class CustomAssistChip @JvmOverloads constructor(
         invalidate()
     }
 
+    @Suppress("unused")
     fun setOutlineColor(color: Int) {
         twSlate200 = color
         outlinePaint.color = color

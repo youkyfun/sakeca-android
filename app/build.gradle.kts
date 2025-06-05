@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("plugin.serialization") version "2.0.21"
+    kotlin("plugin.serialization") version "2.1.21"
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
