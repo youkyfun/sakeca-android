@@ -1,10 +1,10 @@
-package com.youkydesign.recipeapp.feature.discovery
+package com.youkydesign.feature.details.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.youkydesign.recipeapp.databinding.ItemRowIngredientsBinding
+import com.youkydesign.feature.details.databinding.ItemRowIngredientsBinding
 
 class IngredientsAdapter(val recipeList: List<String>) :
     RecyclerView.Adapter<IngredientsAdapter.RecipeViewHolder>() {

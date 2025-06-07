@@ -6,21 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.youkydesign.core.RecipeSortType
+import com.youkydesign.core.di.CoreDependenciesProvider
 import com.youkydesign.core.domain.Recipe
 import com.youkydesign.favorite.FavoriteViewModelFactory
 import com.youkydesign.favorite.R
 import com.youkydesign.favorite.databinding.FragmentFavoriteMainBinding
 import com.youkydesign.favorite.di.DaggerFavoriteComponent
-import com.youkydesign.recipeapp.RecipeApplication
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,8 +43,19 @@ class FavoriteMainFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        val dependencies = (requireActivity().application as RecipeApplication).appComponent
-        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
+//        val dependencies = (requireActivity().application as RecipeApplication).appComponent
+//        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
+
+        // It should be using the CoreDependenciesProvider pattern:
+        val provider = requireActivity().application as? CoreDependenciesProvider // From :core
+            ?: throw IllegalStateException("Application must implement CoreDependenciesProvider")
+        val coreDependencies = provider.provideCoreDependencies()
+
+
+        DaggerFavoriteComponent.factory().create(
+            context = requireActivity(),
+            dependencies = coreDependencies
+        ).inject(this)
     }
 
     override fun onCreateView(
@@ -156,9 +169,9 @@ class FavoriteMainFragment : Fragment() {
     }
 
     private fun toRecipeDetail(recipe: Recipe) {
-        val toDetailFragment =
-            FavoriteMainFragmentDirections.actionFavoriteMainFragmentToFavoriteDetailsFragment()
-        toDetailFragment.rId = recipe.recipeId
-        view?.findNavController()?.navigate(toDetailFragment)
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.youkydesign.feature.details.presentation.RecipeDetailsFragment/${recipe.recipeId}".toUri())
+            .build()
+        findNavController().navigate(request)
     }
 }

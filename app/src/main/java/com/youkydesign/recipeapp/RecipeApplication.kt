@@ -4,11 +4,13 @@ import android.app.Application
 import android.content.Context
 import com.google.android.play.core.splitcompat.SplitCompat
 import com.youkydesign.core.di.CoreComponent
+import com.youkydesign.core.di.CoreDependenciesProvider
+import com.youkydesign.core.di.CoreDependencies
 import com.youkydesign.core.di.DaggerCoreComponent
 import com.youkydesign.recipeapp.di.AppComponent
 import com.youkydesign.recipeapp.di.DaggerAppComponent
 
-open class RecipeApplication : Application() {
+open class RecipeApplication : Application(), CoreDependenciesProvider {
     private val coreComponent: CoreComponent by lazy {
         DaggerCoreComponent.factory().create(applicationContext)
     }
@@ -21,4 +23,6 @@ open class RecipeApplication : Application() {
         super.attachBaseContext(base)
         SplitCompat.install(this)
     }
+
+    override fun provideCoreDependencies(): CoreDependencies = appComponent
 }

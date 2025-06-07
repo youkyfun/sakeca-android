@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".feature.discovery.ui.detail.DetailFragment">
+    tools:context=".presentation.RecipeDetailsFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_favorite"
@@ -17,7 +17,6 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/tw_emerald_500"
         android:contentDescription="@string/fab_to_favorite"
-        android:foregroundTint="@color/tw_slate_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:rippleColor="@color/tw_emerald_300"
@@ -27,8 +26,7 @@
         android:id="@+id/scrollable_recipe_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollview_child_container"
@@ -171,7 +169,6 @@
             android:id="@+id/detail_top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back"
             app:navigationIconTint="@color/tw_slate_50"
             app:titleTextColor="@color/tw_slate_50" />

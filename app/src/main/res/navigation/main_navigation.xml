@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment">
+            app:destination="@id/recipe_details_navigation">
             <argument
                 android:name="rId"
                 android:defaultValue="rId" />
@@ -20,28 +20,13 @@
             android:id="@+id/action_homeFragment_to_favorite_nav_graph"
             app:destination="@id/favorite_nav_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail">
-        <argument
-            android:name="rId"
-            app:argType="string" />
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="https://www.youkydesign.com/recipe/{rId}" />
-        <action
-            android:id="@+id/action_detailFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:launchSingleTop="true"
-                app:popUpTo="@id/homeFragment"
-                app:popUpToInclusive="true" />
-    </fragment>
+
+
+    <include app:graph="@navigation/recipe_details_navigation" />
+
     <include-dynamic
         android:id="@+id/favorite_nav_graph"
-        app:graphResName="favorite_nav_graph"
-        app:moduleName="favorite"
         app:graphPackage="com.youkydesign.recipeapp.favorite"
-        />
+        app:graphResName="favorite_nav_graph"
+        app:moduleName="favorite" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.youkydesign.recipeapp.di
+package com.youkydesign.core.di
 
 import javax.inject.Scope
 

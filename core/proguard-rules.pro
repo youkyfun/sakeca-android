@@ -30,7 +30,9 @@
 -keep class com.youkydesign.core.di.CoreComponent { *; }
 -keep class com.youkydesign.core.di.CoreComponent$Factory { *; }
 -keep class com.youkydesign.core.di.DaggerCoreComponent { *; }
--keep class com.youkydesign.core.di.FavoriteModuleDependencies { *; }
+-keep interface com.youkydesign.core.di.CoreDependenciesProvider { *; }
+-keep class * implements com.youkydesign.core.di.CoreDependenciesProvider { *; }
+-keep class com.youkydesign.core.di.CoreDependencies { *; }
 -keep class com.youkydesign.core.domain.IRecipeRepository { *; }
 -keep class com.youkydesign.core.domain.*Component$Builder { *; }
 
@@ -49,14 +51,16 @@
 -keep class com.youkydesign.core.di.CoreComponent
 -keep class com.youkydesign.core.di.CoreComponent$Factory
 -keep class com.youkydesign.core.di.DaggerCoreComponent
--keep class com.youkydesign.core.di.FavoriteModuleDependencies
+-keep class com.youkydesign.core.di.CoreDependencies
+-keep class com.youkydesign.core.di.CoreDependenciesProvider
 -keep class com.youkydesign.core.domain.IRecipeRepository
 
 # Keep Dagger generated classes
 -keep class com.youkydesign.core.di.CoreComponent { *; }
 -keep class com.youkydesign.core.di.CoreComponent$Factory { *; }
 -keep class com.youkydesign.core.di.DaggerCoreComponent { *; }
--keep class com.youkydesign.core.di.FavoriteModuleDependencies { *; }
+-keep class com.youkydesign.core.di.CoreDependencies { *; }
+-keep class com.youkydesign.core.di.CoreDependenciesProvider { *; }
 
 # Keep domain classes if they are being removed
 -keep class com.youkydesign.core.domain.IRecipeRepository { *; }

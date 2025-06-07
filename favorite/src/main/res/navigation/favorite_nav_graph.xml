@@ -9,22 +9,5 @@
         android:name="com.youkydesign.favorite.ui.main.FavoriteMainFragment"
         android:label="fragment_favorite_main"
         app:moduleName="favorite"
-        tools:layout="@layout/fragment_favorite_main">
-        <action
-            android:id="@+id/action_favoriteMainFragment_to_favoriteDetailsFragment"
-            app:destination="@id/favoriteDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/favoriteDetailsFragment"
-        android:name="com.youkydesign.favorite.ui.details.FavoriteDetailsFragment"
-        android:label="fragment_favorite_details"
-        tools:layout="@layout/fragment_favorite_details" >
-        <action
-            android:id="@+id/action_favoriteDetailsFragment_to_favoriteMainFragment"
-            app:destination="@id/favoriteMainFragment" />
-        <argument
-            android:name="rId"
-            app:argType="string"
-            android:defaultValue="rId" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite_main"/>
 </navigation>

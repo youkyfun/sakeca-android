@@ -1,10 +1,11 @@
-package com.youkydesign.favorite.ui.details
+@file:Suppress("RedundantSuppression", "unused")
+
+package com.youkydesign.feature.details.presentation
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,18 +14,13 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.youkydesign.core.di.CoreDependenciesProvider
 import com.youkydesign.core.domain.UiResource
-import com.youkydesign.favorite.FavoriteViewModelFactory
-import com.youkydesign.favorite.databinding.FragmentFavoriteDetailsBinding
-import com.youkydesign.favorite.di.DaggerFavoriteComponent
-import com.youkydesign.favorite.ui.main.FavoriteRecipeViewModel
-import com.youkydesign.recipeapp.RecipeApplication
-import com.youkydesign.recipeapp.feature.discovery.IngredientsAdapter
-import com.youkydesign.recipeapp.feature.discovery.ui.detail.DetailFragmentArgs
+import com.youkydesign.feature.details.databinding.FragmentRecipeDetailsBinding
+import com.youkydesign.feature.details.di.DaggerRecipeDetailsComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,37 +29,47 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+class RecipeDetailsFragment : Fragment() {
+    private var _binding: FragmentRecipeDetailsBinding? = null
+    private val binding get() = _binding!!
 
-class FavoriteDetailsFragment : Fragment() {
-    private lateinit var binding: FragmentFavoriteDetailsBinding
 
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private var scrollJob: Job? = null
-    private var favoriteRemovalTimer: CountDownTimer? = null
-    private var currentSnackbar: Snackbar? = null
 
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var lastKnownScrollPosition = 0
 
     @Inject
-    lateinit var factory: FavoriteViewModelFactory
+    lateinit var factory: ViewModelFactory
 
-    private val detailRecipeViewModel: FavoriteRecipeViewModel by viewModels {
+    private val detailRecipeViewModel: DetailRecipeViewModel by viewModels<DetailRecipeViewModel> {
         factory
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val dependencies = (requireActivity().application as RecipeApplication).appComponent
-        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
-    }
 
+        val application = requireActivity().application
+        if (application !is CoreDependenciesProvider) {
+            throw IllegalStateException("Application must implement CoreDependenciesProvider")
+        }
+        val coreDependencies = application.provideCoreDependencies()
+
+        // Now inject using DaggerRecipeDetailsComponent
+        DaggerRecipeDetailsComponent.factory()
+            .create(
+                context = requireActivity(),
+                dependencies = coreDependencies
+            )
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoriteDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.detailTopAppBar.setNavigationOnClickListener {
@@ -79,7 +85,7 @@ class FavoriteDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rId = DetailFragmentArgs.fromBundle(arguments as Bundle).rId
+        val rId = RecipeDetailsFragmentArgs.fromBundle(arguments as Bundle).rId
         detailRecipeViewModel.getRecipe(rId)
 
         with(binding) {
@@ -110,6 +116,7 @@ class FavoriteDetailsFragment : Fragment() {
                         }
                         Glide.with(binding.imgRecipePhoto).load(resource.data?.imageUrl)
                             .into(binding.imgRecipePhoto)
+                        TITLE_SCREEN = resource.data?.title ?: TITLE_SCREEN
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
@@ -118,47 +125,20 @@ class FavoriteDetailsFragment : Fragment() {
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
                             binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite)
-
                             fabFavorite.setOnClickListener {
-
-                                // Immediately remove from favorites
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, false)
-                                detailRecipeViewModel.getFavoriteRecipes()
-                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
-
-                                currentSnackbar = Snackbar.make(
+                                Snackbar.make(
                                     requireView(),
                                     "Removed from favorite",
-                                    Snackbar.LENGTH_LONG
+                                    Snackbar.LENGTH_SHORT
                                 )
-
-                                currentSnackbar?.setAction("OK") {
-                                    favoriteRemovalTimer?.cancel()
-                                }
-                                currentSnackbar?.addCallback(object : Snackbar.Callback() {
-                                    override fun onDismissed(
-                                        transientBottomBar: Snackbar?,
-                                        event: Int
-                                    ) {
-                                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_CONSECUTIVE) {
-                                            favoriteRemovalTimer?.cancel()
-                                        }
-                                    }
-                                })
-                                currentSnackbar?.show()
-
-                                favoriteRemovalTimer =
-                                    object : CountDownTimer(3000, 1000) { // 3 seconds
-                                        override fun onTick(millisUntilFinished: Long) {}
-                                        override fun onFinish() {}
-                                    }.start()
+                                    .show()
+                                binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
                             }
                         } else {
                             binding.fabFavorite.setImageResource(com.youkydesign.designsystem.R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
                                 detailRecipeViewModel.setFavoriteRecipe(resource.data, true)
-                                detailRecipeViewModel.getFavoriteRecipes()
-
                                 Snackbar.make(
                                     requireView(),
                                     "Added to favorite",
@@ -187,30 +167,46 @@ class FavoriteDetailsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        scrollChangedListener?.let {
-            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
-        }
-        lastKnownScrollPosition = 0
-        scrollJob?.cancel()
-        scrollChangedListener = null
-        viewLifecycleOwner.lifecycleScope.cancel()
-        fragmentScope.cancel()
+        cleanUpResources()
+        _binding = null
     }
 
     override fun onStop() {
         super.onStop()
+        cleanUpScrollRelatedResources()
+    }
+
+    private fun cleanUpScrollRelatedResources() {
         scrollChangedListener?.let {
-            binding.scrollableRecipeDetails.viewTreeObserver.removeOnScrollChangedListener(it)
+            _binding?.scrollableRecipeDetails?.viewTreeObserver?.removeOnScrollChangedListener(it)
         }
         lastKnownScrollPosition = 0
         scrollJob?.cancel()
         scrollChangedListener = null
-        viewLifecycleOwner.lifecycleScope.cancel()
+    }
+
+    private fun cleanUpResources() {
+        cleanUpScrollRelatedResources()
         fragmentScope.cancel()
-        scrollJob?.cancel()
     }
 
     private fun renderTopAppBarAnimated(scrollPosition: Int) {
+
+        val slate50Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_50,
+            null
+        )
+        val slate400Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_400,
+            null
+        )
+        val slate950Color = ResourcesCompat.getColor(
+            resources,
+            com.youkydesign.designsystem.R.color.tw_slate_950,
+            null
+        )
         val transparentColor =
             ResourcesCompat.getColor(
                 resources,
@@ -229,7 +225,10 @@ class FavoriteDetailsFragment : Fragment() {
         colorAnimationScroll.duration = 250
 
         colorAnimationScroll.addUpdateListener { animator ->
+            binding.detailTopAppBar.setNavigationIconTint(slate400Color)
+            binding.detailTopAppBar.setTitleTextColor(slate950Color)
             binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+            binding.detailTopAppBar.setTitle(TITLE_SCREEN)
         }
 
         // This animation should be started with #start()
@@ -238,7 +237,10 @@ class FavoriteDetailsFragment : Fragment() {
         colorAnimationTop.duration = 250
 
         colorAnimationTop.addUpdateListener { animator ->
+            binding.detailTopAppBar.setTitleTextColor(slate50Color)
+            binding.detailTopAppBar.setNavigationIconTint(slate50Color)
             binding.detailAppBarLayout.setBackgroundColor(animator.animatedValue as Int)
+            binding.detailTopAppBar.setTitle(null)
         }
 
         // Only run animation if the scroll direction changes relative to the threshold
@@ -248,7 +250,9 @@ class FavoriteDetailsFragment : Fragment() {
         if (crossedThresholdUpwards) {
             if (!colorAnimationTop.isRunning) colorAnimationTop.start()
         } else if (crossedThresholdDownwards) {
-            if (!colorAnimationScroll.isRunning) colorAnimationScroll.start()
+            if (!colorAnimationScroll.isRunning) {
+                colorAnimationScroll.start()
+            }
         }
 
         lastKnownScrollPosition = scrollPosition
@@ -263,5 +267,10 @@ class FavoriteDetailsFragment : Fragment() {
         binding.scrollviewChildContainer.visibility =
             if (isLoading) View.GONE else View.VISIBLE
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    @Suppress("unused")
+    companion object {
+        var TITLE_SCREEN = "Details"
     }
 }
