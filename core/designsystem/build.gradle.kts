@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.youkydesign.designsystem"
+    namespace = "com.youkydesign.sakeca.designsystem"
     compileSdk = 36
 
     defaultConfig {

@@ -13,7 +13,7 @@
         app:moduleName="favorite" />
     <fragment
         android:id="@+id/recipe_discovery_fragment"
-        android:name="com.youkydesign.feature.discovery.presentation.RecipeDiscoveryFragment"
+        android:name="com.youkydesign.sakeca.feature.discovery.presentation.RecipeDiscoveryFragment"
         android:label="RecipeDiscoveryFragment"
         tools:layout="@layout/fragment_discovery_recipe">
         <action
@@ -24,6 +24,9 @@
             app:destination="@id/recipe_details_navigation"
             app:popUpTo="@id/recipe_discovery_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_recipe_discovery_fragment_to_shopping_list_navigation"
+            app:destination="@id/shopping_list_navigation" />
     </fragment>
 
     <action
@@ -33,5 +36,6 @@
             android:name="recipeId"
             app:argType="string" />
     </action>
+    <include app:graph="@navigation/groceries_navigation" />
 
 </navigation>

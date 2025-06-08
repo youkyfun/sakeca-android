@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":feature:groceries")
+
+
 include(":feature:discovery")
 
 
@@ -33,7 +36,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Recipe App"
+rootProject.name = "Sakeca"
 include(":app")
 include(":core")
 include(":favorite")

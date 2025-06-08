@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.youkydesign.feature.details.presentation.RecipeDetailsFragment"
+        android:name="com.youkydesign.sakeca.feature.details.presentation.RecipeDetailsFragment"
         android:label="fragment_recipe_details"
         tools:layout="@layout/fragment_recipe_details">
         <argument

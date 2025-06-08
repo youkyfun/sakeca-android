@@ -20,21 +20,21 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep,includedescriptorclasses class net.sqlcipher.** { *; }
--keep,includedescriptorclasses class com.youkydesign.core.RecipeSortType { *; }
--keep,includedescriptorclasses class com.youkydesign.core.SortUtils { *; }
+-keep,includedescriptorclasses class com.youkydesign.sakeca.core.RecipeSortType { *; }
+-keep,includedescriptorclasses class com.youkydesign.sakeca.core.SortUtils { *; }
 -keep,includedescriptorclasses interface net.sqlcipher.** { *; }
 
 -keep class androidx.constraintlayout.widget.R$* { *; }
 -keep public class * extends androidx.constraintlayout.widget.ConstraintLayout { *; }
 
--keep class com.youkydesign.core.di.CoreComponent { *; }
--keep class com.youkydesign.core.di.CoreComponent$Factory { *; }
--keep class com.youkydesign.core.di.DaggerCoreComponent { *; }
--keep interface com.youkydesign.core.di.CoreDependenciesProvider { *; }
--keep class * implements com.youkydesign.core.di.CoreDependenciesProvider { *; }
--keep class com.youkydesign.core.di.CoreDependencies { *; }
--keep class com.youkydesign.core.domain.IRecipeRepository { *; }
--keep class com.youkydesign.core.domain.*Component$Builder { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreComponent { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreComponent$Factory { *; }
+-keep class com.youkydesign.sakeca.core.di.DaggerCoreComponent { *; }
+-keep interface com.youkydesign.sakeca.core.di.CoreDependenciesProvider { *; }
+-keep class * implements com.youkydesign.sakeca.core.di.CoreDependenciesProvider { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreDependencies { *; }
+-keep class com.youkydesign.sakeca.core.domain.IRecipeRepository { *; }
+-keep class com.youkydesign.sakeca.core.domain.*Component$Builder { *; }
 
 # Keep Dagger generated components
 -keep class *.Dagger*Component { *; }
@@ -48,23 +48,23 @@
 -keep @dagger.Provides class *
 
 # Keep your specific missing classes (as a more targeted approach if the above are too broad or don't work)
--keep class com.youkydesign.core.di.CoreComponent
--keep class com.youkydesign.core.di.CoreComponent$Factory
--keep class com.youkydesign.core.di.DaggerCoreComponent
--keep class com.youkydesign.core.di.CoreDependencies
--keep class com.youkydesign.core.di.CoreDependenciesProvider
--keep class com.youkydesign.core.domain.IRecipeRepository
+-keep class com.youkydesign.sakeca.core.di.CoreComponent
+-keep class com.youkydesign.sakeca.core.di.CoreComponent$Factory
+-keep class com.youkydesign.sakeca.core.di.DaggerCoreComponent
+-keep class com.youkydesign.sakeca.core.di.CoreDependencies
+-keep class com.youkydesign.sakeca.core.di.CoreDependenciesProvider
+-keep class com.youkydesign.sakeca.core.domain.IRecipeRepository
 
 # Keep Dagger generated classes
--keep class com.youkydesign.core.di.CoreComponent { *; }
--keep class com.youkydesign.core.di.CoreComponent$Factory { *; }
--keep class com.youkydesign.core.di.DaggerCoreComponent { *; }
--keep class com.youkydesign.core.di.CoreDependencies { *; }
--keep class com.youkydesign.core.di.CoreDependenciesProvider { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreComponent { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreComponent$Factory { *; }
+-keep class com.youkydesign.sakeca.core.di.DaggerCoreComponent { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreDependencies { *; }
+-keep class com.youkydesign.sakeca.core.di.CoreDependenciesProvider { *; }
 
 # Keep domain classes if they are being removed
--keep class com.youkydesign.core.domain.IRecipeRepository { *; }
--keep class com.youkydesign.core.domain.RecipeInteractor_Factory { *; }
--keep class com.youkydesign.core.domain.RecipeUseCase { *; }
--keep class com.youkydesign.core.domain.UiResource { *; }
--keep class com.youkydesign.core.domain.UiResource$* { *; }
+-keep class com.youkydesign.sakeca.core.domain.IRecipeRepository { *; }
+-keep class com.youkydesign.sakeca.core.domain.RecipeInteractor_Factory { *; }
+-keep class com.youkydesign.sakeca.core.domain.RecipeUseCase { *; }
+-keep class com.youkydesign.sakeca.core.domain.UiResource { *; }
+-keep class com.youkydesign.sakeca.core.domain.UiResource$* { *; }
