@@ -12,10 +12,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
-
-    @Query("SELECT * FROM recipes")
-    fun getCachedRecipes(): Flow<List<RecipeEntity>>
-
     @RawQuery(observedEntities = [RecipeEntity::class])
     fun getFavoriteRecipes(query: SupportSQLiteQuery): PagingSource<Int, RecipeEntity>
 
@@ -27,4 +23,8 @@ interface RecipeDao {
 
     @Update
     suspend fun setFavoriteRecipe(recipe: RecipeEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(recipes: List<RecipeEntity>)
+
 }

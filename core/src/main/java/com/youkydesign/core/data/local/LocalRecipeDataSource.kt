@@ -9,8 +9,6 @@ import javax.inject.Singleton
 
 @Singleton
 class LocalRecipeDataSource @Inject constructor(private val recipeDao: RecipeDao) {
-    fun getAllCachedRecipes(): Flow<List<RecipeEntity>> = recipeDao.getCachedRecipes()
-
     fun getRecipe(rId: String): Flow<RecipeEntity?> = recipeDao.getRecipeById(rId)
 
     suspend fun insertRecipe(recipe: RecipeEntity) {
