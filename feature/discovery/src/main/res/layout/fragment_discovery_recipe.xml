@@ -21,7 +21,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_top_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:foregroundTint="@color/tw_emerald_500"
             android:minHeight="?attr/actionBarSize"
             android:paddingStart="0dp"

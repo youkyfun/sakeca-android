@@ -13,4 +13,10 @@
         android:icon="@drawable/favorite"
         android:title="@string/favorite_recipe"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/shopping_list_action"
+        android:icon="@drawable/shopbag_filled"
+        android:title="@string/visit_shopping_list"
+        app:showAsAction="ifRoom" />
 </menu>

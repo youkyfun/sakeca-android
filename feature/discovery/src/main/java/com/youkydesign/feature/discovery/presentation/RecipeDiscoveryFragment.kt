@@ -57,7 +57,6 @@ class RecipeDiscoveryFragment : Fragment() {
         }
         val coreDependencies = application.provideCoreDependencies()
 
-        // Now inject using DaggerRecipeDetailsComponent
         DaggerRecipeDiscoveryComponent.factory()
             .create(
                 context = requireActivity(),
@@ -110,6 +109,11 @@ class RecipeDiscoveryFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        true
+                    }
+
+                    R.id.shopping_list_action -> {
+                        toShoppingList()
                         true
                     }
 
@@ -308,6 +312,13 @@ class RecipeDiscoveryFragment : Fragment() {
     private fun toRecipeDetail(recipe: Recipe) {
         val request = NavDeepLinkRequest.Builder
             .fromUri("android-app://com.youkydesign.recipe/details/${recipe.recipeId}".toUri())
+            .build()
+        findNavController().navigate(request)
+    }
+
+    private fun toShoppingList() {
+        val request = NavDeepLinkRequest.Builder
+            .fromUri("android-app://com.youkydesign.recipe/shopping-list".toUri())
             .build()
         findNavController().navigate(request)
     }

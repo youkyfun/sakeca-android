@@ -1,44 +1,32 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version "2.1.21"
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.youkydesign.recipeapp"
+    namespace = "com.youkydesign.shopping"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.youkydesign.recipeapp"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        debug {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -48,55 +36,56 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        viewBinding = true
-        buildConfig = true
+        compose = true
     }
-    dynamicFeatures += setOf(":favorite")
 }
 
 dependencies {
+
     implementation(project(":core"))
     implementation(project(":core:designsystem"))
-    implementation(project(":feature:discovery"))
-    implementation(project(":feature:details"))
-    implementation(project(":feature:shopping"))
 
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
-
-    implementation(libs.feature.delivery.ktx)
-
-    // Splashscreen API
-    implementation(libs.androidx.core.splashscreen)
+    // Shimmer
+    implementation(libs.shimmer)
 
     // Kotlin Flow
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-
-    // Testing Navigation
-    androidTestImplementation(libs.androidx.navigation.testing)
-
     // Dagger
     implementation(libs.dagger)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
     ksp(libs.dagger.compiler)
 
     implementation(libs.glide)
 
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // Compose UI
+    implementation(libs.androidx.activity.compose)
+
     // Views/Fragments integration/Dynamic Feature support
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
-    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    debugImplementation(libs.leakcanary.android)
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shopping_list_navigation"
+    app:startDestination="@id/shoppingListRootFragment">
+
+    <fragment
+        android:id="@+id/shoppingListRootFragment"
+        android:name="com.youkydesign.shopping.presentation.ShoppingListRootFragment"
+        android:label="fragment_shopping_list_root"
+        tools:layout="@layout/fragment_shopping_list_root">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="android-app://com.youkydesign.recipe/shopping-list" />
+    </fragment>
+</navigation>
