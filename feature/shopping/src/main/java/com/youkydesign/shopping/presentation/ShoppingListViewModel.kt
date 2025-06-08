@@ -2,5 +2,5 @@ package com.youkydesign.shopping.presentation
 
 import androidx.lifecycle.ViewModel
 
-class ShoppingListViewModel() : ViewModel() {
+internal class ShoppingListViewModel() : ViewModel() {
 }

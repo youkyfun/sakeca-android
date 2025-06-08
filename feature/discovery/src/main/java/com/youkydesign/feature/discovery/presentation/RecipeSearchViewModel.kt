@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class RecipeSearchViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
     private val _searchResult: MutableStateFlow<UiResource<List<Recipe>>> =
         MutableStateFlow(UiResource.Idle())
     val searchResult: StateFlow<UiResource<List<Recipe>>> = _searchResult.asStateFlow()

@@ -7,7 +7,7 @@ import com.youkydesign.core.domain.RecipeUseCase
 import javax.inject.Inject
 
 @AppScope
-class ViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+class DetailsViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

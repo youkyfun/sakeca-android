@@ -40,7 +40,7 @@ class RecipeDetailsFragment : Fragment() {
     private var lastKnownScrollPosition = 0
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: DetailsViewModelFactory
 
     private val detailRecipeViewModel: DetailRecipeViewModel by viewModels<DetailRecipeViewModel> {
         factory

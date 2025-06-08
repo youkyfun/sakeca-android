@@ -11,7 +11,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState

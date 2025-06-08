@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.youkydesign.feature.details.databinding.ItemRowIngredientsBinding
 
-class IngredientsAdapter(val recipeList: List<String>) :
+internal class IngredientsAdapter(val recipeList: List<String>) :
     RecyclerView.Adapter<IngredientsAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(

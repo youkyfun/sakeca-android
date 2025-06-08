@@ -12,7 +12,7 @@ class ViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseC
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            RecipeViewModel::class.java -> RecipeViewModel(recipeUseCase) as T
+            RecipeSearchViewModel::class.java -> RecipeSearchViewModel(recipeUseCase) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

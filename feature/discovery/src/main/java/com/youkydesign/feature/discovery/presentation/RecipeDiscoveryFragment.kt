@@ -44,7 +44,7 @@ class RecipeDiscoveryFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private val recipeViewModel: RecipeViewModel by viewModels {
+    private val recipeSearchViewModel: RecipeSearchViewModel by viewModels {
         factory
     }
 
@@ -84,7 +84,7 @@ class RecipeDiscoveryFragment : Fragment() {
                 if (searchRecommendationContainer.isGone) {
                     searchRecommendationContainer.visibility = VISIBLE
                 }
-                recipeViewModel.searchRecipes("chicken")
+                recipeSearchViewModel.searchRecipes("chicken")
             }
             mainTopAppBar.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -125,7 +125,7 @@ class RecipeDiscoveryFragment : Fragment() {
             searchView.editText.setOnEditorActionListener { _, _, _ ->
                 searchBar.setText(searchView.text)
                 searchView.hide()
-                recipeViewModel.searchRecipes(searchBar.text.toString())
+                recipeSearchViewModel.searchRecipes(searchBar.text.toString())
 
                 _searchBarText = binding.searchBar.text.toString()
                 binding.tvSectionTitle.text = searchBarText
@@ -161,7 +161,7 @@ class RecipeDiscoveryFragment : Fragment() {
         })
 
         lifecycleScope.launch {
-            recipeViewModel.searchResult.collectLatest { resource ->
+            recipeSearchViewModel.searchResult.collectLatest { resource ->
                 when (resource) {
                     is UiResource.Loading -> showLoading(true)
 
@@ -345,7 +345,7 @@ class RecipeDiscoveryFragment : Fragment() {
                             searchView.hide()
                             tvSectionTitle.visibility = VISIBLE
                             searchRecommendationContainer.visibility = GONE
-                            recipeViewModel.searchRecipes(item)
+                            recipeSearchViewModel.searchRecipes(item)
                         }
                         layoutParams = ViewGroup.MarginLayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
