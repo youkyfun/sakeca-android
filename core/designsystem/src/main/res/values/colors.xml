@@ -8,8 +8,6 @@
     <color name="tw_slate_200">#e2e8f0</color>
     <color name="tw_slate_400">#64748b</color>
     <color name="tw_slate_700">#334155</color>
-    <color name="tw_emerald_50">#ecfdf5</color>
-    <color name="tw_emerald_100">#d1fae5</color>
     <color name="tw_emerald_300">#bbf7d0</color>
     <color name="tw_emerald_500">#10b981</color>
 </resources>

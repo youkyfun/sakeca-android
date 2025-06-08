@@ -57,10 +57,8 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:discovery"))
     implementation(project(":feature:details"))
-
-    // Shimmer
-    implementation(libs.shimmer)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -76,8 +74,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Flexbox Layout
-    implementation(libs.flexbox)
 
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
@@ -85,10 +81,6 @@ dependencies {
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.glide)
 

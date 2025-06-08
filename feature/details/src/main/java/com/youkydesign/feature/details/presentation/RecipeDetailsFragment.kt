@@ -33,7 +33,6 @@ class RecipeDetailsFragment : Fragment() {
     private var _binding: FragmentRecipeDetailsBinding? = null
     private val binding get() = _binding!!
 
-
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private var scrollJob: Job? = null
 

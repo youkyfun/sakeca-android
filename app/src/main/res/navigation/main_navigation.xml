@@ -2,31 +2,36 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/discovery_nav_graph"
-    app:startDestination="@id/homeFragment">
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.youkydesign.recipeapp.feature.discovery.ui.discovery.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/recipe_details_navigation">
-            <argument
-                android:name="rId"
-                android:defaultValue="rId" />
-        </action>
-        <action
-            android:id="@+id/action_homeFragment_to_favorite_nav_graph"
-            app:destination="@id/favorite_nav_graph" />
-    </fragment>
-
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/recipe_discovery_fragment">
 
     <include app:graph="@navigation/recipe_details_navigation" />
-
     <include-dynamic
         android:id="@+id/favorite_nav_graph"
         app:graphPackage="com.youkydesign.recipeapp.favorite"
         app:graphResName="favorite_nav_graph"
         app:moduleName="favorite" />
+    <fragment
+        android:id="@+id/recipe_discovery_fragment"
+        android:name="com.youkydesign.feature.discovery.presentation.RecipeDiscoveryFragment"
+        android:label="RecipeDiscoveryFragment"
+        tools:layout="@layout/fragment_discovery_recipe">
+        <action
+            android:id="@+id/action_recipe_discovery_fragment_to_favorite_nav_graph"
+            app:destination="@id/favorite_nav_graph" />
+        <action
+            android:id="@+id/action_recipe_discovery_fragment_to_recipe_details_navigation"
+            app:destination="@id/recipe_details_navigation"
+            app:popUpTo="@id/recipe_discovery_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <action
+        android:id="@+id/global_action_to_recipe_details"
+        app:destination="@id/recipe_details_navigation">
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+    </action>
+
 </navigation>

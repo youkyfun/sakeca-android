@@ -12,10 +12,21 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
+    <application android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".ui.main.FavoriteActivity"
-            android:exported="false" />
-    </application>
+            android:name=".presentation.FavoriteActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="android-app"
+                    android:host="com.youkydesign"
+                    android:pathPrefix="/favorite"/>
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

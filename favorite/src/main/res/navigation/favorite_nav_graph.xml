@@ -6,8 +6,28 @@
 
     <fragment
         android:id="@+id/favoriteMainFragment"
-        android:name="com.youkydesign.favorite.ui.main.FavoriteMainFragment"
+        android:name="com.youkydesign.favorite.presentation.FavoriteMainFragment"
         android:label="fragment_favorite_main"
         app:moduleName="favorite"
-        tools:layout="@layout/fragment_favorite_main"/>
+        tools:layout="@layout/fragment_favorite_main">
+        <deepLink
+            android:id="@+id/favorite_deeplink"
+            app:uri="android-app://com.youkydesign/favorite" />
+        <action
+            android:id="@+id/action_favorite_to_recipeDetails"
+            app:destination="@id/recipeDetailsFavoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailsFavoriteFragment"
+        android:name="com.youkydesign.favorite.presentation.RecipeDetailsFragment"
+        android:label="fragment_recipe_details"
+        tools:layout="@layout/fragment_recipe_details" >
+        <argument
+            android:name="rId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recipeDetails_pop_including_favoriteMain"
+            app:popUpTo="@id/favoriteMainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
