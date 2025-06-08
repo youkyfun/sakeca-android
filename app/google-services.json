@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "280132951141",
-    "project_id": "recipe-app-1a483",
-    "storage_bucket": "recipe-app-1a483.firebasestorage.app"
+    "project_number": "879328967771",
+    "project_id": "sakeca-d5a7f",
+    "storage_bucket": "sakeca-d5a7f.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:280132951141:android:17c4f4719cbb57f508ba8c",
+        "mobilesdk_app_id": "1:879328967771:android:5f762b4d93444b432a137e",
         "android_client_info": {
           "package_name": "com.youkydesign.sakeca"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyALOD7Vr_V2K5_p1GY6k_TuzFeoSAD7NIQ"
+          "current_key": "AIzaSyApZl4p5Sf0YeauMAou2XWXivImPQrwLg8"
         }
       ],
       "services": {
