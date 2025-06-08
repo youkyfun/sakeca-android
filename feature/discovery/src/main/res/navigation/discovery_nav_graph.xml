@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recipeDiscoveryFragment"
-        android:name="com.youkydesign.feature.discovery.presentation.RecipeDiscoveryFragment"
+        android:name="com.youkydesign.sakeca.feature.discovery.presentation.RecipeDiscoveryFragment"
         android:label="fragment_discovery_recipe"
         tools:layout="@layout/fragment_discovery_recipe" />
 </navigation>

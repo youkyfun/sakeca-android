@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.youkydesign.recipeapp"
+    namespace = "com.youkydesign.sakeca"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.youkydesign.recipeapp"
+        applicationId = "com.youkydesign.sakeca"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -59,7 +59,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":feature:discovery"))
     implementation(project(":feature:details"))
-    implementation(project(":feature:shopping"))
+    implementation(project(":feature:groceries"))
 
     // Firebase
     implementation(platform(libs.firebase.bom))

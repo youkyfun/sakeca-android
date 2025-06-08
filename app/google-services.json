@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:280132951141:android:1603b435d2f9812108ba8c",
+        "mobilesdk_app_id": "1:280132951141:android:17c4f4719cbb57f508ba8c",
         "android_client_info": {
-          "package_name": "com.youkydesign.recipeapp"
+          "package_name": "com.youkydesign.sakeca"
         }
       },
       "oauth_client": [],

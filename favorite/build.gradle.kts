@@ -7,7 +7,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 android {
-    namespace = "com.youkydesign.favorite"
+    namespace = "com.youkydesign.sakeca.favorite"
     compileSdk = 36
 
     defaultConfig {

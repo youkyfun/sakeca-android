@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/favoriteMainFragment"
-        android:name="com.youkydesign.favorite.presentation.FavoriteMainFragment"
+        android:name="com.youkydesign.sakeca.favorite.presentation.FavoriteMainFragment"
         android:label="fragment_favorite_main"
         app:moduleName="favorite"
         tools:layout="@layout/fragment_favorite_main">
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFavoriteFragment"
-        android:name="com.youkydesign.favorite.presentation.RecipeDetailsFragment"
+        android:name="com.youkydesign.sakeca.favorite.presentation.RecipeDetailsFragment"
         android:label="fragment_recipe_details"
         tools:layout="@layout/fragment_recipe_details" >
         <argument

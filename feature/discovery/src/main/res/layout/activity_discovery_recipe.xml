@@ -10,7 +10,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
-        android:name="com.youkydesign.feature.discovery.presentation.RecipeDiscoveryFragment"
+        android:name="com.youkydesign.sakeca.feature.discovery.presentation.RecipeDiscoveryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"

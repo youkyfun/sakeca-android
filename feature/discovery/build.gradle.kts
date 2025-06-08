@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.youkydesign.feature.discovery"
+    namespace = "com.youkydesign.sakeca.feature.discovery"
     compileSdk = 36
 
     defaultConfig {

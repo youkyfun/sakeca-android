@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.youkydesign.feature"
+    namespace = "com.youkydesign.sakeca.feature"
     compileSdk = 36
 
     defaultConfig {
