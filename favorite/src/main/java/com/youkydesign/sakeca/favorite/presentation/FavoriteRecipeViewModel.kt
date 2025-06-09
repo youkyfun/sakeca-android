@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import com.youkydesign.sakeca.core.RecipeSortType
 import com.youkydesign.sakeca.core.domain.Recipe
 import com.youkydesign.sakeca.core.domain.RecipeUseCase
-import com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow

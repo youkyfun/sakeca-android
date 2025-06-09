@@ -21,7 +21,5 @@ interface RecipeDetailsComponent {
             @BindsInstance context: Context,
             dependencies: CoreDependencies
         ): RecipeDetailsComponent
-
     }
-
 }

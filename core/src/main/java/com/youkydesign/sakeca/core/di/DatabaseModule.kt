@@ -25,4 +25,6 @@ class DatabaseModule {
     @Provides
     fun provideRecipeDao(database: RecipeDatabase) = database.recipeDao()
 
+    @Provides
+    fun provideGroceryDao(database: RecipeDatabase) = database.groceriesDao()
 }

@@ -26,11 +26,11 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.core.domain.Recipe
-import com.youkydesign.sakeca.core.domain.UiResource
 import com.youkydesign.sakeca.designsystem.CustomAssistChip
 import com.youkydesign.sakeca.feature.discovery.R
 import com.youkydesign.sakeca.feature.discovery.databinding.FragmentDiscoveryRecipeBinding
 import com.youkydesign.sakeca.feature.discovery.di.DaggerRecipeDiscoveryComponent
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject

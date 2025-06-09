@@ -1,4 +1,4 @@
-package com.youkydesign.sakeca.core.data.local
+package com.youkydesign.sakeca.data.groceries
 
 import androidx.room.Dao
 import androidx.room.Delete

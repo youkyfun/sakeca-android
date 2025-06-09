@@ -2,6 +2,7 @@ package com.youkydesign.sakeca.core.di
 
 import android.content.Context
 import com.youkydesign.sakeca.core.domain.IRecipeRepository
+import com.youkydesign.sakeca.domain.groceries.IGroceriesRepository
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -14,5 +15,6 @@ interface CoreComponent {
         fun create(@BindsInstance context: Context): CoreComponent
     }
 
-    fun provideRepository(): IRecipeRepository
+    fun provideRecipeRepository(): IRecipeRepository
+    fun provideGroceriesRepository(): IGroceriesRepository
 }

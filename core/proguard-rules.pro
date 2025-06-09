@@ -47,7 +47,7 @@
 -keep @dagger.Module class *
 -keep @dagger.Provides class *
 
-# Keep your specific missing classes (as a more targeted approach if the above are too broad or don't work)
+# Keep specific missing classes (as a more targeted approach if the above are too broad or don't work)
 -keep class com.youkydesign.sakeca.core.di.CoreComponent
 -keep class com.youkydesign.sakeca.core.di.CoreComponent$Factory
 -keep class com.youkydesign.sakeca.core.di.DaggerCoreComponent
@@ -66,5 +66,3 @@
 -keep class com.youkydesign.sakeca.core.domain.IRecipeRepository { *; }
 -keep class com.youkydesign.sakeca.core.domain.RecipeInteractor_Factory { *; }
 -keep class com.youkydesign.sakeca.core.domain.RecipeUseCase { *; }
--keep class com.youkydesign.sakeca.core.domain.UiResource { *; }
--keep class com.youkydesign.sakeca.core.domain.UiResource$* { *; }

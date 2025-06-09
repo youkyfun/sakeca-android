@@ -2,6 +2,7 @@ package com.youkydesign.sakeca.core.domain
 
 import androidx.paging.PagingData
 import com.youkydesign.sakeca.core.RecipeSortType
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

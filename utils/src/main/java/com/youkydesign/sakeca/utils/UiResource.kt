@@ -1,4 +1,4 @@
-package com.youkydesign.sakeca.core.domain
+package com.youkydesign.sakeca.utils
 
 sealed class UiResource<T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T) : UiResource<T>(data)

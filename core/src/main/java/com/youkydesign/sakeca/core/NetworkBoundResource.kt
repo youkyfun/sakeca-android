@@ -1,7 +1,7 @@
 package com.youkydesign.sakeca.core
 
 import com.youkydesign.sakeca.core.data.network.ApiResponse
-import com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

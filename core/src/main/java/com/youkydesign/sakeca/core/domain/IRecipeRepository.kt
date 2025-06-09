@@ -2,6 +2,7 @@ package com.youkydesign.sakeca.core.domain
 
 import androidx.paging.PagingData
 import com.youkydesign.sakeca.core.RecipeSortType
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.Flow
 
 interface IRecipeRepository {
@@ -9,5 +10,4 @@ interface IRecipeRepository {
     fun getRecipe(rId: String): Flow<UiResource<Recipe?>>
     suspend fun setFavoriteRecipe(recipe: Recipe, isFavorite: Boolean)
     fun getFavoriteRecipes(sortType: RecipeSortType): Flow<PagingData<Recipe>>
-
 }

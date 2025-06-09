@@ -1,4 +1,4 @@
-package com.youkydesign.sakeca.core.data.local
+package com.youkydesign.sakeca.data.groceries
 
 import javax.inject.Inject
 import javax.inject.Singleton

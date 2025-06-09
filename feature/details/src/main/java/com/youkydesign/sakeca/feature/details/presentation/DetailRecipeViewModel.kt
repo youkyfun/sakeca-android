@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import  com.youkydesign.sakeca.core.domain.Recipe
 import  com.youkydesign.sakeca.core.domain.RecipeUseCase
-import  com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch

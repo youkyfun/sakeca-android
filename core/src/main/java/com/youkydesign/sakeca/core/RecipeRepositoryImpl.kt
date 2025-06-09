@@ -12,7 +12,7 @@ import com.youkydesign.sakeca.core.data.network.response.RecipeResponse
 import com.youkydesign.sakeca.core.data.network.response.RecipesItem
 import com.youkydesign.sakeca.core.domain.IRecipeRepository
 import com.youkydesign.sakeca.core.domain.Recipe
-import com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

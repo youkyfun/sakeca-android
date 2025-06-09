@@ -61,6 +61,8 @@ dependencies {
     implementation(project(":feature:details"))
     implementation(project(":feature:groceries"))
 
+    implementation(project(":domain:groceries"))
+
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

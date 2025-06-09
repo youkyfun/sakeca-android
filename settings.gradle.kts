@@ -1,5 +1,20 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":utils")
+
+
+include(":domain:groceries")
+
+
+include(":domain")
+
+
+include(":data:groceries")
+
+
+include(":data")
+
+
 include(":feature:groceries")
 
 

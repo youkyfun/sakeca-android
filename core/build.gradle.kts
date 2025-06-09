@@ -48,6 +48,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":utils"))
+    implementation(project(":domain:groceries"))
+    implementation(project(":data:groceries"))
+
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import  com.youkydesign.sakeca.core.domain.Recipe
 import  com.youkydesign.sakeca.core.domain.RecipeUseCase
-import  com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

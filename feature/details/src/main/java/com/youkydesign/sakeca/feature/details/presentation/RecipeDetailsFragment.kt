@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
-import com.youkydesign.sakeca.core.domain.UiResource
 import com.youkydesign.sakeca.designsystem.R
 import com.youkydesign.sakeca.feature.details.databinding.FragmentRecipeDetailsBinding
 import com.youkydesign.sakeca.feature.details.di.DaggerRecipeDetailsComponent
+import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
