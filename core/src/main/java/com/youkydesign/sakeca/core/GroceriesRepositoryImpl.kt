@@ -18,9 +18,11 @@ class GroceriesRepositoryImpl @Inject constructor(private val dataSource: Grocer
     val scope = CoroutineScope(Dispatchers.IO)
 
     override fun getAll(): Flow<UiResource<List<Grocery>>> = flow {
-        val data = dataSource.getAll()
-        data.map { entity ->
-            GroceriesDataMapper.mapEntityToDomain(entity)
+        scope.launch {
+            val data = dataSource.getAll()
+            data.map { entity ->
+                GroceriesDataMapper.mapEntityToDomain(entity)
+            }
         }
     }
 

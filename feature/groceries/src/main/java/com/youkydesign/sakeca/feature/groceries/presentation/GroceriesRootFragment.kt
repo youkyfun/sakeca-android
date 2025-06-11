@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.getValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.feature.groceries.R
+import com.youkydesign.sakeca.feature.groceries.di.DaggerGroceriesComponent
 import com.youkydesign.sakeca.utils.UiResource
 import javax.inject.Inject
 
@@ -61,8 +63,7 @@ class GroceriesRootFragment : Fragment() {
         composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-
-                val groceries = viewModel.uiState.collectAsStateWithLifecycle().value
+                val groceries by viewModel.uiState.collectAsStateWithLifecycle()
                 Scaffold { paddingValues ->
                     Column(
                         modifier = Modifier.padding(paddingValues),

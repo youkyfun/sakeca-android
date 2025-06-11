@@ -1,16 +1,17 @@
 package com.youkydesign.sakeca.feature.groceries.di
 
 import android.content.Context
-import com.youkydesign.sakeca.core.di.AppScope
 import com.youkydesign.sakeca.core.di.CoreDependencies
+import com.youkydesign.sakeca.core.di.FeatureScope
+import com.youkydesign.sakeca.feature.groceries.presentation.GroceriesRootFragment
 import dagger.BindsInstance
 import dagger.Component
 
-@AppScope
+@FeatureScope
 @Component(dependencies = [CoreDependencies::class])
 interface GroceriesComponent {
 
-    fun inject(fragment: GroceriesComponent)
+    fun inject(fragment: GroceriesRootFragment)
 
     @Component.Factory
     interface Factory {

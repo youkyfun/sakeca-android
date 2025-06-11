@@ -7,7 +7,6 @@ import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
 import dagger.Binds
 import dagger.Module
 
-@Suppress("unused")
 @Module
 abstract class AppModule {
     @Binds

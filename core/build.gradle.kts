@@ -49,7 +49,7 @@ android {
 
 dependencies {
     implementation(project(":utils"))
-    implementation(project(":domain:groceries"))
+    api(project(":domain:groceries"))
     implementation(project(":data:groceries"))
 
     // Feature module support for Fragments

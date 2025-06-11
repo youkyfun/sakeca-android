@@ -10,7 +10,7 @@ import com.youkydesign.sakeca.core.di.DaggerCoreComponent
 import com.youkydesign.sakeca.di.AppComponent
 import com.youkydesign.sakeca.di.DaggerAppComponent
 
-open class SakecaApplication : Application(), CoreDependenciesProvider {
+class SakecaApplication : Application(), CoreDependenciesProvider {
     private val coreComponent: CoreComponent by lazy {
         DaggerCoreComponent.factory().create(applicationContext)
     }

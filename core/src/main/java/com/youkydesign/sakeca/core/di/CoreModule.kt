@@ -18,12 +18,14 @@ import javax.inject.Singleton
 @Module(includes = [DatabaseModule::class, NetworkModule::class])
 class CoreModule {
     @Provides
+    @Singleton
     fun provideRecipeUseCase(recipeRepositoryImpl: RecipeRepositoryImpl): RecipeUseCase =
         RecipeInteractor(
             recipeRepository = recipeRepositoryImpl
         )
 
     @Provides
+    @Singleton
     fun provideGroceriesUseCase(groceriesRepositoryImpl: GroceriesRepositoryImpl): GroceriesUseCase =
         GroceriesInteractor(
             repository = groceriesRepositoryImpl
