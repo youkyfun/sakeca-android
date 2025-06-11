@@ -14,9 +14,10 @@
     card_view:layout_constraintTop_toTopOf="parent">
 
     <CheckBox
+        android:id="@+id/ingredients_checkbox"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:clickable="false" />
+        android:checked="false" />
 
     <TextView
         android:id="@+id/tv_ingredient_item"

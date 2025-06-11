@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":utils"))
     implementation(project(":core"))
     implementation(project(":core:designsystem"))
+    implementation(project(":domain:groceries"))
 
     // Shimmer
     implementation(libs.shimmer)

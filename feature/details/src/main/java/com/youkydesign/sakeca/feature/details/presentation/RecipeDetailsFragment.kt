@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.designsystem.R
+import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.feature.details.databinding.FragmentRecipeDetailsBinding
 import com.youkydesign.sakeca.feature.details.di.DaggerRecipeDetailsComponent
 import com.youkydesign.sakeca.utils.UiResource
@@ -40,6 +42,8 @@ class RecipeDetailsFragment : Fragment() {
     private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var lastKnownScrollPosition = 0
 
+    private val ingredientsToSave = mutableListOf<Grocery>()
+
     @Inject
     lateinit var factory: DetailsViewModelFactory
 
@@ -56,7 +60,6 @@ class RecipeDetailsFragment : Fragment() {
         }
         val coreDependencies = application.provideCoreDependencies()
 
-        // Now inject using DaggerRecipeDetailsComponent
         DaggerRecipeDetailsComponent.factory()
             .create(
                 context = requireActivity(),
@@ -260,6 +263,18 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun setIngredientList(ingredientList: List<String>) {
         val adapter = IngredientsAdapter(ingredientList)
+        adapter.setOnItemClickCallback(object : IngredientsAdapter.OnItemClickCallback {
+
+            override fun onItemClicked(grocery: String) {
+                val grocery = Grocery(name = grocery)
+                ingredientsToSave.add(grocery)
+
+                if (binding.addToShoppingListContainer.isGone && ingredientsToSave.isNotEmpty()) {
+                    binding.addToShoppingListContainer.visibility = View.VISIBLE
+                }
+            }
+        })
+
         binding.rvIngredients.adapter = adapter
     }
 
@@ -267,6 +282,13 @@ class RecipeDetailsFragment : Fragment() {
         binding.scrollviewChildContainer.visibility =
             if (isLoading) View.GONE else View.VISIBLE
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun addIngredientToShoppingBag(grocery: Grocery) {
+        if (ingredientsToSave.isNotEmpty()) {
+            detailRecipeViewModel.addIngredientToShoppingBag(grocery)
+            Toast.makeText(requireContext(), "Added to shopping bag", Toast.LENGTH_SHORT).show()
+        }
     }
 
     @Suppress("unused")

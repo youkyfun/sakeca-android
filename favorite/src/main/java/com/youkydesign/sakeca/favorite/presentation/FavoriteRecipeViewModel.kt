@@ -8,6 +8,8 @@ import androidx.paging.PagingData
 import com.youkydesign.sakeca.core.RecipeSortType
 import com.youkydesign.sakeca.core.domain.Recipe
 import com.youkydesign.sakeca.core.domain.RecipeUseCase
+import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
+import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -18,7 +20,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+class FavoriteRecipeViewModel(
+    private val recipeUseCase: RecipeUseCase,
+    private val groceryUseCase: GroceriesUseCase
+) : ViewModel() {
     private val _favoriteRecipes: MutableStateFlow<PagingData<Recipe>> =
         MutableStateFlow(PagingData.empty())
     val favoriteRecipes: StateFlow<PagingData<Recipe>> = _favoriteRecipes.asStateFlow()
@@ -67,6 +72,12 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                         }
                     }
                 }
+        }
+    }
+
+    fun addIngredientToShoppingBag(grocery: Grocery) {
+        viewModelScope.launch {
+            groceryUseCase.insert(grocery)
         }
     }
 

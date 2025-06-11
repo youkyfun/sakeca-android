@@ -10,5 +10,5 @@ data class GroceryEntity(
     val name: String,
 
     @ColumnInfo(name = "quantity")
-    val quantity: Int
+    val quantity: Int = 0
 )

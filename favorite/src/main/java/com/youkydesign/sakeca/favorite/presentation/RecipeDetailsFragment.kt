@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.designsystem.R
+import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.favorite.FavoriteViewModelFactory
 import com.youkydesign.sakeca.favorite.databinding.FragmentRecipeDetailsBinding
 import com.youkydesign.sakeca.favorite.di.DaggerFavoriteComponent
@@ -44,7 +45,7 @@ class RecipeDetailsFragment : Fragment() {
     @Inject
     lateinit var factory: FavoriteViewModelFactory
 
-    private val recipeViewModel: FavoriteRecipeViewModel by viewModels<FavoriteRecipeViewModel> {
+    private val favoriteRecipeViewModel: FavoriteRecipeViewModel by viewModels<FavoriteRecipeViewModel> {
         factory
     }
 
@@ -57,7 +58,6 @@ class RecipeDetailsFragment : Fragment() {
         }
         val coreDependencies = application.provideCoreDependencies()
 
-        // Now inject using DaggerRecipeDetailsComponent
         DaggerFavoriteComponent.factory()
             .create(
                 context = requireActivity(),
@@ -87,10 +87,10 @@ class RecipeDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val rId = RecipeDetailsFragmentArgs.fromBundle(arguments as Bundle).rId
-        recipeViewModel.getRecipe(rId)
+        favoriteRecipeViewModel.getRecipe(rId)
 
         with(binding) {
-            recipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
+            favoriteRecipeViewModel.recipeDetailState.observe(viewLifecycleOwner) { resource ->
                 when (resource) {
                     is UiResource.Error -> {
                         showLoading(false)
@@ -115,6 +115,7 @@ class RecipeDetailsFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                         Glide.with(binding.imgRecipePhoto).load(resource.data?.imageUrl)
                             .into(binding.imgRecipePhoto)
                         TITLE_SCREEN = resource.data?.title ?: TITLE_SCREEN
@@ -127,7 +128,7 @@ class RecipeDetailsFragment : Fragment() {
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
                             fabFavorite.setOnClickListener {
-                                recipeViewModel.setFavoriteRecipe(resource.data, false)
+                                favoriteRecipeViewModel.setFavoriteRecipe(resource.data, false)
                                 Snackbar.make(
                                     requireView(),
                                     "Removed from favorite",
@@ -139,7 +140,7 @@ class RecipeDetailsFragment : Fragment() {
                         } else {
                             binding.fabFavorite.setImageResource(R.drawable.favorite_border)
                             fabFavorite.setOnClickListener {
-                                recipeViewModel.setFavoriteRecipe(resource.data, true)
+                                favoriteRecipeViewModel.setFavoriteRecipe(resource.data, true)
                                 Snackbar.make(
                                     requireView(),
                                     "Added to favorite",
@@ -261,6 +262,13 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun setIngredientList(ingredientList: List<String>) {
         val adapter = IngredientsAdapter(ingredientList)
+        adapter.setOnItemClickCallback(object : IngredientsAdapter.OnItemClickCallback {
+            override fun onItemClicked(grocery: String) {
+                val grocery = Grocery(name = grocery)
+                favoriteRecipeViewModel.addIngredientToShoppingBag(grocery)
+            }
+
+        })
         binding.rvIngredients.adapter = adapter
     }
 

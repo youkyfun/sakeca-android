@@ -6,12 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import  com.youkydesign.sakeca.core.domain.Recipe
 import  com.youkydesign.sakeca.core.domain.RecipeUseCase
+import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
+import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class DetailRecipeViewModel(
+    private val recipeUseCase: RecipeUseCase,
+    private val groceryUseCase: GroceriesUseCase
+) : ViewModel() {
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
@@ -62,6 +67,12 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                 return@launch
             }
             recipeUseCase.setFavoriteRecipe(recipe, isFavorite)
+        }
+    }
+
+    fun addIngredientToShoppingBag(grocery: Grocery) {
+        viewModelScope.launch {
+            groceryUseCase.insert(grocery)
         }
     }
 }

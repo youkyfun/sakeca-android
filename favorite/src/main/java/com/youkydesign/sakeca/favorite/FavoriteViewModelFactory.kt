@@ -4,16 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.youkydesign.sakeca.core.di.AppScope
 import com.youkydesign.sakeca.core.domain.RecipeUseCase
+import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
 import com.youkydesign.sakeca.favorite.presentation.FavoriteRecipeViewModel
 import javax.inject.Inject
 
 @AppScope
-class FavoriteViewModelFactory @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+class FavoriteViewModelFactory @Inject constructor(
+    private val recipeUseCase: RecipeUseCase,
+    private val groceriesUseCase: GroceriesUseCase
+) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when (modelClass) {
-            FavoriteRecipeViewModel::class.java -> return FavoriteRecipeViewModel(recipeUseCase) as T
+            FavoriteRecipeViewModel::class.java -> return FavoriteRecipeViewModel(
+                recipeUseCase = recipeUseCase,
+                groceryUseCase = groceriesUseCase
+            ) as T
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
