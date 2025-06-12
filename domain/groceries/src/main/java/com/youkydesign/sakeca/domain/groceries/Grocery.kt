@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Grocery(
-    val id: Long = 0,
+    val id: Long? = null,
     val name: String,
     val quantity: Int = 1,
 ) : Parcelable

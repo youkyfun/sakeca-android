@@ -1,5 +1,6 @@
 package com.youkydesign.sakeca.feature.details.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,9 @@ import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
 import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.utils.UiResource
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
@@ -17,6 +21,9 @@ internal class DetailRecipeViewModel(
     private val recipeUseCase: RecipeUseCase,
     private val groceryUseCase: GroceriesUseCase
 ) : ViewModel() {
+    private val _ingredientsToSave: MutableStateFlow<List<Grocery>> = MutableStateFlow(emptyList())
+    val ingredientsToSave: StateFlow<List<Grocery>> = _ingredientsToSave.asStateFlow()
+
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
@@ -70,9 +77,23 @@ internal class DetailRecipeViewModel(
         }
     }
 
-    fun addIngredientToShoppingBag(grocery: Grocery) {
+    fun setIngredientsToSave(ingredient: String) {
+        val newGrocery = Grocery(name = ingredient)
+        _ingredientsToSave.value.plusElement(newGrocery)
+    }
+
+    fun addIngredientToShoppingBag() {
+        if (ingredientsToSave.value.isEmpty()) {
+            return
+        }
+        Log.d("AddIngredientToShoppingBag", "Adding ingredients to shopping bag")
         viewModelScope.launch {
-            groceryUseCase.insert(grocery)
+            if (ingredientsToSave.value.isNotEmpty()) {
+                ingredientsToSave.value.forEach {
+                    Log.d("AddIngredientToShoppingBag", "Inserting each grocery: $it")
+                    groceryUseCase.insert(it)
+                }
+            }
         }
     }
 }

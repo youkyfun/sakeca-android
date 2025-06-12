@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.youkydesign.sakeca.SakecaApplication
 import com.youkydesign.sakeca.core.RecipeSortType
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.core.domain.Recipe
@@ -41,8 +42,8 @@ class FavoriteMainFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-//        val dependencies = (requireActivity().application as SakecaApplication).appComponent
-//        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
+        val dependencies = (requireActivity().application as SakecaApplication).appComponent
+        DaggerFavoriteComponent.factory().create(requireActivity(), dependencies).inject(this)
 
         // It should be using the CoreDependenciesProvider pattern:
         val provider = requireActivity().application as? CoreDependenciesProvider // From :core

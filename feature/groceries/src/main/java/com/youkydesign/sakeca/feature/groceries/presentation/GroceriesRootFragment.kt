@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -70,7 +72,7 @@ class GroceriesRootFragment : Fragment() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        
+
                         when (groceries) {
                             is UiResource.Error ->
                                 Text(groceries.message.toString())
@@ -79,10 +81,34 @@ class GroceriesRootFragment : Fragment() {
                             is UiResource.Loading -> Text("Loading")
                             is UiResource.Success -> {
                                 LazyColumn {
-                                    items(groceries.data?.size ?: 0) { index ->
-                                        Row {
-                                            Text(groceries.data?.get(index)?.name.toString())
-                                            Text(groceries.data?.get(index)?.quantity.toString())
+                                    val groceries = groceries.data
+                                    item {
+                                        Text("Shopping List")
+                                    }
+                                    if (groceries.isNullOrEmpty()) {
+                                        item {
+                                            Text("No groceries")
+                                        }
+                                    } else {
+                                        item {
+                                            Row(
+                                                modifier = Modifier.padding(8.dp),
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.SpaceBetween
+                                            ) {
+                                                Text("Name")
+                                                Text("Quantity")
+                                            }
+                                        }
+                                        items(groceries) { grocery ->
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                modifier = Modifier.padding(8.dp)
+                                            ) {
+                                                Text(grocery.name.toString())
+                                                Text(grocery.quantity.toString())
+                                            }
                                         }
                                     }
                                 }

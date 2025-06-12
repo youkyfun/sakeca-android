@@ -1,5 +1,6 @@
 package com.youkydesign.sakeca.feature.details.presentation
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +22,6 @@ internal class IngredientsAdapter(val ingredients: List<String>) :
     ): GroceriesViewHolder {
         val binding =
             ItemRowIngredientsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        if (binding.ingredientsCheckbox.isChecked == false) {
-            binding.ingredientsCheckbox.isChecked = true
-        }
         return GroceriesViewHolder(binding)
     }
 
@@ -34,6 +32,13 @@ internal class IngredientsAdapter(val ingredients: List<String>) :
         val ingredient = ingredients[position]
         holder.bind(ingredient)
         holder.itemView.setOnClickListener {
+            val isChecked = !holder.binding.ingredientsCheckbox.isChecked
+            holder.binding.ingredientsCheckbox.isChecked = isChecked
+            if (isChecked) {
+                holder.binding.tvIngredientItem.setTypeface(null, Typeface.BOLD)
+            } else {
+                holder.binding.tvIngredientItem.setTypeface(null, Typeface.NORMAL)
+            }
             onItemClick.onItemClicked(ingredients[holder.bindingAdapterPosition])
         }
     }

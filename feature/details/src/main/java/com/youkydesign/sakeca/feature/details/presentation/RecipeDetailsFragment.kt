@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -165,6 +167,10 @@ class RecipeDetailsFragment : Fragment() {
             scrollableRecipeDetails.viewTreeObserver.addOnScrollChangedListener(
                 scrollChangedListener
             )
+
+            btnAddToShoppingList.setOnClickListener {
+                addIngredientToShoppingBag()
+            }
         }
     }
 
@@ -266,12 +272,16 @@ class RecipeDetailsFragment : Fragment() {
         adapter.setOnItemClickCallback(object : IngredientsAdapter.OnItemClickCallback {
 
             override fun onItemClicked(grocery: String) {
-                val grocery = Grocery(name = grocery)
-                ingredientsToSave.add(grocery)
+                detailRecipeViewModel.setIngredientsToSave(grocery)
 
-                if (binding.addToShoppingListContainer.isGone && ingredientsToSave.isNotEmpty()) {
-                    binding.addToShoppingListContainer.visibility = View.VISIBLE
+                viewLifecycleOwner.lifecycleScope.launch {
+                    detailRecipeViewModel.ingredientsToSave.collectLatest {
+                        if (it.isNotEmpty() || binding.addToShoppingListContainer.isGone) {
+                            binding.addToShoppingListContainer.visibility = View.VISIBLE
+                        }
+                    }
                 }
+
             }
         })
 
@@ -284,11 +294,9 @@ class RecipeDetailsFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun addIngredientToShoppingBag(grocery: Grocery) {
-        if (ingredientsToSave.isNotEmpty()) {
-            detailRecipeViewModel.addIngredientToShoppingBag(grocery)
-            Toast.makeText(requireContext(), "Added to shopping bag", Toast.LENGTH_SHORT).show()
-        }
+    private fun addIngredientToShoppingBag() {
+        detailRecipeViewModel.addIngredientToShoppingBag()
+        Toast.makeText(requireContext(), "Added to shopping bag", Toast.LENGTH_SHORT).show()
     }
 
     @Suppress("unused")
