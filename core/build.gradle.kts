@@ -27,7 +27,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://forkify-api.herokuapp.com/api/\"")
         }
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

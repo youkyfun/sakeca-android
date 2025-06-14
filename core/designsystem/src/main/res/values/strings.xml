@@ -17,7 +17,7 @@
     <string name="search_result" tools:keep="@string/search_result">Search result</string>
     <string name="add_to_shopping_list">Add to shopping list</string>
     <string name="coming_soon">* Coming soon</string>
-    <string name="ingredients_amount_placeholder">5 items</string>
+    <string name="ingredients_amount_placeholder">5</string>
     <string name="craving_text">What are you craving today?</string>
     <string name="view_recipe">View recipe</string>
     <string name="home_title">Lapaaarrr</string>

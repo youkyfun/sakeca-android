@@ -110,14 +110,29 @@
                     android:textColor="@color/tw_emerald_500"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_ingredients_amount"
-                    style="@style/baseTextViewStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ingredients_amount_placeholder"
-                    android:textAlignment="textEnd" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_ingredients_amount"
+                        style="@style/baseTextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/ingredients_amount_placeholder"
+                        android:textAlignment="textEnd"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_ingredients_amount_label"
+                        style="@style/baseTextViewStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/items"
+                        android:textAlignment="textEnd" />
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -138,11 +153,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/grad_white_background"
-        android:orientation="vertical"
-        android:visibility="gone"
+        android:orientation="horizontal"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/shopping_list_icon"
+            android:src="@drawable/shopbag_outline" />
 
         <Button
             android:id="@+id/btn_add_to_shopping_list"

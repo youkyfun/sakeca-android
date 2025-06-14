@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import  com.youkydesign.sakeca.core.domain.Recipe
-import  com.youkydesign.sakeca.core.domain.RecipeUseCase
+import com.youkydesign.sakeca.core.domain.Recipe
+import com.youkydesign.sakeca.core.domain.RecipeUseCase
 import com.youkydesign.sakeca.domain.groceries.GroceriesUseCase
 import com.youkydesign.sakeca.domain.groceries.Grocery
 import com.youkydesign.sakeca.utils.UiResource
@@ -78,6 +78,7 @@ internal class DetailRecipeViewModel(
     }
 
     fun setIngredientsToSave(ingredient: String) {
+        Log.d("DetailRecipeViewModel", "Ingredient to save: $ingredient")
         val newGrocery = Grocery(name = ingredient)
         _ingredientsToSave.value.plusElement(newGrocery)
     }
@@ -86,11 +87,9 @@ internal class DetailRecipeViewModel(
         if (ingredientsToSave.value.isEmpty()) {
             return
         }
-        Log.d("AddIngredientToShoppingBag", "Adding ingredients to shopping bag")
         viewModelScope.launch {
             if (ingredientsToSave.value.isNotEmpty()) {
                 ingredientsToSave.value.forEach {
-                    Log.d("AddIngredientToShoppingBag", "Inserting each grocery: $it")
                     groceryUseCase.insert(it)
                 }
             }

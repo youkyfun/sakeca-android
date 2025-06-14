@@ -6,6 +6,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -126,7 +127,10 @@ class RecipeDetailsFragment : Fragment() {
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
 
-                        setIngredientList(resource.data?.ingredients ?: emptyList())
+                        if (resource.data?.ingredients != null) {
+                            tvIngredientsAmount.text = resource.data?.ingredients?.size.toString()
+                            setIngredientList(resource.data?.ingredients ?: emptyList())
+                        }
 
                         if (resource.data?.isFavorite != null && resource.data?.isFavorite == true) {
                             binding.fabFavorite.setImageResource(R.drawable.favorite)
@@ -270,7 +274,6 @@ class RecipeDetailsFragment : Fragment() {
     private fun setIngredientList(ingredientList: List<String>) {
         val adapter = IngredientsAdapter(ingredientList)
         adapter.setOnItemClickCallback(object : IngredientsAdapter.OnItemClickCallback {
-
             override fun onItemClicked(grocery: String) {
                 detailRecipeViewModel.setIngredientsToSave(grocery)
 
@@ -296,7 +299,6 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun addIngredientToShoppingBag() {
         detailRecipeViewModel.addIngredientToShoppingBag()
-        Toast.makeText(requireContext(), "Added to shopping bag", Toast.LENGTH_SHORT).show()
     }
 
     @Suppress("unused")
