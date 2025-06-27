@@ -3,6 +3,11 @@
 
     <application>
         <activity
+            android:name=".presentation.RecipeDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_recipe_detail"
+            android:theme="@style/Theme.Sakecaandroid" />
+        <activity
             android:name=".presentation.RecipeDetailsActivity"
             android:exported="true">
             <intent-filter>
@@ -19,4 +24,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

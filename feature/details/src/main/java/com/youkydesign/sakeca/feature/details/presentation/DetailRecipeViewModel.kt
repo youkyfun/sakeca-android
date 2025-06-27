@@ -1,8 +1,6 @@
 package com.youkydesign.sakeca.feature.details.presentation
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.youkydesign.sakeca.core.domain.Recipe
@@ -24,9 +22,9 @@ internal class DetailRecipeViewModel(
     private val _ingredientsToSave: MutableStateFlow<List<Grocery>> = MutableStateFlow(emptyList())
     val ingredientsToSave: StateFlow<List<Grocery>> = _ingredientsToSave.asStateFlow()
 
-    private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
-        MutableLiveData(UiResource.Loading())
-    val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
+    private val _recipeDetailState: MutableStateFlow<UiResource<Recipe>> =
+        MutableStateFlow(UiResource.Loading())
+    val recipeDetailState: StateFlow<UiResource<Recipe>> = _recipeDetailState.asStateFlow()
 
     fun getRecipe(rId: String) {
         _recipeDetailState.value = UiResource.Loading()
@@ -80,7 +78,20 @@ internal class DetailRecipeViewModel(
     fun setIngredientsToSave(ingredient: String) {
         Log.d("DetailRecipeViewModel", "Ingredient to save: $ingredient")
         val newGrocery = Grocery(name = ingredient)
-        _ingredientsToSave.value.plusElement(newGrocery)
+        val currentList = _ingredientsToSave.value.toMutableList()
+        currentList.add(newGrocery)
+        _ingredientsToSave.value = currentList.toList()
+    }
+
+    fun removeIngredientFromList(ingredient: String) {
+        viewModelScope.launch {
+            val currentList = _ingredientsToSave.value.toMutableList()
+            currentList.removeIf {
+                Log.d("DetailRecipeViewModel", "Ingredient to remove: $ingredient")
+                it.name == ingredient
+            }
+            _ingredientsToSave.value = currentList.toList()
+        }
     }
 
     fun addIngredientToShoppingBag() {

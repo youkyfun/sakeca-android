@@ -1,16 +1,14 @@
-@file:Suppress("RedundantSuppression", "unused")
-
 package com.youkydesign.sakeca.feature.details.presentation
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -24,30 +22,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.Snackbar
+import androidx.navigation.NavController
 import com.youkydesign.sakeca.core.di.CoreDependenciesProvider
 import com.youkydesign.sakeca.designsystem.IngredientItem
-import com.youkydesign.sakeca.feature.details.databinding.FragmentRecipeDetailsBinding
 import com.youkydesign.sakeca.feature.details.di.DaggerRecipeDetailsComponent
+import com.youkydesign.sakeca.feature.details.presentation.ui.theme.SakecaandroidTheme
 import com.youkydesign.sakeca.utils.UiResource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
-class RecipeDetailsFragment : Fragment() {
-    private var _binding: FragmentRecipeDetailsBinding? = null
-    private val binding get() = _binding!!
-
-    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
-    private var scrollJob: Job? = null
-
-    private val fragmentScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-    private var lastKnownScrollPosition = 0
+class RecipeDetailActivity : ComponentActivity() {
+    private lateinit var navController: NavController
 
     @Inject
     lateinit var factory: DetailsViewModelFactory
@@ -56,10 +40,12 @@ class RecipeDetailsFragment : Fragment() {
         factory
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    @OptIn(ExperimentalMaterial3Api::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
-        val application = requireActivity().application
+        val application = this.application
         if (application !is CoreDependenciesProvider) {
             throw IllegalStateException("Application must implement CoreDependenciesProvider")
         }
@@ -67,29 +53,17 @@ class RecipeDetailsFragment : Fragment() {
 
         DaggerRecipeDetailsComponent.factory()
             .create(
-                context = requireActivity(),
+                context = this,
                 dependencies = coreDependencies
             )
             .inject(this)
-    }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
-
-        val rId = RecipeDetailsFragmentArgs.fromBundle(arguments as Bundle).rId
-        detailRecipeViewModel.getRecipe(rId)
-
-        val composeView = binding.composeView
-        composeView.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
+        setContent {
+            SakecaandroidTheme {
                 val uiState by detailRecipeViewModel.recipeDetailState.collectAsState(UiResource.Loading())
 
                 Scaffold(
+                    modifier = Modifier.fillMaxSize(),
                     topBar = {
                         TopAppBar(
                             title = { Text("Recipe Details") },
@@ -109,12 +83,6 @@ class RecipeDetailsFragment : Fragment() {
                                             uiState.data,
                                             true
                                         )
-                                        Snackbar.make(
-                                            requireView(),
-                                            "Removed from favorite",
-                                            Snackbar.LENGTH_SHORT
-                                        )
-                                            .show()
                                     }
                                 }) {
 
@@ -131,9 +99,8 @@ class RecipeDetailsFragment : Fragment() {
                     Column(modifier = Modifier.consumeWindowInsets(paddingValues)) {
                         when (uiState) {
                             is UiResource.Error -> {
-                                showLoading(false)
                                 Toast.makeText(
-                                    requireContext(),
+                                    this@RecipeDetailActivity,
                                     uiState.message,
                                     Toast.LENGTH_SHORT
                                 )
@@ -143,14 +110,17 @@ class RecipeDetailsFragment : Fragment() {
                             is UiResource.Idle -> {}
 
                             is UiResource.Loading -> {
-                                showLoading(true)
+                                Toast.makeText(
+                                    this@RecipeDetailActivity,
+                                    "Loading...",
+                                    Toast.LENGTH_SHORT
+                                )
                             }
 
                             is UiResource.Success -> {
-                                showLoading(false)
                                 if (uiState.data == null) {
                                     Toast.makeText(
-                                        requireContext(),
+                                        this@RecipeDetailActivity,
                                         "Sorry, something went wrong! We can't get this recipe right now.",
                                         Toast.LENGTH_SHORT
                                     ).show()
@@ -184,7 +154,6 @@ class RecipeDetailsFragment : Fragment() {
                                             }
                                         )
                                     }
-
                                 }
                             }
                         }
@@ -192,31 +161,5 @@ class RecipeDetailsFragment : Fragment() {
                 }
             }
         }
-
-        return composeView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val rId = RecipeDetailsFragmentArgs.fromBundle(arguments as Bundle).rId
-        detailRecipeViewModel.getRecipe(rId)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.composeView.visibility =
-            if (isLoading) View.GONE else View.VISIBLE
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-
-    @Suppress("unused")
-    companion object {
-        var TITLE_SCREEN = "Details"
     }
 }

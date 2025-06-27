@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.1.21"
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
@@ -36,6 +37,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
@@ -44,6 +46,14 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":core:designsystem"))
     implementation(project(":domain:groceries"))
+
+    // Compose UI
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.ui)
+
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.android)
 
     // Shimmer
     implementation(libs.shimmer)
@@ -56,6 +66,12 @@ dependencies {
     implementation(libs.dagger)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
     ksp(libs.dagger.compiler)
 
     implementation(libs.glide)

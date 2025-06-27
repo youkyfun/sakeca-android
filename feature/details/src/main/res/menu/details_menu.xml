@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/save_recipe_action"
+        android:contentDescription="@string/save_recipe"
+        android:icon="@drawable/favorite_border"
+        android:title="@string/save_recipe"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+</menu>

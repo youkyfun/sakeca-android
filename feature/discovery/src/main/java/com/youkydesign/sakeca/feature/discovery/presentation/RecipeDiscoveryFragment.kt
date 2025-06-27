@@ -74,7 +74,7 @@ class RecipeDiscoveryFragment : Fragment() {
         val view = binding.root
 
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvRecipes.layoutManager = layoutManager // Use binding directly
+        binding.rvRecipes.layoutManager = layoutManager
         binding.rvRecipes.setHasFixedSize(true)
 
         with(binding) {

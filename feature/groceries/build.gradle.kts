@@ -75,7 +75,6 @@ dependencies {
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
 
     // Views/Fragments integration/Dynamic Feature support
     implementation(libs.androidx.navigation.fragment)

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recipe_details_navigation"
     android:label="Recipe Details"
-    app:startDestination="@id/recipeDetailsFragment">
+    app:startDestination="@id/recipeDetailActivity">
 
-    <fragment
-        android:id="@+id/recipeDetailsFragment"
-        android:name="com.youkydesign.sakeca.feature.details.presentation.RecipeDetailsFragment"
-        android:label="fragment_recipe_details"
-        tools:layout="@layout/fragment_recipe_details">
+    <activity
+        android:id="@+id/recipeDetailActivity"
+        android:name="com.youkydesign.sakeca.feature.details.presentation.RecipeDetailActivity"
+        android:label="RecipeDetailActivity">
         <argument
             android:name="rId"
             app:argType="string" />
         <deepLink
-            android:id="@+id/details_deepLink"
+            android:id="@+id/deepLink"
             app:uri="android-app://com.youkydesign.recipe/details/{rId}" />
-    </fragment>
+    </activity>
 </navigation>
