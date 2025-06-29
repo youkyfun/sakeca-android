@@ -59,7 +59,6 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":feature:discovery"))
     implementation(project(":feature:details"))
-    implementation(project(":feature:groceries"))
 
     // Firebase
     implementation(platform(libs.firebase.bom))

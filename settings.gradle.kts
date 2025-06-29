@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":feature:groceries")
-
 
 include(":feature:discovery")
 
