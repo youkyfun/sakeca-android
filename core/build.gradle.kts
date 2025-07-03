@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "com.youkydesign.sakeca.core"
-    compileSdk = 36
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectConfig.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 

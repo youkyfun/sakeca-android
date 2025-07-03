@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "com.youkydesign.sakeca"
-    compileSdk = 36
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
         applicationId = "com.youkydesign.sakeca"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = ProjectConfig.minSdk
+        targetSdk = ProjectConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 
