@@ -20,7 +20,8 @@
     <string name="ingredients_amount_placeholder">5 items</string>
     <string name="craving_text">What are you craving today?</string>
     <string name="view_recipe">View recipe</string>
-    <string name="home_title">Lapaaarrr</string>
+    <string name="home_title">Sakeca Foods</string>
+    <string name="no_recipe_found">Sorry, something went wrong! We can\'t get this recipe right now.</string>
 
     <string-array name="search_recommendation">
         <item>apple</item>

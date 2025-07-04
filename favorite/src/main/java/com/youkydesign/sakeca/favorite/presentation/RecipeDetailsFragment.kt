@@ -121,6 +121,10 @@ class RecipeDetailsFragment : Fragment() {
                         tvRecipeTitle.text = resource.data?.title
                         tvRecipePublisher.text = resource.data?.publisher
                         tvRecipeSocialRank.text = resource.data?.socialRank.toString()
+                        tvIngredientsAmount.text = buildString {
+                            append(resource.data?.ingredients?.size.toString())
+                            append(" items")
+                        }
 
                         setIngredientList(resource.data?.ingredients ?: emptyList())
 

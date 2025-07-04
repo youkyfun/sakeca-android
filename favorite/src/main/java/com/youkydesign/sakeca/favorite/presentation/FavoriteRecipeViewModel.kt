@@ -9,16 +9,15 @@ import com.youkydesign.sakeca.core.RecipeSortType
 import com.youkydesign.sakeca.core.domain.Recipe
 import com.youkydesign.sakeca.core.domain.RecipeUseCase
 import com.youkydesign.sakeca.core.domain.UiResource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import com.youkydesign.sakeca.designsystem.R as designSystem
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
     private val _favoriteRecipes: MutableStateFlow<PagingData<Recipe>> =
         MutableStateFlow(PagingData.empty())
     val favoriteRecipes: StateFlow<PagingData<Recipe>> = _favoriteRecipes.asStateFlow()
@@ -37,14 +36,14 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
             recipeUseCase.getRecipe(rId)
                 .catch {
                     _recipeDetailState.value =
-                        UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                        UiResource.Error(designSystem.string.no_recipe_found.toString())
                 }
                 .collect { state: UiResource<Recipe?> ->
                     when (state) {
                         is UiResource.Error -> {
                             if (state.message == null) {
                                 _recipeDetailState.value =
-                                    UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
                                 return@collect
                             } else {
                                 _recipeDetailState.value = UiResource.Error(state.message!!)
@@ -59,7 +58,7 @@ class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewMo
                         is UiResource.Success<*> -> {
                             if (state.data == null) {
                                 _recipeDetailState.value =
-                                    UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
                                 return@collect
                             } else {
                                 _recipeDetailState.value = UiResource.Success(state.data!!)
