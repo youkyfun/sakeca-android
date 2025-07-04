@@ -1,104 +1,39 @@
-# .circleci/config.yml
-
-# Use version 2.1 to enable using orbs and other advanced features.
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration.
-# The Android orb simplifies Android development on CircleCI.
 orbs:
-  android: circleci/android@3.1.0
+  android: circleci/android@0.2.1
 
-# Jobs are collections of steps that run in a specified environment.
 jobs:
-  # The 'test' job focuses on running lint and unit tests quickly.
-  test:
-    # The executor defines the environment. 'android/android-docker' is a Docker
-    # image provided by the orb, with Android tools pre-installed.
-    executor:
-      name: android/android-docker
-      tag: '2024.01.1-node' # Using a specific, recent image tag is recommended
-    
+  build:
+    docker:
+      - image: cimg/android:2025.04
+    executor: android/android
     steps:
-      # Step 1: Get the code from your repository
       - checkout
-
-      # Step 2: Restore cache to speed up dependency downloads
-      # The key uses checksums of your Gradle files. The cache is only
-      # restored if these files haven't changed.
       - restore_cache:
-          key: &gradle-cache-key v1-gradle-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}
-
-      # Step 3: Download your project's dependencies
+          key: android-orb-v1-
+      - run:
+          name: Chmod permissions
+          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-
-      # Step 4: Save the downloaded dependencies to the cache for future runs
       - save_cache:
-          key: *gradle-cache-key
+          key: 'android-orb-v1-{{ epoch }}'
           paths:
-            - ~/.gradle/caches
-            - ~/.gradle/wrapper
-
-      # Step 5: Run lint and unit tests
+            - ~/.android/build-cache
+            - ~/.android/cache
       - run:
-          name: Run Lint and Unit Tests
-          command: ./gradlew lintDebug testDebug
-
-      # Step 6: Save the test results for viewing in the CircleCI UI
+          name: Run Build
+          command: ./gradlew build
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - run:
+          name: Run Tests
+          command: ./gradlew lint test
       - store_test_results:
           path: app/build/test-results
-
-      # Step 7: Save the lint reports as artifacts for debugging
       - store_artifacts:
-          path: app/build/reports/lint-results-debug.html
-          destination: lint-report.html
-
-  # The 'build' job focuses on creating a release-ready Android App Bundle (AAB).
-  build:
-    executor:
-      name: android/android-docker
-      tag: '2024.01.1-node'
-
-    steps:
-      - checkout
-
-      # Restore the same cache as the 'test' job
-      - restore_cache:
-          key: *gradle-cache-key
-
-      # Although dependencies might be cached, this ensures they are available
-      # if the cache was empty.
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-
-      # This is where you would handle code signing for a release build.
-      # For now, we are building a debug version.
-      # In a real-world scenario, you would use CircleCI environment variables
-      # to store your keystore and credentials securely.
-
-      # Step to build the debug Android App Bundle (AAB)
-      - run:
-          name: Build Debug AAB
-          command: ./gradlew bundleDebug
-
-      # Step to save the generated AAB as an artifact
-      - store_artifacts:
-          path: app/build/outputs/bundle/debug/app-debug.aab
-          destination: app-debug.aab
-
-
-# Workflows define the order in which jobs are run.
-workflows:
-  # The name of the workflow
-  test_and_build:
-    jobs:
-      # The 'test' job will run first.
-      - test
-
-      # The 'build' job will run only after the 'test' job succeeds.
-      # The 'requires' key creates this dependency.
-      - build:
-          requires:
-            - test
+          path: app/build/outputs/apk/debug/
+          destination: artifact-file
