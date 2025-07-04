@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import  com.youkydesign.sakeca.core.domain.Recipe
-import  com.youkydesign.sakeca.core.domain.RecipeUseCase
-import  com.youkydesign.sakeca.core.domain.UiResource
+import com.youkydesign.sakeca.core.domain.Recipe
+import com.youkydesign.sakeca.core.domain.RecipeUseCase
+import com.youkydesign.sakeca.core.domain.UiResource
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -44,7 +44,7 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                         is UiResource.Success<*> -> {
                             if (state.data == null) {
                                 _recipeDetailState.value =
-                                    UiResource.Error("Sorry, something went wrong! We can't get this recipe right now.")
+                                    UiResource.Error("Sorry, something went wrong! We can\'t get this recipe right now.")
                                 return@collect
                             } else {
                                 _recipeDetailState.value = UiResource.Success(state.data!!)
