@@ -6,7 +6,7 @@ version: 2.1
 # Orbs are reusable packages of CircleCI configuration.
 # The Android orb simplifies Android development on CircleCI.
 orbs:
-  android: circleci/android@2.4.0
+  android: circleci/android@3.1.0
 
 # Jobs are collections of steps that run in a specified environment.
 jobs:
