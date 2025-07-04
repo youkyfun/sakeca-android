@@ -10,6 +10,7 @@ class StringListConverter {
 
     @TypeConverter
     fun toList(lineOfString: String): List<String> {
+        if (lineOfString.isEmpty()) return emptyList()
         return lineOfString.split(",")
     }
 
