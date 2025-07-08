@@ -28,28 +28,19 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                 .collect { state: UiResource<Recipe?> ->
                     when (state) {
                         is UiResource.Error -> {
-                            if (state.message == null) {
-                                _recipeDetailState.value =
-                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
-                                return@collect
-                            } else {
-                                _recipeDetailState.value = UiResource.Error(state.message!!)
-                            }
+                            _recipeDetailState.value = UiResource.Error(state.message!!)
                         }
 
-                        is UiResource.Idle -> {}
+                        is UiResource.Idle -> {
+                            _recipeDetailState.value = UiResource.Idle()
+                        }
+
                         is UiResource.Loading -> {
                             _recipeDetailState.value = UiResource.Loading()
                         }
 
                         is UiResource.Success<*> -> {
-                            if (state.data == null) {
-                                _recipeDetailState.value =
-                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
-                                return@collect
-                            } else {
-                                _recipeDetailState.value = UiResource.Success(state.data!!)
-                            }
+                            _recipeDetailState.value = UiResource.Success(state.data!!)
                         }
                     }
                 }
