@@ -186,7 +186,7 @@ class RecipeDiscoveryFragment : Fragment() {
                             tvCraving.isVisible = false
                             tvSectionTitle.isVisible = false
                             rvRecipes.isVisible = false
-                            val message = "No recipe found for \"${searchBar.text}\""
+                            val message = "No recipe found for \"${searchBarText}\""
                             tvNoRecipe.text = message
                             binding.searchBar.setText("")
 
