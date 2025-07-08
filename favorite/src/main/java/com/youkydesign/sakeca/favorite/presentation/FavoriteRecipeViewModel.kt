@@ -15,9 +15,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import com.youkydesign.sakeca.designsystem.R as designSystem
 
-internal class FavoriteRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class FavoriteRecipeViewModel @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+    ViewModel() {
     private val _favoriteRecipes: MutableStateFlow<PagingData<Recipe>> =
         MutableStateFlow(PagingData.empty())
     val favoriteRecipes: StateFlow<PagingData<Recipe>> = _favoriteRecipes.asStateFlow()

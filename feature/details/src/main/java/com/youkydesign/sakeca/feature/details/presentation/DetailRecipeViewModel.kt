@@ -7,12 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.youkydesign.sakeca.core.domain.Recipe
 import com.youkydesign.sakeca.core.domain.RecipeUseCase
 import com.youkydesign.sakeca.core.domain.UiResource
+import jakarta.inject.Inject
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import com.youkydesign.sakeca.designsystem.R as designSystem
 
-internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) : ViewModel() {
+internal class DetailRecipeViewModel @Inject constructor(private val recipeUseCase: RecipeUseCase) :
+    ViewModel() {
     private val _recipeDetailState: MutableLiveData<UiResource<Recipe>> =
         MutableLiveData(UiResource.Loading())
     val recipeDetailState: LiveData<UiResource<Recipe>> = _recipeDetailState
@@ -28,7 +30,13 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                 .collect { state: UiResource<Recipe?> ->
                     when (state) {
                         is UiResource.Error -> {
-                            _recipeDetailState.value = UiResource.Error(state.message!!)
+                            if (state.message == null) {
+                                _recipeDetailState.value =
+                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
+                                return@collect
+                            } else {
+                                _recipeDetailState.value = UiResource.Error(state.message!!)
+                            }
                         }
 
                         is UiResource.Idle -> {
@@ -40,7 +48,13 @@ internal class DetailRecipeViewModel(private val recipeUseCase: RecipeUseCase) :
                         }
 
                         is UiResource.Success<*> -> {
-                            _recipeDetailState.value = UiResource.Success(state.data!!)
+                            if (state.data == null) {
+                                _recipeDetailState.value =
+                                    UiResource.Error(designSystem.string.no_recipe_found.toString())
+                                return@collect
+                            } else {
+                                _recipeDetailState.value = UiResource.Success(state.data!!)
+                            }
                         }
                     }
                 }
