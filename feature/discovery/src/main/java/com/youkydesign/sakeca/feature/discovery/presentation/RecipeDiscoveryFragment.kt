@@ -183,14 +183,14 @@ class RecipeDiscoveryFragment : Fragment() {
                             showLoading(false)
                             tvNoRecipe.isVisible = true
 
-                            setupSearchRecommendations()
                             tvCraving.isVisible = false
                             tvSectionTitle.isVisible = false
                             rvRecipes.isVisible = false
                             val message = "No recipe found for \"${searchBar.text}\""
-                            tvNoRecipe.text = message // Use binding directly
+                            tvNoRecipe.text = message
                             binding.searchBar.setText("")
 
+                            setupSearchRecommendations()
                         }
                         Toast.makeText(requireContext(), "Recipe not found", Toast.LENGTH_SHORT)
                             .show()
@@ -319,10 +319,10 @@ class RecipeDiscoveryFragment : Fragment() {
             }
             flexboxChipContainer.removeAllViews()
             resources.getStringArray(designRes.array.search_recommendation)
-                .forEachIndexed { index, item ->
+                .forEachIndexed { index, ingredient ->
                     val chip = CustomAssistChip(requireContext()).apply {
                         id = View.generateViewId() + index
-                        setText(item)
+                        setText(ingredient)
                         setChipIcon(
                             ContextCompat.getDrawable(
                                 requireContext(),
@@ -332,9 +332,10 @@ class RecipeDiscoveryFragment : Fragment() {
                         setOnClickListener {
                             searchBar.setText("")
                             searchView.hide()
+                            tvCraving.visibility = GONE
+                            tvSectionTitle.text = ingredient.replaceFirstChar { it.uppercase() }
                             tvSectionTitle.visibility = VISIBLE
-                            searchRecommendationContainer.visibility = GONE
-                            recipeSearchViewModel.searchRecipes(item)
+                            recipeSearchViewModel.searchRecipes(ingredient)
                         }
                         layoutParams = ViewGroup.MarginLayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,

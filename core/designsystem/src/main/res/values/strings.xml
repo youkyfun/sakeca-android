@@ -21,7 +21,7 @@
     <string name="craving_text">What are you craving today?</string>
     <string name="view_recipe">View recipe</string>
     <string name="home_title">Sakeca Foods</string>
-    <string name="no_recipe_found">Sorry, something went wrong! We can\'t get this recipe right now.</string>
+    <string name="no_recipe_found">Failed to get the recipe.</string>
 
     <string-array name="search_recommendation">
         <item>apple</item>
