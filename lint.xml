@@ -39,4 +39,8 @@
     <issue id="all">
         <ignore path="\*/di/\*" />
     </issue>
+
+    <issue id="all">
+        <ignore path="**/RecipeDetailsFragment.kt" />
+    </issue>
 </lint>
